@@ -6,7 +6,7 @@
   * Peter Allen
   * Nathan Johnson
 ## Project Summary
-  Dan from Dan's Bagels would like a web based application to manage and operate his bagel shop.
+  Dan from Dan's Bagels would like a web-based application to manage and operate his bagel shop.
  
 ## Team Organization
    * Server Code Reviewer: Braysen Goodwin 
@@ -21,8 +21,7 @@ Tools for communication:
   * Git (For version control and code review)
   * Google Drive (For file sharing) 
     
-Nameing Conventions:  
+Naming Conventions:  
   * All caps for Constants 
   * Lower camel Case for variables
-  * Upper camel case for components and classes 
-  
+  * Upper camel case for components and classes
