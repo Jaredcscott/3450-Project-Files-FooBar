@@ -15,14 +15,14 @@
 ## Software Development Process
 
 ## Policies, Procedures and tools
-  Tools for communication:<br>
-    * Discord (Communication and video conferencing)
-    * Canvas (General class communication)
-    * Git (For version control and code review)
-    * Google Drive (For file sharing) 
+Tools for communication:  
+  * Discord (Communication and video conferencing)  
+  * Canvas (General class communication)
+  * Git (For version control and code review)
+  * Google Drive (For file sharing) 
     
-  Nameing Conventions:<br>
-    * All caps for Constants 
-    * Lower camel Case for variables
-    * Upper camel case for components and classes 
+Nameing Conventions:  
+  * All caps for Constants 
+  * Lower camel Case for variables
+  * Upper camel case for components and classes 
   
