@@ -11,7 +11,7 @@
  
 ## Team Organization
    * Server Code Reviewer: Braysen Goodwin 
-   * Client Code Reviewer: Jared Scott
+   * Front end Reviewer: Jared Scott
    * Back End Developers: Braysen Goodwin and Nathan Johnson 
    * Fron End Developers: Jared Scott and Peter Goodwin
    
