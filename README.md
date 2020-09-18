@@ -5,12 +5,15 @@
   * Braysen Goodwin
   * Peter Allen
   * Nathan Johnson
+  
 ## Project Summary
   Dan from Dan's Bagels would like a web-based application to manage and operate his bagel shop.
  
 ## Team Organization
    * Server Code Reviewer: Braysen Goodwin 
-   * Client Code Reviewer: Jared Scott 
+   * Client Code Reviewer: Jared Scott
+   * Back End Developers: Braysen Goodwin and Nathan Johnson 
+   * Fron End Developers: Jared Scott and Peter Goodwin
    
 ## Software Development Process
 
