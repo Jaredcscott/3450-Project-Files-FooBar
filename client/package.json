@@ -33,7 +33,8 @@
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.6",
-    "flow-bin": "^0.134.0"
+    "flow-bin": "^0.134.0",
+    "prettier": "^2.1.2"
   },
   "eslintConfig": {
     "extends": "react-app"
