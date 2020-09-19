@@ -1,0 +1,52 @@
+{
+	"extends": [
+		"strongloop",
+		"prettier",
+		"plugin:react/recommended"
+	],
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"env": {
+		"es6": true,
+		"browser": true,
+		"jasmine": true
+	},
+	"plugins": [
+		"flowtype",
+		"prettier",
+		"react"
+	],
+	"globals": {
+		"IdMap": false,
+		"UseStateReturn": false,
+		"SetState": false,
+		"Class": false,
+		"React$Node": false,
+		"React$ComponentType": false,
+		"ReactObjRef": false,
+		"StyledType": false,
+		"SyntheticInputEvent": false,
+		"IntervalID": false,
+		"TimeoutID": false,
+		"ReturnType": false,
+		"$Keys": false,
+		"$PropertyType": false,
+		"$ReadOnly": false,
+		"$ReadOnlyArray": false,
+		"SyntheticEvent": false,
+		"SyntheticKeyboardEvent": false,
+
+		// Tests
+		"jest": false
+	},
+	"rules": {
+		"semi": "off",
+		"indent": "off",
+		"max-len": "off",
+		"prettier/prettier": "error"
+	}
+}

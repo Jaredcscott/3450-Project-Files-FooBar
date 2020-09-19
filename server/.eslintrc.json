@@ -1,0 +1,60 @@
+{
+	"extends": ["strongloop", "prettier"],
+	"parser": "babel-eslint",
+	"env": {
+		"node": true,
+		"es6": true
+	},
+	"plugins": ["flowtype", "prettier"],
+	"globals": {
+		// flow
+		"IdMap": false,
+		"ReturnType": false,
+		"RecursiveReadOnly": false,
+		"RecursiveReadOnlyArray": false,
+		"TimeoutID": false,
+		"IntervalID": false,
+		"Promise": false,
+
+		// Flow - Utility Types
+		"$Subtype": false,
+		"$Keys": false,
+		"$ReadOnly": false,
+		"$Call": false,
+		"$Exact": false,
+		"$ReadOnlyArray": false,
+		"$PropertyType": false,
+		"$Diff": false,
+		"$Shape": false,
+		"$Rest": false,
+
+		// express
+		"express$Request": false,
+		"express$Response": false,
+		"express$NextFunction": false,
+
+		// mongoose
+		"bson$ObjectId": false,
+
+		// add-ons
+		"Bluebird$Promise": false,
+
+		// testing
+		"jest": false,
+		"describe": false,
+		"it": false,
+		"test": false,
+		"expect": false,
+		"beforeAll": false,
+		"afterAll": false,
+		"beforeEach": false,
+		"afterEach": false
+	},
+	"rules": {
+		"semi": "off",
+		"indent": "off",
+		"max-len": "off",
+		"prettier/prettier": "error",
+		"no-unused-vars": ["error", { "args": "after-used" }]
+	}
+}
