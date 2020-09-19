@@ -37,8 +37,10 @@ Naming Conventions:
   5. install dependencies `cd ./server && yarn && cd ../client && yarn`
       * navigate into the client folder and run `yarn`
       * navigate into the server folder and run `yarn`
-  6. install google chrome
-  7. install google chrome extensions
+  6. navigate to server folder and copy the file `.env.example` to `.env`
+  7. navigate to the client folder and copy the file `.env.development` to `.env`
+  8. install google chrome
+  9. install google chrome extensions
       * install [react developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
       * install [redux developer tools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)
 
