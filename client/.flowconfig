@@ -1,0 +1,16 @@
+[ignore]
+.*/build/.*
+.*/node_modules/.*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+emoji=true
+esproposal.optional_chaining=enable
+all=true
+
+[strict]
