@@ -28,3 +28,19 @@ Naming Conventions:
   * All caps for Constants 
   * Lower camel Case for variables
   * Upper camel case for components and classes
+
+# Setup
+  1. install node version manager (nvm) [mac: `brew install nvm`]
+  2. install and use node version 10 `nvm install 10 && nvm alias default 10`
+  3. install yarn `npm install -g yarn`
+  4. install mongoDB (community edition)[https://www.mongodb.com/try/download/community]
+  5. install dependencies [`cd ./server && yarn && cd ../client && yarn`]
+    * navigate into the client folder and run `yarn`
+    * navigate into the server folder and run `yarn`
+
+# Starting Servers
+  * start server
+    1. start mongoDB server, see mongoDB documentation
+    1. navigate into the server folder and run `yarn dev`
+  * start client
+    1. navigate into the server folder and run `yarn start`
