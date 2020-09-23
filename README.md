@@ -29,12 +29,16 @@
    * [react-query](https://react-query.tanstack.com) - back end (server) state manager
    * [axios](https://github.com/axios/axios) - back end (server) communication manager
    * [react-testing-library](https://testing-library.com/docs/react-testing-library/intro) - testing framework (extends [jest](https://jestjs.io) testing framework)
+   * [yarn](https://www.npmjs.com/package/yarn) - package (dependency) manager
+   * [flow](https://flow.org) - type hinting
 * server
    * [nodejs](https://nodejs.org/en/) - javascript interpreter
    * [express](http://expressjs.com) - http(s) request handler (router)
    * [express-ws](https://github.com/HenningM/express-ws) - websocket handler
    * [mongoose](https://mongoosejs.com/docs/index.html) - database interface
    * [jest](https://jestjs.io) - testing framework
+   * [yarn](https://www.npmjs.com/package/yarn) - package (dependency) manager
+   * [flow](https://flow.org) - type hinting
 * database
    * [mongoDB](https://docs.mongodb.com/manual/) - database (none sql)
 
