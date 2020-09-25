@@ -8,18 +8,25 @@
 
 ---
   
-## Project Summary
-  Dan from Dan's Bagels would like a web-based application to manage and operate his bagel shop.
+## Project
+  Dan from Dan's Bagels would like a web-based application to manage and operate his bagel shop. See the [google drive](https://drive.google.com/drive/folders/1U6tCNB-WRtASPWM0pf92Lu5S1zJgnxXI?usp=sharing) for living documents.
  
 ## Team Organization
    * Server Code Reviewer: Braysen Goodwin 
    * Front End Code Reviewer: Jared Scott
    * Back End Developers: Braysen Goodwin and Nathan Johnson 
    * Fron End Developers: Jared Scott and Peter Goodwin
-   
+
+### Team Planning
+
+We will be using an agile development method for this project. We will have sprint planning every Monday after class between 2:30pm-3:00pm to determine tasks for the week, and standup/scrum on Wednesday and Friday after class between 2:30pm and 3:00pm.
+
+---
+
 ## Software Development Process
 
 ## Policies, Procedures and tools
+
 
 #### Tech stack
 *  client
@@ -31,6 +38,7 @@
    * [react-testing-library](https://testing-library.com/docs/react-testing-library/intro) - testing framework (extends [jest](https://jestjs.io) testing framework)
    * [yarn](https://www.npmjs.com/package/yarn) - package (dependency) manager
    * [flow](https://flow.org) - type hinting
+   * [eslint](https://www.npmjs.com/package/eslint) - code syntax enforcer
 * server
    * [nodejs](https://nodejs.org/en/) - javascript interpreter
    * [express](http://expressjs.com) - http(s) request handler (router)
@@ -39,6 +47,7 @@
    * [jest](https://jestjs.io) - testing framework
    * [yarn](https://www.npmjs.com/package/yarn) - package (dependency) manager
    * [flow](https://flow.org) - type hinting
+   * [eslint](https://www.npmjs.com/package/eslint) - code syntax enforcer
 * database
    * [mongoDB](https://docs.mongodb.com/manual/) - database (none sql)
 
