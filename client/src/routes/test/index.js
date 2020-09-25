@@ -27,8 +27,8 @@ export default function Test() {
 }
 
 const Screen = styled.div`
-    width: 100%;
-    flex: 1 0 0;
+	width: 100%;
+	flex: 1 0 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
