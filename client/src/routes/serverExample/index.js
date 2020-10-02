@@ -2,7 +2,7 @@ import React from 'react'
 import { useQuery } from 'react-query'
 import styled from 'styled-components'
 
-export default function Hello() {
+export default function ServerExample() {
 	const info = useQuery('test', getTestNumber)
 
 	return <StyledDiv>{info.data ? info.data : 'Loading'}</StyledDiv>
