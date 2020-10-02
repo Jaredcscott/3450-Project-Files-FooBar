@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Home from './home'
 import Test from './test'
 import styled from 'styled-components'
+import Hello from './hello'
 
 export default function Routing() {
 	return (
@@ -14,6 +15,7 @@ export default function Routing() {
 					<Route exact path="/" component={Home} />
 					<Route path="/home" component={Home} />
 					<Route path="/test" component={Test} />
+					<Route path="/hello" component={Hello} />
 				</Switch>
 			</Screen>
 		</BrowserRouter>
