@@ -4,9 +4,14 @@ import Button from '../../general/Button'
 export default function Register() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [name, setName] = useState('')
 
 	return (
 		<div>
+			<label>
+				Name:{' '}
+				<input type="text" value={name} onChange={(event) => setName(event.target.value)} />
+			</label>
 			<label>
 				Email:{' '}
 				<input
@@ -23,20 +28,20 @@ export default function Register() {
 					onChange={(event) => setPassword(event.target.value)}
 				/>
 			</label>
-			<Button color="primary" onClick={() => register(email, password)}>
+			<Button color="primary" onClick={() => register(name, email, password)}>
 				Register
 			</Button>
 		</div>
 	)
 }
 
-function register(email: string, password: string) {
+function register(name: string, email: string, password: string) {
 	fetch('http://localhost:8100/auth/register', {
 		credentials: 'include',
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify({ email, password }),
+		body: JSON.stringify({ name, email, password }),
 	})
 }

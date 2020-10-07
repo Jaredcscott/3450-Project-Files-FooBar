@@ -8,6 +8,7 @@ router.post('/register', (req, res) => {
 	User.register(
 		new User({
 			email: req.body.email,
+			name: req.body.name,
 			roles: ['CUSTOMER'],
 		}),
 		req.body.password,
