@@ -8,6 +8,7 @@ export default function Navigation() {
 		<Navbar>
 			<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
 			<NavElement onClick={() => history.replace('/test')}>Test</NavElement>
+			<NavElement onClick={() => history.replace('/Order')}>Order</NavElement>
 		</Navbar>
 	)
 }
