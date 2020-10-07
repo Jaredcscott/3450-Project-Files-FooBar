@@ -11,6 +11,7 @@ const Roles = ['CUSTOMER', 'CASHIER', 'CHEF', 'MANAGER', 'ADMIN']
 
 const UserSchema = new Schema({
 	email: { type: String, required: true },
+	name: { type: String, required: true, default: 'Anonymous' },
 	roles: [
 		{
 			type: String,

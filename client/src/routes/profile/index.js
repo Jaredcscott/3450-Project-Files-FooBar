@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { useQuery } from 'react-query'
 import styled from 'styled-components'
 import Button from '../../general/Button'
@@ -18,16 +19,30 @@ export default function ServerExample() {
 			{info.isLoading ? (
 				'Loading'
 			) : info.data ? (
-				<>
-					<div>Email: {info.data.email}</div>
-					<Button color="secondary" onClick={signOut}>
-						sign out
-					</Button>
-				</>
+				<Profile user={info.data} />
 			) : (
 				'Not Logged In'
 			)}
 		</StyledDiv>
+	)
+}
+
+function Profile({ user }: { user: { name: string, email: string } }) {
+	const [name, setName] = useState(user.name)
+	return (
+		<>
+			<div>Email: {user.email}</div>
+			<label>
+				Name:{' '}
+				<input type="text" value={name} onChange={(event) => setName(event.target.value)} />
+			</label>
+			<Button color="secondary" onClick={() => updateProfile(name)}>
+				Update
+			</Button>
+			<Button color="warn" onClick={signOut}>
+				Sign out
+			</Button>
+		</>
 	)
 }
 
@@ -36,7 +51,6 @@ function getSignedInUser() {
 		credentials: 'include',
 	})
 		.then((res) => {
-			console.log('querying')
 			return res.json()
 		})
 		.catch(() => null)
@@ -50,6 +64,24 @@ function signOut() {
 	})
 }
 
+function updateProfile(name: string) {
+	return axios
+		.put('http://localhost:8100/user/me', {
+			name,
+		})
+		.catch(console.error)
+		.finally((res) => {
+			window.queryCache.refetchQueries()
+		})
+}
+
 const StyledDiv = styled.div`
 	color: black;
 `
+
+axios.interceptors.request.use(
+	(config) => {
+		return { ...config, withCredentials: true }
+	},
+	(error) => Promise.reject(error)
+)
