@@ -7,6 +7,7 @@ import bodyParser from 'body-parser'
 import { createServer } from 'http'
 
 import testRoutes from './routes/test'
+import testRoutes from './routes/inventory'
 
 const app = express()
 const server = createServer(app)

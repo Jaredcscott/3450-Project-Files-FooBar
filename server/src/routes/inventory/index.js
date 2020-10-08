@@ -15,7 +15,7 @@ router.get('/get-data', function(req, res, next) {
   var resultArray = [];
   mongo.connect(url, function(err, db) {
     assert.equal(null, err);
-    var cursor = db.collection('user-data').find();
+    var cursor = db.collection('inventory').find();
     cursor.forEach(function(doc, err) {
       assert.equal(null, err);
       resultArray.push(doc);
@@ -35,7 +35,7 @@ router.post('/insert', function(req, res, next) {
 
   mongo.connect(url, function(err, db) {
     assert.equal(null, err);
-    db.collection('user-data').insertOne(item, function(err, result) {
+    db.collection('inventory').insertOne(item, function(err, result) {
       assert.equal(null, err);
       console.log('Item inserted');
       db.close();
@@ -55,7 +55,7 @@ router.post('/update', function(req, res, next) {
 
   mongo.connect(url, function(err, db) {
     assert.equal(null, err);
-    db.collection('user-data').updateOne({"_id": objectId(id)}, {$set: item}, function(err, result) {
+    db.collection('inventory').updateOne({"_id": objectId(id)}, {$set: item}, function(err, result) {
       assert.equal(null, err);
       console.log('Item updated');
       db.close();
@@ -68,7 +68,7 @@ router.post('/delete', function(req, res, next) {
 
   mongo.connect(url, function(err, db) {
     assert.equal(null, err);
-    db.collection('user-data').deleteOne({"_id": objectId(id)}, function(err, result) {
+    db.collection('inventory').deleteOne({"_id": objectId(id)}, function(err, result) {
       assert.equal(null, err);
       console.log('Item deleted');
       db.close();
