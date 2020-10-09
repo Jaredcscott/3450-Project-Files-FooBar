@@ -1,4 +1,4 @@
-db.inventory.insertMany([
+
   {
     "Bagels": {
         "Plain":{
@@ -84,7 +84,7 @@ db.inventory.insertMany([
       "Lox":{
         "qty": 0,
         "price" : 10
-      },
+      }
     },
     "Beverages": {
       "Coffee":{
@@ -102,7 +102,6 @@ db.inventory.insertMany([
       "Water":{
         "qty": 0,
         "price" : 5
-      },
+      }
     }
   }
-])
