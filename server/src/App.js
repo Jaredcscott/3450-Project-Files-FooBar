@@ -7,6 +7,7 @@ import bodyParser from 'body-parser'
 import { createServer } from 'http'
 
 import testRoutes from './routes/test'
+import {inventoryConnection, Inventory} from './routes/inventory'
 import inventoryRoutes from './routes/inventory'
 
 const app = express()
@@ -24,12 +25,13 @@ app.use(
 			maxAge: 1000 * 60 * 60 * 24 * 7 * 2, // two weeks
 		},
 		store: new MongoStore({
-			mongooseConnection: accountConnection,
+			mongooseConnection: inventoryConnection,
 		}),
 		resave: false,
 		saveUninitialized: true,
 	})
 )
+
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
