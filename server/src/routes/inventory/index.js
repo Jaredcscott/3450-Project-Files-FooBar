@@ -1,8 +1,9 @@
 import { Router } from 'express'
-import { Inventory } from '../../models/inventory '
+import { Inventory } from '../../models/inventory'
 
 const router = new Router()
 
+// this is to populate the database with the table of data.
 router.post("/insertdefault", function(req, res){
   Inventory.insertMany(
     default_inventory,
@@ -17,8 +18,5 @@ router.post("/insertdefault", function(req, res){
 
 });
 
-router.get('/', (request, response) =>
-	response.json({ hello: 'world'})
-)
 
 export default router

@@ -4,11 +4,17 @@ import morgan from 'morgan'
 import config from './config'
 import bodyParser from 'body-parser'
 
+import passport from 'passport'
+import session from 'express-session'
+import { inventoryConnection, Inventory } from './models/inventory'
+
+const MongoStore = require('connect-mongo')(session)
+
 import { createServer } from 'http'
 
 import testRoutes from './routes/test'
-import {inventoryConnection, Inventory} from './routes/inventory'
 import inventoryRoutes from './routes/inventory'
+
 
 const app = express()
 const server = createServer(app)
