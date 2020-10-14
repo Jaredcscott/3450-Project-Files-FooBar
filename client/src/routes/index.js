@@ -3,6 +3,7 @@ import Navigation from '../navigation'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Home from './home'
 import Test from './test'
+import Profile from './profilePrototype'
 import styled from 'styled-components'
 
 export default function Routing() {
@@ -14,6 +15,7 @@ export default function Routing() {
 					<Route exact path="/" component={Home} />
 					<Route path="/home" component={Home} />
 					<Route path="/test" component={Test} />
+					<Route path="/profilePrototype" component={Profile} />
 				</Switch>
 			</Screen>
 		</BrowserRouter>
