@@ -112,7 +112,7 @@ export default function Order() {
 
 	function sendOrder(){
 		console.log("not implemented yet");
-		}
+	
 	}
 
 	return (
