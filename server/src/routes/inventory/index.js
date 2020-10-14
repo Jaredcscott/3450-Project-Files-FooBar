@@ -5,27 +5,17 @@ import mongoose from 'mongoose'
 
 const router = new Router()
 
-// this is to populate the database with the table of data.
-// router.post("/insertdefault", (req, res) =>{
-//   for (var i = 0; i < default_inventory.length; i++){
-//     Inventory.insert(default_inventory[i])
-//   }
-// })
-inventory = db.collection(Inventory)
-
-
-
 router.get('/', (request, response) =>
 response.json({ Inventory }))
 
 
-router.post('/register', (req, res) => {
+router.post('/createItem', (req, res) => {
 	Inventory.register(
 		new Inventory({
-        category: "BAGEL",
-        name: "Onion",
-        qty: 0,
-        price: 2,
+        category: req.body.category,
+        name: req.body.name,
+        qty: req.body.qty,
+        price: req.body.price,
 		}),
 		(err) => {
 			if (err) {
@@ -35,6 +25,27 @@ router.post('/register', (req, res) => {
 			}
 		}
 	)
+})
+
+router.post('/updateItem', (req, res) => {
+
+
+
+})
+
+router.post('/importdefaultdata', (req, res) =>{
+  Inventory.insertmany(
+    default_inventory
+  ),
+  (err) => {
+    if (err) {
+      console.error(err)
+      res.redirect('/err')
+      return
+    }
+  }
+
+
 })
 
 export default router
