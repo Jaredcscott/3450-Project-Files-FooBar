@@ -9,7 +9,6 @@ import styled from 'styled-components'
 import ServerExample from './serverExample'
 import Register from './auth/Register'
 import Login from './auth/Login'
-import Profile from './profile'
 
 export default function Routing() {
 	return (
