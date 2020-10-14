@@ -6,6 +6,7 @@ import bodyParser from 'body-parser'
 
 import passport from 'passport'
 import session from 'express-session'
+import { inventoryConnection, Inventory } from './models/inventory'
 import { accountConnection, User } from './models/accounts'
 
 const MongoStore = require('connect-mongo')(session)
@@ -13,8 +14,11 @@ const MongoStore = require('connect-mongo')(session)
 import { createServer } from 'http'
 
 import testRoutes from './routes/test'
+
+import inventoryRoutes from './routes/inventory'
 import authenticationRoutes from './routes/auth'
 import userRoutes from './routes/user'
+
 
 const app = express()
 const server = createServer(app)
@@ -31,6 +35,7 @@ app.use(
 			maxAge: 1000 * 60 * 60 * 24 * 7 * 2, // two weeks
 		},
 		store: new MongoStore({
+			mongooseConnection: inventoryConnection,
 			mongooseConnection: accountConnection,
 		}),
 		resave: false,
@@ -60,5 +65,7 @@ passport.deserializeUser(User.deserializeUser())
 app.use('/auth', authenticationRoutes)
 app.use('/user', userRoutes)
 app.use('/', testRoutes)
+app.use('/inv', inventoryRoutes)
+
 
 export default server
