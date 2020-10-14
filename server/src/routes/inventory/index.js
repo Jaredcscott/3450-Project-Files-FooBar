@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { Inventory } from '../../models/inventory'
 import {default_inventory} from './inventory_data'
 import mongoose from 'mongoose'
+import { request } from 'http'
 
 const router = new Router()
 
@@ -27,25 +28,32 @@ router.post('/createItem', (req, res) => {
 	)
 })
 
-router.post('/updateItem', (req, res) => {
 
+router.post('/update', async (req, res) => {
+  req.Inventory.qty = req.body.qty
+  await req.Inventory,save()
+  response.status(200)
+});
 
-
-})
 
 router.post('/importdefaultdata', (req, res) =>{
-  Inventory.insertmany(
-    default_inventory
-  ),
-  (err) => {
-    if (err) {
-      console.error(err)
-      res.redirect('/err')
-      return
+  for (var x = 0; x <= default_inventory.length; x++){
+    Inventory.register({
+      category: default_inventory[x].category,
+      name: default_inventory[x].name,
+      qty: default_inventory[x].qty,
+      price: default_inventory[x].price,
+		}),
+		(err) => {
+			if (err) {
+				console.error(err)
+				res.redirect('/err')
+				return
+			}
     }
   }
+}
+)
 
-
-})
 
 export default router
