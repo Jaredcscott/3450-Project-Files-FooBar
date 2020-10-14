@@ -5,6 +5,10 @@ import Home from './home'
 import Test from './test'
 import orderPrototype from './Order'
 import styled from 'styled-components'
+import ServerExample from './serverExample'
+import Register from './auth/Register'
+import Login from './auth/Login'
+import Profile from './profile'
 
 export default function Routing() {
 	return (
@@ -16,6 +20,11 @@ export default function Routing() {
 					<Route path="/home" component={Home} />
 					<Route path="/test" component={Test} />
 					<Route path="/Order" component={orderPrototype} />
+					<Route path="/serverExample" component={ServerExample} />
+					<Route path="/register" component={Register} />
+					<Route path="/login" component={Login} />
+					<Route path="/profile" component={Profile} />
+
 				</Switch>
 			</Screen>
 		</BrowserRouter>

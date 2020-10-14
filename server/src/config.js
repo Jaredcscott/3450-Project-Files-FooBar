@@ -16,6 +16,8 @@ let config: Config = {
 	isDevelopment: true,
 	sessionSecret: 'dev_secret',
 	sessionDomain: 'SHOULD NOT BE USED IN DEV',
+	dbUrl: 'mongodb://localhost/',
+	accountDatabaseName: 'accounts',
 }
 
 if (process.env.NODE_ENV === 'prod') {
