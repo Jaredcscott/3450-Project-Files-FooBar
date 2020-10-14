@@ -9,7 +9,7 @@ const router = new Router()
 router.get('/', (request, response) =>
 response.json({ Inventory }))
 
-
+// this is to create an item in the inventory
 router.post('/createItem', (req, res) => {
 	Inventory.register(
 		new Inventory({
@@ -28,8 +28,17 @@ router.post('/createItem', (req, res) => {
 	)
 })
 
+// an order will come in as an array of items.
+// for each item we will find it in the inventory and deduct 1
+// will need to turn this into a for loop for updating a order of data.
+router.post('/updateOrder', async (req, res) => {
+  req.Inventory.qty = req.body.qty
+  await req.Inventory,save()
+  response.status(200)
+});
 
-router.post('/update', async (req, res) => {
+// this is similar to update order but instead to update a whole item from the inventory menu that will be made.
+router.post('/updateItem', async (req, res) => {
   req.Inventory.qty = req.body.qty
   await req.Inventory,save()
   response.status(200)
