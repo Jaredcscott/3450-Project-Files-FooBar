@@ -24,7 +24,6 @@ export default function Routing() {
 					<Route path="/serverExample" component={ServerExample} />
 					<Route path="/register" component={Register} />
 					<Route path="/login" component={Login} />
-					<Route path="/profile" component={Profile} />
 				</Switch>
 			</Screen>
 		</BrowserRouter>
