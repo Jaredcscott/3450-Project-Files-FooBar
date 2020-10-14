@@ -9,9 +9,12 @@ export default function ServerExample() {
 }
 
 function getTestNumber() {
-	return fetch('http://localhost:8100/')
+	return fetch('http://localhost:8100/', {
+		credentials: 'include',
+	})
 		.then((res) => res.json())
 		.then((res) => res.number)
+		.catch(console.error)
 }
 
 const StyledDiv = styled.div`
