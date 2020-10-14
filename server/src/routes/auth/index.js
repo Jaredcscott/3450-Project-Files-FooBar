@@ -35,7 +35,7 @@ router.get('/logout', function (req, res) {
 })
 
 router.get('/', (req, res) => {
-	res.json({ hello: 'world' })
+	res.json(req.user)
 })
 
 export default router

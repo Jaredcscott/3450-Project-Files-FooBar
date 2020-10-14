@@ -10,10 +10,12 @@ export default function Navigation() {
 			<NavElement onClick={() => history.replace('/test')}>Test</NavElement>
 			<NavElement onClick={() => history.replace('/profilePrototype')}>Profile</NavElement>
 			<NavElement onClick={() => history.replace('/Order')}>Order</NavElement>
-			<NavElement onClick={() => history.replace('/serverExample')}>Server Example</NavElement>
+			<NavElement onClick={() => history.replace('/serverExample')}>
+				Server Example
+			</NavElement>
 			<NavElement onClick={() => history.replace('/register')}>Register</NavElement>
 			<NavElement onClick={() => history.replace('/login')}>Login</NavElement>
-			<NavElement onClick={() => history.replace('/profile')}>Profile</NavElement>
+			<NavElement onClick={() => history.replace('/profile')}>Profile (Editable)</NavElement>
 		</Navbar>
 	)
 }
