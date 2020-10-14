@@ -7,13 +7,17 @@ import bodyParser from 'body-parser'
 import passport from 'passport'
 import session from 'express-session'
 import { inventoryConnection, Inventory } from './models/inventory'
+import { accountConnection, User } from './models/accounts'
 
 const MongoStore = require('connect-mongo')(session)
 
 import { createServer } from 'http'
 
 import testRoutes from './routes/test'
+
 import inventoryRoutes from './routes/inventory'
+import authenticationRoutes from './routes/auth'
+import userRoutes from './routes/user'
 
 
 const app = express()
@@ -32,6 +36,7 @@ app.use(
 		},
 		store: new MongoStore({
 			mongooseConnection: inventoryConnection,
+			mongooseConnection: accountConnection,
 		}),
 		resave: false,
 		saveUninitialized: true,
@@ -41,8 +46,24 @@ app.use(
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(cors())
-app.options('*', cors())
+app.use(passport.initialize())
+app.use(passport.session())
+
+const corsOptions = {
+	origin: /localhost:(\d+)$/,
+	credentials: true,
+}
+
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions))
+
+// setup passport
+passport.use(User.createStrategy())
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+app.use('/auth', authenticationRoutes)
+app.use('/user', userRoutes)
 app.use('/', testRoutes)
 app.use('/inv', inventoryRoutes)
 

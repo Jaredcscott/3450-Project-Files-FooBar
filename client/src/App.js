@@ -4,9 +4,12 @@ import { Provider as ReduxProvider } from 'react-redux'
 import store from './redux-store'
 import ThemeProvider from './themes/provider'
 import Routing from './routes'
+import { ReactQueryDevtools } from 'react-query-devtools'
 import './App.css'
 
 const queryCache = new QueryCache()
+
+window.queryCache = queryCache
 
 function App() {
 	return (
@@ -16,6 +19,7 @@ function App() {
 					<Routing />
 				</ThemeProvider>
 			</ReduxProvider>
+			<ReactQueryDevtools initialIsOpen={false} />
 		</ReactQueryCacheProvider>
 	)
 }
