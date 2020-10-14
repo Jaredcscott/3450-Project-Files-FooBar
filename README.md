@@ -1,4 +1,4 @@
-# Project Milestone 1 
+# Project Milestone 2
 ## Group Name: FooBar
 ## Group Members
   * Jared Scott
@@ -138,3 +138,5 @@ These are not hard rules, but they should be followed whenever possible.
     1. navigate into the server folder and run `yarn dev`
   * start client
     1. navigate into the server folder and run `yarn start`
+ 
+

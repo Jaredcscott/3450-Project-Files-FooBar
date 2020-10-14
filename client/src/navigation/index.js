@@ -9,17 +9,22 @@ export default function Navigation() {
 			<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
 			<NavElement onClick={() => history.replace('/test')}>Test</NavElement>
 			<NavElement onClick={() => history.replace('/profilePrototype')}>Profile</NavElement>
+			<NavElement onClick={() => history.replace('/Order')}>Order</NavElement>
+			<NavElement onClick={() => history.replace('/serverExample')}>Server Example</NavElement>
+			<NavElement onClick={() => history.replace('/register')}>Register</NavElement>
+			<NavElement onClick={() => history.replace('/login')}>Login</NavElement>
+			<NavElement onClick={() => history.replace('/profile')}>Profile</NavElement>
 		</Navbar>
 	)
 }
 
 const Navbar = styled.nav`
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: row;
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	flex-direction: row;
 	flex: 0 0 auto;
 
 	background-color: ${({ theme }) => theme.color.base.lighter};
@@ -31,7 +36,7 @@ const NavElement = styled.div`
 	margin-right: ${({ theme }) => theme.spacing.veryLarge};
 
 	&:hover {
-		background-color:  ${({ theme }) => theme.color.base.normal};
+		background-color: ${({ theme }) => theme.color.base.normal};
 		cursor: pointer;
 	}
 `
