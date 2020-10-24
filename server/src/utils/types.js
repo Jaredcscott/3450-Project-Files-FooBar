@@ -1,4 +1,4 @@
-import { ROLES } from './constants'
+import { ROLES, INVENTORY_ITEM_CATEGORIES } from './constants'
 
 export type MongooseDocument<U> = {|
 	...U,
@@ -6,6 +6,7 @@ export type MongooseDocument<U> = {|
 |}
 
 export type Roles = $Keys<typeof ROLES>[]
+export type InventoryItemCategory = $Keys<typeof INVENTORY_ITEM_CATEGORIES>
 
 export type PublicUser = {|
 	name: string,

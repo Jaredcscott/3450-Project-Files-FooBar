@@ -1,6 +1,5 @@
 import app from '../../App'
 import request from 'supertest'
-import config from '../../config'
 import * as validate from '../../utils/validators'
 import { UserModel } from '../../models/accounts'
 import { ROLES } from '../../utils/constants'
@@ -207,7 +206,7 @@ describe('Auth Route', () => {
 		let managerCookie = []
 
 		beforeAll(() => {
-			// add test account
+			// add test accounts
 			return Promise.all([
 				request(app)
 					.post('/auth/register')

@@ -40,6 +40,16 @@ export function isString(element: any): boolean %checks {
 }
 
 /**
+ * isNoneEmptyString - check if the element is a none empty string
+ *
+ * @param  {any} element - the element to check
+ * @returns boolean - true if the element is a none empty string, false otherwise
+ */
+export function isNoneEmptyString(element: any): boolean %checks {
+	return isString(element) && element.length > 0
+}
+
+/**
  * isUndefined - check if the element is undefined
  *
  * @param  {any} element - the element to check
@@ -72,6 +82,16 @@ export function isObject(element: any): boolean %checks {
 }
 
 /**
+ * isBoolean - check if an element is a boolean
+ *
+ * @param  {any} element - the element to check if it is an object
+ * @returns boolean - true if the element is a boolean, false otherwise
+ */
+export function isBoolean(element: any): boolean %checks {
+	return typeof element === 'boolean'
+}
+
+/**
  * isNumber - check if an element is a number type
  *
  * @param  {any} element - the element to check if it is a number type
@@ -79,6 +99,18 @@ export function isObject(element: any): boolean %checks {
  */
 export function isNumber(element: any): boolean %checks {
 	return typeof element === 'number'
+}
+
+/**
+ * isGreaterOrEqualTo - check if an element is greater or equal to amount
+ *
+ * @param  {number} amount - check if the element is greater than or equal to amount
+ * @returns Validator - resolves to true if the element is greater than or less than the amount, false otherwise
+ */
+export const isGreaterOrEqualTo = (amount: number) => (
+	element: any
+): boolean => {
+	return isNumber(element) && amount <= element
 }
 
 /**

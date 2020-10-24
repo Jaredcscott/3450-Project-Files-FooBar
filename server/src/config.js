@@ -8,6 +8,7 @@ type Config = {|
 	sessionDomain: string,
 	dbUrl: string,
 	accountDatabaseName: string,
+	inventoryDatabaseName: string,
 |}
 
 let config: Config = {
@@ -20,6 +21,7 @@ let config: Config = {
 	sessionDomain: 'SHOULD NOT BE USED IN DEV',
 	dbUrl: 'mongodb://localhost/',
 	accountDatabaseName: 'accounts',
+	inventoryDatabaseName: 'inventory',
 }
 
 if (process.env.NODE_ENV === 'prod') {

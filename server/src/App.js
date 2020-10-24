@@ -11,6 +11,7 @@ import { createServer } from 'http'
 
 import authenticationRoutes from './routes/auth'
 import userRoutes from './routes/user'
+import inventoryRoutes from './routes/inventory'
 
 const MongoStore = require('connect-mongo')(session)
 
@@ -57,6 +58,7 @@ passport.deserializeUser(User.deserializeUser())
 
 app.use('/auth', authenticationRoutes)
 app.use('/user', userRoutes)
+app.use('/inventory', inventoryRoutes)
 
 app.use((req: express$Request, res: express$Response) => {
 	res.status(404)

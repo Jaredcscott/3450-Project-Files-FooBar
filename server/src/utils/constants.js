@@ -7,3 +7,14 @@ export const ROLES = {
 }
 
 export const ROLES_ENUM: $Keys<typeof ROLES>[] = Object.keys(ROLES)
+
+export const INVENTORY_ITEM_CATEGORIES = {
+	BEVERAGE: 'BEVERAGE',
+	SAMMICHE_TOPPINGS: 'SAMMICHE_TOPPINGS',
+	SMEAR: 'SMEAR',
+	BAGEL: 'BAGEL',
+}
+
+export const INVENTORY_ITEM_CATEGORIES_ENUM: Array<
+	$Keys<typeof INVENTORY_ITEM_CATEGORIES>
+> = Object.keys(INVENTORY_ITEM_CATEGORIES)
