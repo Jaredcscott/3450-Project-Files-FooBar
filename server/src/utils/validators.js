@@ -40,6 +40,26 @@ export function isString(element: any): boolean %checks {
 }
 
 /**
+ * isUndefined - check if the element is undefined
+ *
+ * @param  {any} element - the element to check
+ * @returns boolean - true if the element is undefined, false otherwise
+ */
+export function isUndefined(element: any): boolean %checks {
+	return element === undefined
+}
+
+/**
+ * isNull - check if the element is null
+ *
+ * @param  {any} element - the element to check
+ * @returns boolean - true if the element is null, false otherwise
+ */
+export function isNull(element: any): boolean %checks {
+	return element === null
+}
+
+/**
  * isObject - check if an element is an object
  *
  * @param  {any} element - the element to check if it is an object
