@@ -6,16 +6,20 @@ type Config = {|
 	isDevelopment: boolean,
 	sessionSecret: string,
 	sessionDomain: string,
+	dbUrl: string,
+	accountDatabaseName: string,
 |}
 
 let config: Config = {
 	mongoAccountsUser: 'accountsAdmin',
-	mongoAccountsPass: 'accountsAdmin4178',
-	cookieSessionKey: 'infinid-server.sid',
+	mongoAccountsPass: 'adminAccounts827399',
+	cookieSessionKey: 'dans_bagel_shop.sid',
 	isProduction: false,
 	isDevelopment: true,
-	sessionSecret: 'dev_secret',
+	sessionSecret: process.env.SESSION_SECRET || 'secret',
 	sessionDomain: 'SHOULD NOT BE USED IN DEV',
+	dbUrl: 'mongodb://localhost/',
+	accountDatabaseName: 'accounts',
 }
 
 if (process.env.NODE_ENV === 'prod') {

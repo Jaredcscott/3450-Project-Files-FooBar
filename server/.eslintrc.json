@@ -3,7 +3,8 @@
 	"parser": "babel-eslint",
 	"env": {
 		"node": true,
-		"es6": true
+		"es6": true,
+		"jest": true
 	},
 	"plugins": ["flowtype", "prettier"],
 	"globals": {
@@ -35,6 +36,7 @@
 
 		// mongoose
 		"bson$ObjectId": false,
+		"Mongoose$Connection": false,
 
 		// add-ons
 		"Bluebird$Promise": false,
