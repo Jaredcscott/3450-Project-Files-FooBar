@@ -131,6 +131,22 @@ export function isObjectWith(template: {
 }
 
 /**
+ * isObjectOf - check if an element is an object with only the keys and values specified in the template
+ *
+ * @param  {{ [key: string]: Validator }} template - the template to check the element against
+ * @returns Validator - validates to true if element matches the template, false otherwise
+ */
+export function isObjectOf(template: { [key: string]: Validator }): Validator {
+	return (element: any) => {
+		return (
+			isObject(element) &&
+			Object.keys(template).length === Object.keys(element).length &&
+			Object.keys(template).every((key: string) => template[key](element[key]))
+		)
+	}
+}
+
+/**
  * and - check if the element satisfies all the supplied validators
  *
  * @param  {...validators: Validator[]} validators - the validators the element should satisfy

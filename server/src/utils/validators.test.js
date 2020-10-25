@@ -193,6 +193,34 @@ describe('Validators', () => {
 		})
 	})
 
+	describe('isObjectOf', () => {
+		it('should return true if element is an object that satisfies the validators', () => {
+			expect(validate.isObjectOf({})({})).toBe(true)
+			expect(
+				validate.isObjectOf({
+					hello: validate.isString,
+					world: validate.isString,
+				})({
+					hello: 'world',
+					world: 'are',
+				})
+			).toBe(true)
+		})
+
+		it('should return false if element is not an object or the validators fail', () => {
+			expect(validate.isObjectOf({})(null)).toBe(false)
+			expect(validate.isObjectOf({})(undefined)).toBe(false)
+			expect(validate.isObjectOf({})([])).toBe(false)
+			expect(validate.isObjectOf({})('helloWorld!')).toBe(false)
+			expect(
+				validate.isObjectOf({
+					hello: validate.isString,
+					how: validate.isString,
+				})({ hello: 'world', how: 'am', I: 'hello' })
+			).toBe(false)
+		})
+	})
+
 	describe('or', () => {
 		it('should return true if the element satisfies any of the validators', () => {
 			expect(validate.or(validate.isString, validate.isObject)('hello')).toBe(

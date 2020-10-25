@@ -9,6 +9,7 @@ type Config = {|
 	dbUrl: string,
 	accountDatabaseName: string,
 	inventoryDatabaseName: string,
+	orderDatabaseName: string,
 |}
 
 let config: Config = {
@@ -22,6 +23,7 @@ let config: Config = {
 	dbUrl: 'mongodb://localhost/',
 	accountDatabaseName: 'accounts',
 	inventoryDatabaseName: 'inventory',
+	orderDatabaseName: 'order',
 }
 
 if (process.env.NODE_ENV === 'prod') {
