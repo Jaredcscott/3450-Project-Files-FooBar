@@ -9,7 +9,7 @@ import type {
 import { Item } from '../../models/inventoryItem'
 import * as validate from '../../utils/validators'
 import { ROLES, INVENTORY_ITEM_CATEGORIES_ENUM } from '../../utils/constants'
-import { Types as mongooseTypes } from 'mongoose'
+import { Mongoose, Types as mongooseTypes } from 'mongoose'
 
 const router = new Router()
 
@@ -38,6 +38,7 @@ const ITEM_FIELDS_UPDATABLE_BY = {
 	[ROLES.ADMIN]: ['category', 'name', 'quantity', 'price', 'onMenu'],
 }
 
+// get for finding an item by chef/manager/admin stats
 router.get(
 	'/',
 	verifyUserHasRole(([ROLES.ADMIN, ROLES.MANAGER, ROLES.CHEF]: any)),
@@ -46,6 +47,7 @@ router.get(
 	}
 )
 
+// post for new Item only by manager
 router.post(
 	'/',
 	verifyUserHasRole(([ROLES.ADMIN, ROLES.MANAGER]: any)),
@@ -75,6 +77,7 @@ router.post(
 	}
 )
 
+// return all data of an item for admin/manager
 router.get(
 	'/:id',
 	verifyUserHasRole(([ROLES.ADMIN, ROLES.MANAGER]: any)),
@@ -93,6 +96,7 @@ router.get(
 	}
 )
 
+// forms the data to be sent back about an item by the role of the user.
 router.post(
 	'/:id',
 	verifyUserHasRole(([ROLES.ADMIN, ROLES.MANAGER, ROLES.CHEF]: any)),
@@ -131,6 +135,34 @@ router.post(
 		})
 		await item.save()
 		return res.status(200).json({ data: item }).end()
+	}
+)
+
+// returns the items needed if <10 qty
+router.get(
+	'/needed',
+	verifyUserHasRole(([ROLES.ADMIN, ROLES.MANAGER]: any)),
+	async (
+		req: AuthenticatedUserRequest<{}, {| id: string |}>,
+		res: express$Response
+	) => {
+		if (!mongooseTypes.ObjectId.isValid(req.params.id)) {
+			return res.status(400).end()
+		}
+		const items = await Item.find({ onMenu: true }).lean()
+		const needed: {
+			[key: $Keys<typeof Item[]>]: typeof Number,
+		} = {}
+		Object.keys(Item).forEach(
+			(Item) => (needed[Item] = [])
+		)
+		items.forEach((item) => {
+			if (item.quantity > 10){
+				needed[Item] = []
+			}
+			needed[item.name].push(item)
+		})
+		return res.status(200).json({ data: needed })
 	}
 )
 
