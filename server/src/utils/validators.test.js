@@ -79,6 +79,21 @@ describe('Validators', () => {
 		})
 	})
 
+	describe('isNoneEmptyString', () => {
+		it('should return true if element is string a string and is not empty', () => {
+			expect(validate.isNoneEmptyString('hello@gmail.com')).toBe(true)
+			expect(validate.isNoneEmptyString('123')).toBe(true)
+		})
+
+		it('should return false if element is not string or not is empty', () => {
+			expect(validate.isNoneEmptyString(null)).toBe(false)
+			expect(validate.isNoneEmptyString(undefined)).toBe(false)
+			expect(validate.isNoneEmptyString({})).toBe(false)
+			expect(validate.isNoneEmptyString([])).toBe(false)
+			expect(validate.isNoneEmptyString('')).toBe(false)
+		})
+	})
+
 	describe('isArray', () => {
 		it('should return true if element is an array', () => {
 			expect(validate.isArray([])).toBe(true)
@@ -100,11 +115,43 @@ describe('Validators', () => {
 		})
 
 		it('should return false if element is not string or not a number type', () => {
-			expect(validate.isEmail(null)).toBe(false)
-			expect(validate.isEmail(undefined)).toBe(false)
-			expect(validate.isEmail({})).toBe(false)
-			expect(validate.isEmail([])).toBe(false)
-			expect(validate.isEmail('123')).toBe(false)
+			expect(validate.isNumber(null)).toBe(false)
+			expect(validate.isNumber(undefined)).toBe(false)
+			expect(validate.isNumber({})).toBe(false)
+			expect(validate.isNumber([])).toBe(false)
+			expect(validate.isNumber('123')).toBe(false)
+		})
+	})
+
+	describe('isBoolean', () => {
+		it('should return true if element is a boolean type', () => {
+			expect(validate.isBoolean(true)).toBe(true)
+			expect(validate.isBoolean(false)).toBe(true)
+		})
+
+		it('should return false if element is not string or not a number type', () => {
+			expect(validate.isBoolean(null)).toBe(false)
+			expect(validate.isBoolean(undefined)).toBe(false)
+			expect(validate.isBoolean({})).toBe(false)
+			expect(validate.isBoolean([])).toBe(false)
+			expect(validate.isBoolean('123')).toBe(false)
+			expect(validate.isBoolean(1)).toBe(false)
+		})
+	})
+
+	describe('isGreaterOrEqualTo', () => {
+		it('should return true if element is greater than or equal to the amount', () => {
+			expect(validate.isGreaterOrEqualTo(1)(2)).toBe(true)
+			expect(validate.isGreaterOrEqualTo(-1)(0)).toBe(true)
+		})
+
+		it('should return false if element is less than the amount', () => {
+			expect(validate.isGreaterOrEqualTo(0)(null)).toBe(false)
+			expect(validate.isGreaterOrEqualTo(0)(undefined)).toBe(false)
+			expect(validate.isGreaterOrEqualTo(0)({})).toBe(false)
+			expect(validate.isGreaterOrEqualTo(0)([])).toBe(false)
+			expect(validate.isGreaterOrEqualTo(0)('123')).toBe(false)
+			expect(validate.isGreaterOrEqualTo(0)(-0.001)).toBe(false)
 		})
 	})
 
@@ -142,6 +189,34 @@ describe('Validators', () => {
 					hello: validate.isString,
 					how: validate.isString,
 				})({ hello: 'world', I: 'am' })
+			).toBe(false)
+		})
+	})
+
+	describe('isObjectOf', () => {
+		it('should return true if element is an object that satisfies the validators', () => {
+			expect(validate.isObjectOf({})({})).toBe(true)
+			expect(
+				validate.isObjectOf({
+					hello: validate.isString,
+					world: validate.isString,
+				})({
+					hello: 'world',
+					world: 'are',
+				})
+			).toBe(true)
+		})
+
+		it('should return false if element is not an object or the validators fail', () => {
+			expect(validate.isObjectOf({})(null)).toBe(false)
+			expect(validate.isObjectOf({})(undefined)).toBe(false)
+			expect(validate.isObjectOf({})([])).toBe(false)
+			expect(validate.isObjectOf({})('helloWorld!')).toBe(false)
+			expect(
+				validate.isObjectOf({
+					hello: validate.isString,
+					how: validate.isString,
+				})({ hello: 'world', how: 'am', I: 'hello' })
 			).toBe(false)
 		})
 	})

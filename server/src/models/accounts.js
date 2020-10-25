@@ -9,17 +9,20 @@ export const mongooseAccountConnection = createMongooseConnection(
 	config.accountDatabaseName
 )
 
-const UserSchema = new Schema({
-	email: { type: String, required: true, lowercase: true },
-	name: { type: String, required: true, default: 'Anonymous' },
-	balance: { type: Number, required: true, default: 10000 },
-	roles: [
-		{
-			type: String,
-			enum: ROLES_ENUM,
-		},
-	],
-})
+const UserSchema = new Schema(
+	{
+		email: { type: String, required: true, lowercase: true },
+		name: { type: String, required: true, default: 'Anonymous' },
+		balance: { type: Number, required: true, default: 10000 },
+		roles: [
+			{
+				type: String,
+				enum: ROLES_ENUM,
+			},
+		],
+	},
+	{ minimize: false }
+)
 
 UserSchema.plugin(passportUserPassportConnector, {
 	usernameField: 'email',
