@@ -16,6 +16,32 @@ describe('Validators', () => {
 		})
 	})
 
+	describe('isUndefined', () => {
+		it('should return true if element is undefined', () => {
+			expect(validate.isUndefined(undefined)).toBe(true)
+		})
+
+		it('should return false if element is not undefined', () => {
+			expect(validate.isUndefined(null)).toBe(false)
+			expect(validate.isUndefined('')).toBe(false)
+			expect(validate.isUndefined({})).toBe(false)
+			expect(validate.isUndefined([])).toBe(false)
+		})
+	})
+
+	describe('isNull', () => {
+		it('should return true if element is null', () => {
+			expect(validate.isNull(null)).toBe(true)
+		})
+
+		it('should return false if element is not null', () => {
+			expect(validate.isNull(undefined)).toBe(false)
+			expect(validate.isNull('')).toBe(false)
+			expect(validate.isNull({})).toBe(false)
+			expect(validate.isNull([])).toBe(false)
+		})
+	})
+
 	describe('isEmail', () => {
 		it('should return true if element is string a string and in email form', () => {
 			expect(validate.isEmail('hello@gmail.com')).toBe(true)

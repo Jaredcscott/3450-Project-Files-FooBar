@@ -12,6 +12,7 @@ export const mongooseAccountConnection = createMongooseConnection(
 const UserSchema = new Schema({
 	email: { type: String, required: true, lowercase: true },
 	name: { type: String, required: true, default: 'Anonymous' },
+	balance: { type: Number, required: true, default: 10000 },
 	roles: [
 		{
 			type: String,

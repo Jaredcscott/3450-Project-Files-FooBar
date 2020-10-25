@@ -10,6 +10,7 @@ import { mongooseAccountConnection, UserModel as User } from './models/accounts'
 import { createServer } from 'http'
 
 import authenticationRoutes from './routes/auth'
+import userRoutes from './routes/user'
 
 const MongoStore = require('connect-mongo')(session)
 
@@ -55,6 +56,7 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 app.use('/auth', authenticationRoutes)
+app.use('/user', userRoutes)
 
 app.use((req: express$Request, res: express$Response) => {
 	res.status(404)
