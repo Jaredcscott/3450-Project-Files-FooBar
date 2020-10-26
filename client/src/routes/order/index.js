@@ -29,7 +29,7 @@ export default function Order() {
 		smearMenu.setAttribute("id", "smear");
 		smearMenu.setAttribute("style","text-align: left")
 		for (var x in smears){
-			smearMenu.innerHTML = smearMenu.innerHTML  + "<input type=\"checkbox\" id=\"" + x + "\" name=\"" + x + "\" value=\"" + x + "\">" + "<label for=\"" + x + "\">" + x +"($" + smears[x] + ")" +"</label>"
+			smearMenu.innerHTML = smearMenu.innerHTML  + "<input type=\"checkbox\" id=\"" + x + "\" name=\"" + x + "\" value=\"" + x + "\"><label for=\"" + x + "\">" + x +"($" + smears[x] + ")</label>"
 		}
 		if(this.parentNode.querySelector("form") == null){
 			this.parentNode.appendChild(smearMenu)
@@ -51,7 +51,7 @@ export default function Order() {
 		stuffMenu.setAttribute("style", "text-align: left")
 		stuffMenu.innerHTML = "<br>"
 		for (var x in sammicheStuff){
-			stuffMenu.innerHTML = stuffMenu.innerHTML + "<label for=\"" + x + "\" style=\"display: inline-block;width: 115px\"> " + x +"($" + sammicheStuff[x] + ")\t" +"</label><input type=\"numeric\" id=\"" + x + "\" name=\"" +x + "\" value=\"" + 0 + "\" style= \"display: inline-block; width: 8px\">" + "<br>"
+			stuffMenu.innerHTML = stuffMenu.innerHTML + "<label for=\"" + x + "\" style=\"display: inline-block;width: 115px\"> " + x + "($" + sammicheStuff[x] + ")</label><input type=\"numeric\" id=\"" + x + "\" name=\"" +x + "\" value=\"" + 0 + "\" style= \"display: inline-block; width: 8px\"><br>"
 		}
 		this.parentNode.appendChild(stuffMenu);
 		this.onclick = removeStuff;
@@ -64,7 +64,7 @@ export default function Order() {
 	
 
 	function addBagle(){
-		let list = document.getElementById("bagleOrder");
+		let list = document.getElementById("bagelOrder");
 		let bagelMenu = document.createElement("select");
 		for (var x in bagels){
 			bagelMenu.innerHTML = bagelMenu.innerHTML + "<option value=\"" + x + "\">" + x + "($" + bagels[x] + ") </option>"
@@ -111,8 +111,7 @@ export default function Order() {
 	};
 
 	function sendOrder(){
-		console.log("not implemented yet");
-	
+		console.log("not implemented");
 	}
 
 	return (
