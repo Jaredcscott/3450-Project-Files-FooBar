@@ -31,3 +31,8 @@ src/**/*.css.map
 .vscode/
 .session.vim
 tags
+
+# coverage
+
+/server/coverage
+/client/coverage
