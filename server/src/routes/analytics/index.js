@@ -40,8 +40,8 @@ router.get(
 		const item = await Item.findOne().lean();
 		const order = await Order.findOne().lean();
 		const total = 0;
-		for (const [price, value] of Object.entries(order)) {
-			total = total + value;
+		for (const [price, Number] of Object.entries(order)) {
+			total = total + Number;
 		}
 		const analysis = [item, order, total]
 
