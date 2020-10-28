@@ -37,10 +37,13 @@ router.get(
 			return res.status(400).end()
 		}
 
-
-		const analysis = {}
-		
-
+		const item = await Item.findOne().lean();
+		const order = await Order.findOne().lean();
+		const total = 0;
+		for (const [price, value] of Object.entries(order)) {
+			total = total + value;
+		}
+		const analysis = [item, order, total]
 
 		return res.status(200).json({ data: analysis })
 	}
