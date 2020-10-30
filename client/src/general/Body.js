@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import type { StatusColor } from '../themes/type'
 
 type Props = {
 	text: string
