@@ -1,16 +1,17 @@
 import React from 'react'
-import logo from './logo.png'
-import background from './background.png';
+import logo from '../../general/logo.png'
 import styled from 'styled-components'
 import Button from '../../general/Button'
 import Body from '../../general/Body'
 import Form from '../../general/Form'
 import Footer from '../../general/Footer'
+import Background from '../../general/Background'
+
 
 export default function Home() {
 	return (
 		<Screen>
-			<div style={{backgroundImage: "url(" + background + ")"}}>
+			<Background>
 				<header className="App-header">
 					<div className="flex-container" style={{'padding-top': "5px"}}>
 						<div className="flex-child">
@@ -65,8 +66,7 @@ export default function Home() {
 					</div>
 
 				</Footer>
-
-			</div>
+			</Background>
 		</Screen>
 	)
 }
