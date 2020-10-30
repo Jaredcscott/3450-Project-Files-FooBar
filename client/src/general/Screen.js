@@ -21,17 +21,6 @@ const Content = styled.div`
 		text-align: center;
 	}
 
-	.App-logo {
-		height: 40vmin;
-		pointer-events: none;
-	}
-
-	@media (prefers-reduced-motion: no-preference) {
-		.App-logo {
-			animation: App-logo-spin infinite 20s linear;
-		}
-	}
-
 	.Testimonials {
 		background-color: #BDB76B;
 		height: 100%;
@@ -58,14 +47,4 @@ const Content = styled.div`
 	.App-link {
 		color: #61dafb;
 	}
-
-	@keyframes App-logo-spin {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-
 `

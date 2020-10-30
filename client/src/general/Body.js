@@ -19,5 +19,4 @@ const Paragraph = styled.div`
     font-size: 25px;
     color: #FFFFF0;
     margin: auto;
-
 `
