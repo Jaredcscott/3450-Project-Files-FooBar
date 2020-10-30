@@ -32,20 +32,6 @@ const Content = styled.div`
 		}
 	}
 
-	.App-header {
-		background-color: #BDB76B;
-		width: 90%;
-		height: 22%;
-		margin: auto;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: top;
-		font-size: calc(35px + 2vmin);
-		color: #FFFFF0;
-		margin-top: 0px;	
-	}
-
 	.Testimonials {
 		background-color: #BDB76B;
 		height: 100%;
