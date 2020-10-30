@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useQuery } from 'react-query'
 // import { useSelector, useDispatch } from 'react-redux'
 // import { getTheme } from '../../redux-store/theme'
 // import reactRouterDom from 'react-router-dom'
@@ -7,6 +8,23 @@ import styled from 'styled-components'
 
 
 export default function Order() {
+
+	function none() {
+
+	}
+    //const info = useQuery('menu', getMenu)
+
+    //function getMenu() {
+	//return fetch('http://localhost:8100/menu',{  
+    //    beverages: [array of ids],
+    //    bagels: [array of objects],
+    //    pickup-date: timestamp#
+    //}{
+      //Fill in with query info
+    //})
+	//	.then((res) => res.json())
+    //}
+
 	function getBagels() {
 		return  {plain: 2, onion: 2, cinnamon_raisen: 2, sesame: 2, cheesy: 2, pumpernickel: 2}
 	}
@@ -24,6 +42,7 @@ export default function Order() {
 	const smears = getSmears();
 	const sammicheStuff = getSammicheStuff(); 
 	const beverages = getBeverages();
+
 	function addSmear() {
 		let smearMenu = document.createElement("form");
 		smearMenu.setAttribute("id", "smear");
@@ -44,6 +63,7 @@ export default function Order() {
 		this.onclick = addSmear;
 		this.textContent = "add a smear to this bagel"
 	}
+
 	function addStuff() {
 		this.textContent = "cancel the sammiche";
 		let stuffMenu = document.createElement("form");
@@ -110,14 +130,10 @@ export default function Order() {
 		list.appendChild(document.createElement("br"));
 	};
 
-	function sendOrder(){
-		console.log("not implemented");
-	}
-
 	return (
 		<Screen>
 			
-			<button style= {{width: "50%"}} onClick= {addBagle}> add bagel to order</button> 
+			<button style= {{width: "50%"}} onClick= {addBagle}> Add Bagel To Order</button> 
 			<button style= {{width: "50%"}} onClick= {addBeverage}>add beverage to order</button>
 			
 			<ul id="bagelOrder" style={{textAlign: "center"}}></ul>
@@ -129,7 +145,7 @@ export default function Order() {
 				<input type="date" id="date"></input>
 			</p>
 			
-			<button style= {{width: "100%"}} onClick={sendOrder} >place order</button>
+			<button style= {{width: "100%"}} onClick={none} >place order</button>
 		</Screen>
 	)
 }
@@ -140,5 +156,5 @@ const Screen = styled.div`
 	margin-top: 0;
 	justify-content: center;
 	align-items: center;
-	background-color: #cccccc;
+	background-color: #BDB76B;
 `
