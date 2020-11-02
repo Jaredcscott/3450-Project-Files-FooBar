@@ -49,6 +49,9 @@ export default function Account() {
 			<Button color="primary" onClick={() => register(name, email, password, password)}>
 				Register
 			</Button>
+			<Button color="primary" onClick={() => login(email, password)}>
+				Login
+			</Button>
 		</div>
             </Screen>
         )
@@ -65,17 +68,18 @@ function register(name: string, email: string, password: string, verifyPassword:
 		},
 		body: JSON.stringify({ name, email, password, verifyPassword }),
     })
-    fetch('http://localhost:8100/auth/login', {
+}
+
+function login(email: string, password: string) {
+	fetch('http://localhost:8100/auth/login', {
 		credentials: 'include',
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({ email, password }),
-    })
+	})
 }
-
-
 
 class ProfileInfo extends Component {
     render() {
