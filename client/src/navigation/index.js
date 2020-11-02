@@ -11,6 +11,7 @@ export default function Navigation() {
 			<NavElement onClick={() => history.replace('/serverExample')}>
 				Example Server Communication
 			</NavElement>
+			<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
 		</Navbar>
 	)
 }
