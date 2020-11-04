@@ -1,17 +1,58 @@
 import React, { Component, useState } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryCache } from 'react-query'
 import Button from '../../general/Button'
 import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
 import { getTheme, setTheme } from '../../redux-store/theme'
 import axios from 'axios'
 
+function getSignedInUser() {
+	return axios
+		.get('http://localhost:8100/user')
+		.then((res) => {
+			console.log(res)
+			return res.data.data
+		})
+		.catch(() => null)
+}
+
+class ProfileInfo extends Component {
+	render() {
+		console.log(this.props)
+		const name = this.props.name
+		const email = this.props.email
+		const balance = this.props.balance
+		const role = this.props.role
+		return (
+			<section>
+				<h3>
+					{' '}
+					<strong>Account Name: {name}</strong>
+				</h3>
+				<h4>Email Id: {email}</h4>
+				<h4>Account Balance: {balance}</h4>
+				<h5>Role: {role}</h5>
+			</section>
+		)
+	}
+}
+
+const ONE_SECOND = 1000 // ms
+
 export default function Account() {
+	const loggedin = useQuery('user', getSignedInUser, {
+		cacheTime: ONE_SECOND,
+		refetchOnWindowFocus: false,
+	})
+
+	console.log(loggedin)
+
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [name, setName] = useState('')
-	const loggedin = getSignedInUser
+	const [verifyPassword, setVerifyPassword] = useState('')
+	const queryCache = useQueryCache()
 
 	if (loggedin.data) {
 		return (
@@ -19,8 +60,8 @@ export default function Account() {
 				<ProfileInfo
 					name={loggedin.data.name}
 					email={loggedin.data.email}
-					accountBal={loggedin.data.accountBal}
-					role={loggedin.data.role}
+					balance={loggedin.data.balance}
+					role={loggedin.data.roles}
 				/>
 			</Screen>
 		)
@@ -55,10 +96,10 @@ export default function Account() {
 					</label>
 					<Button
 						color="primary"
-						onClick={() => register(name, email, password, password)}>
+						onClick={() => register(name, email, password, password, queryCache)}>
 						Register
 					</Button>
-					<Button color="primary" onClick={() => login(email, password)}>
+					<Button color="primary" onClick={() => login(email, password, queryCache)}>
 						Login
 					</Button>
 				</div>
@@ -67,11 +108,18 @@ export default function Account() {
 	}
 }
 
-function register(name: string, email: string, password: string, verifyPassword: string) {
+function register(
+	name: string,
+	email: string,
+	password: string,
+	verifyPassword: string,
+	queryCache: any
+) {
 	axios
 		.post('http://localhost:8100/auth/register', { name, email, password, verifyPassword })
 		.then(() => {
 			console.log('successful register')
+			queryCache.invalidateQueries('user')
 		})
 		.catch((err) => {
 			console.log('failed to register')
@@ -79,7 +127,7 @@ function register(name: string, email: string, password: string, verifyPassword:
 		})
 }
 
-function login(email: string, password: string) {
+function login(email: string, password: string, queryCache: any) {
 	axios
 		.post('http://localhost:8100/auth/login', {
 			email,
@@ -88,41 +136,12 @@ function login(email: string, password: string) {
 		.then((res) => {
 			console.log('successfully loged in')
 			console.log(res)
+			queryCache.invalidateQueries('user')
 		})
 		.catch((err) => {
 			console.log('failed to login')
 			console.error(err)
 		})
-}
-
-class ProfileInfo extends Component {
-	render() {
-		const name = this.props.name
-		const email = this.props.email
-		const balance = this.props.balance
-		const role = this.props.role
-		return (
-			<section>
-				<h3>
-					{' '}
-					<strong>Account Name: {name}</strong>
-				</h3>
-				<h4>Email Id: {email}</h4>
-				<h4>Account Balance: {balance}</h4>
-				<h5>Role: {role}</h5>
-			</section>
-		)
-	}
-}
-
-function getSignedInUser() {
-	return fetch('http://localhost:8100/user GET', {
-		credentials: 'include',
-	})
-		.then((res) => {
-			return res.json()
-		})
-		.catch(() => null)
 }
 
 const Screen = styled.div`
@@ -133,30 +152,3 @@ const Screen = styled.div`
 	align-items: center;
 	background-color: ${({ theme }) => theme.color.base.darker};
 `
-
-// function Profile({ user }: { user: { name: string, email: string } }) {
-// 	const [name, setName] = useState(user.name)
-// 	return (
-// 		<>
-// 			<div>Email: {user.email}</div>
-// 			<label>
-// 				Name:{' '}
-// 				<input type="text" value={name} onChange={(event) => setName(event.target.value)} />
-// 			</label>
-// 			<Button color="secondary" onClick={() => updateProfile(name)}>
-// 				Update
-// 			</Button>
-// 			<Button color="warn" onClick={signOut}>
-// 				Sign out
-// 			</Button>
-// 		</>
-// 	)
-// }
-
-// function signOut() {
-// 	return fetch('http://localhost:8100/auth/logout', {
-// 		credentials: 'include',
-// 	}).then(() => {
-// 		window.queryCache.refetchQueries()
-// 	})
-// }
