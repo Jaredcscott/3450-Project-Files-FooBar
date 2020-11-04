@@ -4,6 +4,10 @@
 /server/node_modules
 /client/node_modules
 
+#coverage
+/server/coverage
+/client/coverage
+
 /.pnp
 .pnp.js
 

@@ -110,7 +110,7 @@ describe('Auth Route', () => {
 							email: 'userTest@test.com',
 							password: 'newPassword2',
 						})
-						.expect(302)
+						.expect(200)
 				})
 		})
 
@@ -132,7 +132,7 @@ describe('Auth Route', () => {
 							email: 'userTest@test.com',
 							password: 'newPassword2',
 						})
-						.expect(302)
+						.expect(200)
 				})
 		})
 
@@ -154,7 +154,7 @@ describe('Auth Route', () => {
 							email: 'userTest@test.com',
 							password: 'newPassword2',
 						})
-						.expect(302)
+						.expect(200)
 				})
 		})
 
@@ -174,7 +174,7 @@ describe('Auth Route', () => {
 							email: 'userTest@test.com',
 							password: 'newPassword2',
 						})
-						.expect(302)
+						.expect(200)
 				})
 		})
 
@@ -196,7 +196,7 @@ describe('Auth Route', () => {
 							email: 'userTest@test.com',
 							password: 'newPassword2',
 						})
-						.expect(302)
+						.expect(200)
 				})
 		})
 	})
