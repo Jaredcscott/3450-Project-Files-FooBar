@@ -11,7 +11,6 @@ function getSignedInUser() {
 	return axios
 		.get('http://localhost:8100/user')
 		.then((res) => {
-			console.log(res)
 			return res.data.data
 		})
 		.catch(() => null)
@@ -19,7 +18,6 @@ function getSignedInUser() {
 
 class ProfileInfo extends Component {
 	render() {
-		console.log(this.props)
 		const name = this.props.name
 		const email = this.props.email
 		const balance = this.props.balance
@@ -45,8 +43,6 @@ export default function Account() {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
-
-	console.log(loggedin)
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
