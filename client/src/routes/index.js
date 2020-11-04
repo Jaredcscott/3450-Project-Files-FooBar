@@ -6,7 +6,6 @@ import Test from './test'
 import styled from 'styled-components'
 import ServerExample from './serverExample'
 import Account from './account'
-import Profile from './auth/profile'
 
 export default function Routing() {
 	return (
@@ -19,7 +18,6 @@ export default function Routing() {
 					<Route path="/test" component={Test} />
 					<Route path="/serverExample" component={ServerExample} />
 					<Route path="/account" component={Account}/>
-					<Route path="/profile" component={Profile} />
 				</Switch>
 			</Screen>
 		</BrowserRouter>

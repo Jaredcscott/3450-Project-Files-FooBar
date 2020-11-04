@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, useState } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useQuery } from 'react-query'
@@ -21,21 +21,32 @@ class ProfileInfo extends Component {
     render() {
 		const name = this.props.name
 		const email = this.props.email
-		const accountBal = this.props.accountBal
+        const balance = this.props.balance
+        const role = this.props.role
         return (
             <section>
                 <h3> <strong>Account Name: {name}</strong></h3>
                 <h4>Email Id: {email}</h4>
-                <h4>Account Balance: {accountBal}</h4>
+                <h4>Account Balance: {balance}</h4>
+                <h5>Role: {role}</h5>
             </section>
         )
     }
 }
 
+const ONE_SECOND = 1000 // ms
 
 export default function Account() {
-	const loggedin = getSignedInUser
+	const loggedin = useQuery('user', getSignedInUser, {
+		cacheTime: ONE_SECOND,
+		refetchOnWindowFocus: false,
+	})
 
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
+	const [name, setName] = useState('')
+	const [verifyPassword, setVerifyPassword] = useState('')
+	
 	if( loggedin.data) {
 		return (
 			<Screen>
@@ -43,12 +54,73 @@ export default function Account() {
 			</Screen>
 		)
 	}
-	return (
+	return(
 		<Screen>
-				<h1>Loading...</h1>
+			<h1>Not Signed in</h1>
+			<div>
+		<label>
+			Name:{' '}
+			<input type="text" value={name} onChange={(event) => setName(event.target.value)} />
+		</label>
+		<label>
+			Email:{' '}
+			<input
+				type="text"
+				value={email}
+				onChange={(event) => setEmail(event.target.value)}
+			/>
+		</label>
+		<label>
+			Password:{' '}
+			<input
+				type="text"
+				value={password}
+				onChange={(event) => setPassword(event.target.value)}
+			/>
+		</label>
+		<label>
+			Verify Password:{''}
+			<input
+				type="text"
+				value={verifyPassword}
+				onChange={(event) => setVerifyPassword(event.target.value)}
+			/>
+		</label>
+		<Button color="primary" onClick={() => register(name, email, password, verifyPassword)}>
+			Register
+		</Button>
+		<Button color="primary" onClick={() => login(email, password)}>
+			Login
+		</Button>
+		</div>
 		</Screen>
 	)
 }
+
+
+
+function register(name: string, email: string, password: string, verifyPassword: string) {
+	fetch('http://localhost:8100/auth/register', {
+		credentials: 'include',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ name, email, password, verifyPassword }),
+    })
+}
+
+function login(email: string, password: string) {
+	fetch('http://localhost:8100/auth/login', {
+		credentials: 'include',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ email, password }),
+	})
+}
+
 
 const Screen = styled.div`
 	width: 100%;
