@@ -178,6 +178,25 @@ router.post(
 	}
 )
 
+router.get(
+	'/todo',
+	verifyUserHasRole(([ROLES.CHEF, ROLES.CASHIER]: any)),
+	async (req: AuthenticatedUserRequest<>, res: express$Response) => {
+		const roles = new Set(req.user.roles)
+		const statusesToGet = []
+		if (roles.has(ROLES.CHEF)) {
+			statusesToGet.push(ORDER_STATUS.PREPARING)
+		}
+		if (roles.has(ROLES.CASHIER)) {
+			statusesToGet.push(ORDER_STATUS.PREPARED)
+		}
+		const orders = await populateOrders(
+			await Order.find({ status: { $in: statusesToGet } }).lean()
+		)
+		return res.status(200).json({ data: orders })
+	}
+)
+
 router.post(
 	'/price',
 	verifiedUserSignedIn,
