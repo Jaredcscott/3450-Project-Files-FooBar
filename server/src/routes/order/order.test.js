@@ -76,6 +76,7 @@ describe('Orders', () => {
 			quantity: 100,
 			price: 50,
 			onMenu: true,
+			targetCount: 100,
 		})
 
 		const smear = new Item({
@@ -84,6 +85,7 @@ describe('Orders', () => {
 			quantity: 100,
 			price: 29,
 			onMenu: true,
+			targetCount: 100,
 		})
 
 		const beverage = new Item({
@@ -92,6 +94,7 @@ describe('Orders', () => {
 			quantity: 100,
 			price: 18,
 			onMenu: true,
+			targetCount: 100,
 		})
 
 		await Promise.all([bagel.save(), smear.save(), beverage.save()])
@@ -132,6 +135,7 @@ describe('Orders', () => {
 							hello: 'world',
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(400)
 		})
@@ -148,6 +152,7 @@ describe('Orders', () => {
 							toppings: ['1111111111111111'],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(400)
 		})
@@ -164,6 +169,7 @@ describe('Orders', () => {
 							toppings: ['111111111111111111111111'],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(409)
 		})
@@ -180,6 +186,7 @@ describe('Orders', () => {
 							toppings: [smearId],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(200)
 				.then((res) => expect(res.body.data.price).toBe(115))
@@ -204,6 +211,7 @@ describe('Orders', () => {
 							hello: 'world',
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(400)
 		})
@@ -220,6 +228,7 @@ describe('Orders', () => {
 							toppings: ['1111111111111111'],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(400)
 		})
@@ -236,6 +245,7 @@ describe('Orders', () => {
 							toppings: ['111111111111111111111111'],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(409)
 		})
@@ -252,6 +262,7 @@ describe('Orders', () => {
 							toppings: [smearId],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(200)
 				.then((res) => expect(res.body.data).toBe(115))
@@ -273,6 +284,7 @@ describe('Orders', () => {
 							toppings: [smearId],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(200)
 				.then((res) => (orderId = res.body.data._id))
@@ -319,6 +331,7 @@ describe('Orders', () => {
 							toppings: [smearId],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(200)
 				.then((res) => (orderId = res.body.data._id))
@@ -370,6 +383,7 @@ describe('Orders', () => {
 				bagels: [],
 				price: 1,
 				placed: Date.now(),
+				pickupAt: 100,
 				status: ORDER_STATUS.PREPARING,
 				placedBy: chefId,
 			})
@@ -379,6 +393,7 @@ describe('Orders', () => {
 				bagels: [],
 				price: 1,
 				placed: Date.now(),
+				pickupAt: 100,
 				status: ORDER_STATUS.PREPARED,
 				placedBy: chefId,
 			})
@@ -388,6 +403,7 @@ describe('Orders', () => {
 				bagels: [],
 				price: 1,
 				placed: Date.now(),
+				pickupAt: 100,
 				status: ORDER_STATUS.PLACED,
 				placedBy: chefId,
 			})

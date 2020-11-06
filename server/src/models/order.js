@@ -27,6 +27,7 @@ const OrderSchema = new Schema(
 			required: true,
 		},
 		placed: { type: Number, required: true },
+		pickupAt: { type: Number, required: true },
 		fulfilled: Number,
 		status: {
 			type: String,

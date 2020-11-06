@@ -158,6 +158,7 @@ describe('inventory', () => {
 					quantity: 2,
 					price: 1,
 					onMenu: false,
+					targetCount: 100,
 				})
 				.expect(200)
 				.then(async (res) => {
@@ -184,6 +185,7 @@ describe('inventory', () => {
 					quantity: 2,
 					price: 1,
 					onMenu: false,
+					targetCount: 100,
 				})
 				.expect(200)
 				.then(async (res) => {
@@ -238,6 +240,7 @@ describe('inventory', () => {
 					quantity: 2,
 					price: 1,
 					onMenu: false,
+					targetCount: 100,
 				})
 				.expect(200)
 				.then(async (res) => {
@@ -265,6 +268,7 @@ describe('inventory', () => {
 					quantity: 2,
 					price: 1,
 					onMenu: false,
+					targetCount: 100,
 				})
 				.set('Cookie', managerCookies)
 				.expect(400)
@@ -279,6 +283,7 @@ describe('inventory', () => {
 					quantity: 2,
 					price: 1,
 					onMenu: false,
+					targetCount: 100,
 				})
 				.set('Cookie', managerCookies)
 				.expect(404)
@@ -294,6 +299,7 @@ describe('inventory', () => {
 					quantity: 0,
 					price: 20,
 					onMenu: true,
+					targetCount: 100,
 				})
 				.expect(200)
 				.then((res) => {

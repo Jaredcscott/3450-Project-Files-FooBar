@@ -9,6 +9,8 @@ import session from 'express-session'
 import { mongooseAccountConnection, UserModel as User } from './models/accounts'
 import { createServer } from 'http'
 
+import startUpdatingOrders from './background/updateOrders'
+
 import authenticationRoutes from './routes/auth'
 import userRoutes from './routes/user'
 import inventoryRoutes from './routes/inventory'
@@ -78,5 +80,7 @@ app.use((err: Error, req: express$Request, res: express$Response) => {
 			.end()
 	}
 })
+
+startUpdatingOrders()
 
 export default server
