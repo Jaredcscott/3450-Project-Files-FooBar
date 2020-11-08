@@ -7,10 +7,7 @@ export default function Navigation() {
 	return (
 		<Navbar>
 			<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-			<NavElement onClick={() => history.replace('/test')}>Test</NavElement>
-			<NavElement onClick={() => history.replace('/serverExample')}>
-				Example Server Communication
-			</NavElement>
+			<NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
 		</Navbar>
 	)
 }
@@ -31,6 +28,7 @@ const NavElement = styled.div`
 	color: ${({ theme }) => theme.color.on.base};
 	padding: 8px;
 	margin-right: ${({ theme }) => theme.spacing.veryLarge};
+	color: #FFFFF0;
 
 	&:hover {
 		background-color: ${({ theme }) => theme.color.base.normal};
