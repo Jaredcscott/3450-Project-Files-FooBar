@@ -29,7 +29,6 @@ const Content = styled.div`
 		flex-direction: column;
 		align-items: left;
 		justify-content: top;
-		font-size: calc(25px + 2vmin);
 		color: #FFFFF0;
 		margin: auto;
 	}

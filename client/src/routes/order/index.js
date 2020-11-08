@@ -144,14 +144,14 @@ export default function Order() {
 	return (
 		<Screen>
 			<Background>
-				<Header text="Welcome to Dan's Bagel Shop">
+				<Header text="Hungry? Lets Get You A Bagel.">
 				</Header>
 				<Body>
-					<Button width='50%'
+					<Button width=''
 						onClick={addBagle}
 						color='primary'>Add Bagel To Order
 					</Button>
-					<Button width='50%'
+					<Button width=''
 						onClick={addBeverage}
 						color='primary'>Add Beverage To Order
 					</Button>

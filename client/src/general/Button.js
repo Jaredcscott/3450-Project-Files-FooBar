@@ -3,14 +3,14 @@ import styled from 'styled-components'
 
 type Props = {
 	onClick: () => void,
-	color: StatusColor,
+	color: string,
 	children: React$Node,
-	width: string
+	width: string,
 }
 
 export default function Button({ onClick, color, children, width }: Props) {
 	return (
-		<ButtonBackground width={width} onClick={onClick} color={color}>
+		<ButtonBackground style={{'width': {width}}} onClick={onClick} color={color}>
 			{children}
 		</ButtonBackground>
 	)

@@ -7,6 +7,8 @@ import Header from '../../general/Header'
 import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
+import man from '../../general/man.png';
+import scooby from '../../general/scooby.png';
 
 export default function Home() {
 	return (
@@ -14,23 +16,26 @@ export default function Home() {
 			<Background>
 				<Header text="Welcome to Dan's Bagel Shop">
 				</Header>
+				
 				<Form>
 					<div>
 						<div className="email">
-							<input type="text" id="email" placeholder="Email" autofocus="1" aria-label="Email"/>
+							<input type="text" id="email" placeholder="Email" autofocus="1" aria-label="Email" style={{'width': '350px', 'height': '30px'}}/>
 						</div>
 						<div className="password">
-							<input type="password" placeholder="Password" aria-label="Password"/>
+							<input type="password" placeholder="Password" aria-label="Password" style={{'width': '350px', 'height': '30px'}}/>
 						</div>
 					</div>
 
 					<div className="flex-container" style={{'padding-top': "5px"}}>
 						<div className="flex-child">
-							<Button width='250px'
+							<Button 
 								onClick={() => {
 									//Insert logic for sign up
 								}}
-								color='primary'>Sign Up
+								color='primary'
+								width=''
+								>Register
 							</Button>
 						</div>
 						<div className="flex-child">
@@ -39,7 +44,8 @@ export default function Home() {
 									//Insert logic for sign in
 								}}
 								color='primary'
-								width='250px'>Sign In
+								width=''
+								>Sign In
 							</Button>
 						</div>
 					</div>
@@ -47,9 +53,11 @@ export default function Home() {
 				<Footer>
 					<div className="Testimonials">
 						<div className="flex-container" style={{'padding-top': "5px"}}>
-						<Body text="'Dan's Bagel Shop has the best shmears'-Jimmy Joe">
+						<Body text="'Dan's Bagel Shop has the best shmears!'-Jimmy Joe">
+							<img src={man} className="photo" alt="Dans Bagel Shop" style={{'padding-left': "120px"}}/>
 						</Body>
-						<Body text="'I start every day with a Bagel from Dan's'-Scooby Doo">
+						<Body text="'I start every day with a Bagel from Dan's.'-Scooby Doo">
+							<img src={scooby} className="photo" alt="Dans Bagel Shop" style={{'padding-left': "75px"}}/>
 						</Body>
 						</div>
 					</div>

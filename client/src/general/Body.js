@@ -20,6 +20,6 @@ const Paragraph = styled.div`
     width: 90%;
     height: 68%;
     font-size: 25px;
-    color: #FFFFF0;
+    color: #FFFFFF;
     margin: auto;
 `
