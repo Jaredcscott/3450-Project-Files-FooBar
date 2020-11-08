@@ -20,7 +20,14 @@ const ORDER_VALIDATOR = validate.isObjectWith({
 			toppings: validate.isArrayOf(mongooseTypes.ObjectId.isValid),
 		})
 	),
+	pickupAt: validate.isGreaterOrEqualTo(0),
 })
+
+const ENDING_STATUSES = new Set([
+	ORDER_STATUS.FULFILLED,
+	ORDER_STATUS.DID_NOT_PICK_UP,
+	ORDER_STATUS.CANCELED,
+])
 
 const CAN_UPDATE_STATUS_FROM = new Set([
 	ORDER_STATUS.PREPARING,
@@ -76,6 +83,7 @@ async function populateOrders(orders: OrderType[]): Promise<PopulatedOrder[]> {
 type IncomingOrder = {|
 	beverages: string[],
 	bagels: {| bagel: string, toppings: string[] |}[],
+	pickupAt: number,
 |}
 
 /**
@@ -143,6 +151,7 @@ router.post(
 		const baseOrder: IncomingOrder = {
 			bagels: req.body.bagels,
 			beverages: req.body.beverages,
+			pickupAt: req.body.pickupAt,
 		}
 		let price = 0
 		try {
@@ -178,6 +187,25 @@ router.post(
 	}
 )
 
+router.get(
+	'/todo',
+	verifyUserHasRole(([ROLES.CHEF, ROLES.CASHIER]: any)),
+	async (req: AuthenticatedUserRequest<>, res: express$Response) => {
+		const roles = new Set(req.user.roles)
+		const statusesToGet = []
+		if (roles.has(ROLES.CHEF)) {
+			statusesToGet.push(ORDER_STATUS.PREPARING)
+		}
+		if (roles.has(ROLES.CASHIER)) {
+			statusesToGet.push(ORDER_STATUS.PREPARED)
+		}
+		const orders = await populateOrders(
+			await Order.find({ status: { $in: statusesToGet } }).lean()
+		)
+		return res.status(200).json({ data: orders })
+	}
+)
+
 router.post(
 	'/price',
 	verifiedUserSignedIn,
@@ -191,6 +219,7 @@ router.post(
 		const baseOrder: IncomingOrder = {
 			bagels: req.body.bagels,
 			beverages: req.body.beverages,
+			pickupAt: req.body.pickupAt,
 		}
 		let price = 0
 		try {
@@ -275,6 +304,9 @@ router.post(
 		for (let i = 0; i < req.user.roles.length; i++) {
 			if (CAN_UPDATE_TO_STATUS[req.user.roles[i]]?.has(status)) {
 				order.status = status
+				if (ENDING_STATUSES.has(status)) {
+					order.fulfilled = Date.now()
+				}
 				await order.save()
 				return res.status(200).json({ data: order })
 			}

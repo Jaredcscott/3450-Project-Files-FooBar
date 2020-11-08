@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 
 // // Always mock the calls to create the mongoose connection
 jest.mock('./src/database/connection.js')
+jest.mock('./src/background/updateOrders')
 
 beforeAll(() => {
 	return mongoose.connect(process.env.MONGO_URL, {

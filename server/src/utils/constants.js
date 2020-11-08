@@ -31,3 +31,10 @@ export const ORDER_STATUS = {
 export const ORDER_STATUS_ENUM: Array<$Keys<typeof ORDER_STATUS>> = Object.keys(
 	ORDER_STATUS
 )
+
+const ONE_SECOND = 1000 // ms
+const ONE_MINUTE = 60 * ONE_SECOND
+
+export const PREPARING_UPDATE_RATE = 30 * ONE_SECOND
+
+export const PREPARING_BEFORE_PICKUP = 15 * ONE_MINUTE

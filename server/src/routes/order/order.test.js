@@ -7,11 +7,14 @@ import {
 	ORDER_STATUS,
 } from '../../utils/constants'
 import { Item } from '../../models/inventoryItem'
+import { Order } from '../../models/order'
 import { UserModel } from '../../models/accounts'
 
 describe('Orders', () => {
 	let customerCookies = []
+	let cashierCookies = []
 	let chefCookies = []
+	let chefId = ''
 	let beverageId = ''
 	let bagelId = ''
 	let smearId = ''
@@ -45,6 +48,24 @@ describe('Orders', () => {
 						email: 'chefOrder@admin.com',
 					})
 					user.roles.push(ROLES.CHEF)
+					chefId = String(user._id)
+					return user.save()
+				}),
+
+			request(app)
+				.post('/auth/register')
+				.send({
+					email: 'cashierOrder@cashier.com',
+					name: 'Cashier',
+					password: 'HelloWorld123',
+					verifyPassword: 'HelloWorld123',
+				})
+				.then(async (response) => {
+					cashierCookies = response.headers['set-cookie']
+					const user = await UserModel.findOne({
+						email: 'cashierOrder@cashier.com',
+					})
+					user.roles.push(ROLES.CASHIER)
 					return user.save()
 				}),
 		])
@@ -55,6 +76,7 @@ describe('Orders', () => {
 			quantity: 100,
 			price: 50,
 			onMenu: true,
+			targetCount: 100,
 		})
 
 		const smear = new Item({
@@ -63,6 +85,7 @@ describe('Orders', () => {
 			quantity: 100,
 			price: 29,
 			onMenu: true,
+			targetCount: 100,
 		})
 
 		const beverage = new Item({
@@ -71,6 +94,7 @@ describe('Orders', () => {
 			quantity: 100,
 			price: 18,
 			onMenu: true,
+			targetCount: 100,
 		})
 
 		await Promise.all([bagel.save(), smear.save(), beverage.save()])
@@ -111,6 +135,7 @@ describe('Orders', () => {
 							hello: 'world',
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(400)
 		})
@@ -127,6 +152,7 @@ describe('Orders', () => {
 							toppings: ['1111111111111111'],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(400)
 		})
@@ -143,6 +169,7 @@ describe('Orders', () => {
 							toppings: ['111111111111111111111111'],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(409)
 		})
@@ -159,6 +186,7 @@ describe('Orders', () => {
 							toppings: [smearId],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(200)
 				.then((res) => expect(res.body.data.price).toBe(115))
@@ -183,6 +211,7 @@ describe('Orders', () => {
 							hello: 'world',
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(400)
 		})
@@ -199,6 +228,7 @@ describe('Orders', () => {
 							toppings: ['1111111111111111'],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(400)
 		})
@@ -215,6 +245,7 @@ describe('Orders', () => {
 							toppings: ['111111111111111111111111'],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(409)
 		})
@@ -231,6 +262,7 @@ describe('Orders', () => {
 							toppings: [smearId],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(200)
 				.then((res) => expect(res.body.data).toBe(115))
@@ -252,6 +284,7 @@ describe('Orders', () => {
 							toppings: [smearId],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(200)
 				.then((res) => (orderId = res.body.data._id))
@@ -298,6 +331,7 @@ describe('Orders', () => {
 							toppings: [smearId],
 						},
 					],
+					pickupAt: 100,
 				})
 				.expect(200)
 				.then((res) => (orderId = res.body.data._id))
@@ -334,6 +368,92 @@ describe('Orders', () => {
 				.send({ status: ORDER_STATUS.PREPARED })
 				.set('Cookie', chefCookies)
 				.expect(200)
+		})
+	})
+
+	describe('/order/todo GET', () => {
+		let preparingOrderId = ''
+		let preparedOrderId = ''
+		let placedOrderId = ''
+
+		beforeAll(async () => {
+			await Order.find().remove()
+			const preparingOrder = new Order({
+				beverages: [beverageId],
+				bagels: [],
+				price: 1,
+				placed: Date.now(),
+				pickupAt: 100,
+				status: ORDER_STATUS.PREPARING,
+				placedBy: chefId,
+			})
+
+			const preparedOrder = new Order({
+				beverages: [beverageId],
+				bagels: [],
+				price: 1,
+				placed: Date.now(),
+				pickupAt: 100,
+				status: ORDER_STATUS.PREPARED,
+				placedBy: chefId,
+			})
+
+			const placedOrder = new Order({
+				beverages: [beverageId],
+				bagels: [],
+				price: 1,
+				placed: Date.now(),
+				pickupAt: 100,
+				status: ORDER_STATUS.PLACED,
+				placedBy: chefId,
+			})
+
+			await Promise.all([
+				preparedOrder.save(),
+				preparingOrder.save(),
+				placedOrder.save(),
+			])
+
+			preparedOrderId = String(preparedOrder._id)
+			preparingOrderId = String(preparingOrder._id)
+
+			return Promise.resolve()
+		})
+
+		it('should not allow this routes to those not signed in', () => {
+			return request(app).get(`/order/todo`).expect(401)
+		})
+
+		it('should return 403 if user role is not able to access route', () => {
+			return request(app)
+				.get(`/order/todo`)
+				.send({ status: ORDER_STATUS.FULFILLED })
+				.set('Cookie', customerCookies)
+				.expect(403)
+		})
+
+		it('should return appropriate orders to CHEF', async () => {
+			return request(app)
+				.get(`/order/todo`)
+				.set('Cookie', chefCookies)
+				.expect(200)
+				.then((res) => {
+					expect(validate.isArray(res.body.data)).toBe(true)
+					expect(res.body.data.length).toBe(1)
+					expect(res.body.data[0]._id).toBe(preparingOrderId)
+				})
+		})
+
+		it('should return appropriate orders to CASHIER', async () => {
+			return request(app)
+				.get(`/order/todo`)
+				.set('Cookie', cashierCookies)
+				.expect(200)
+				.then((res) => {
+					expect(validate.isArray(res.body.data)).toBe(true)
+					expect(res.body.data.length).toBe(1)
+					expect(res.body.data[0]._id).toBe(preparedOrderId)
+				})
 		})
 	})
 })

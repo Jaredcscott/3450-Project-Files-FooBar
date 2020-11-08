@@ -19,6 +19,7 @@ const ITEM_VALIDATOR = validate.isObjectWith({
 	quantity: validate.isGreaterOrEqualTo(0),
 	price: validate.isGreaterOrEqualTo(0),
 	onMenu: validate.isBoolean,
+	targetCount: validate.isGreaterOrEqualTo(0),
 })
 
 const ITEM_UPDATE_VALIDATOR = validate.isObjectWith({
@@ -30,12 +31,30 @@ const ITEM_UPDATE_VALIDATOR = validate.isObjectWith({
 	quantity: validate.or(validate.isUndefined, validate.isGreaterOrEqualTo(0)),
 	price: validate.or(validate.isUndefined, validate.isGreaterOrEqualTo(0)),
 	onMenu: validate.or(validate.isUndefined, validate.isBoolean),
+	targetCount: validate.or(
+		validate.isUndefined,
+		validate.isGreaterOrEqualTo(0)
+	),
 })
 
 const ITEM_FIELDS_UPDATABLE_BY = {
 	[ROLES.CHEF]: ['quantity'],
-	[ROLES.MANAGER]: ['category', 'name', 'quantity', 'price', 'onMenu'],
-	[ROLES.ADMIN]: ['category', 'name', 'quantity', 'price', 'onMenu'],
+	[ROLES.MANAGER]: [
+		'category',
+		'name',
+		'quantity',
+		'price',
+		'onMenu',
+		'targetCount',
+	],
+	[ROLES.ADMIN]: [
+		'category',
+		'name',
+		'quantity',
+		'price',
+		'onMenu',
+		'targetCount',
+	],
 }
 
 router.get(
@@ -56,19 +75,21 @@ router.post(
 			quantity: number,
 			price: number,
 			onMenu: boolean,
+			targetCount: number,
 		}>,
 		res: express$Response
 	) => {
 		if (!ITEM_VALIDATOR(req.body)) {
 			return res.status(400).json({ reason: 'malformed request' }).end()
 		}
-		const { category, name, quantity, price, onMenu } = req.body
+		const { category, name, quantity, price, onMenu, targetCount } = req.body
 		const item = new Item({
 			category,
 			name,
 			quantity,
 			price,
 			onMenu,
+			targetCount,
 		})
 		await item.save()
 		res.status(200).json({ data: item })
@@ -104,6 +125,7 @@ router.post(
 				quantity?: ?number,
 				price?: ?number,
 				onMenu?: ?boolean,
+				targetCount?: ?number,
 			|},
 			{| id: string |}
 		>,
