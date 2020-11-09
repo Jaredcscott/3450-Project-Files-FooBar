@@ -31,6 +31,9 @@ class ProfileInfo extends Component {
 				<h4>Email Id: {email}</h4>
 				<h4>Account Balance: {balance}</h4>
 				<h5>Role: {role}</h5>
+				<Button color="primary" onClick={() => logout()}>
+						Logout
+				</Button>
 			</section>
 		)
 	}
@@ -139,6 +142,28 @@ function login(email: string, password: string, queryCache: any) {
 			console.error(err)
 		})
 }
+
+function logout() {
+	axios
+		.get('http://localhost:8100/auth/logout', {credentials: 'include',})
+		.then(() => {
+			console.log('successfully logged out')
+			console.log()
+			window.location.reload(false);
+			
+		})
+		.catch((err) => {
+			console.log('failed to logout')
+			console.error(err)
+		})
+}
+
+
+// 	return fetch('http://localhost:8100/auth/logout', {
+	// 	credentials: 'include',
+	// }).then(() => {
+	// 	window.queryCache.refetchQueries()
+	// })
 
 const Screen = styled.div`
 	width: 100%;
