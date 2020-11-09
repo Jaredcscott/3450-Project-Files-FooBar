@@ -165,7 +165,7 @@ export default function Order() {
 					</p>
 					<Button width='250px'
 						onClick={none}
-						color='primary'>Add Beverage To Order
+						color='primary'>Place Order
 					</Button>
 			</Body>			
 			</Background>
