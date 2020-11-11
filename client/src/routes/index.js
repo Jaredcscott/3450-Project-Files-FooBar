@@ -13,7 +13,6 @@ export default function Routing() {
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route path="/home" component={Home} />
-					<Route path="/order" component={Order} />
 				</Switch>
 			</Screen>
 		</BrowserRouter>
