@@ -4,7 +4,11 @@
 /server/node_modules
 /client/node_modules
 
+<<<<<<< HEAD
 # coverage
+=======
+#coverage
+>>>>>>> 740e726d42e9c1b3507d4ead0e34836637f82461
 /server/coverage
 /client/coverage
 

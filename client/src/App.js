@@ -5,6 +5,9 @@ import store from './redux-store'
 import ThemeProvider from './themes/provider'
 import Routing from './routes'
 import './App.css'
+import setUpAxios from './utils/setupAxios'
+
+setUpAxios()
 
 const queryCache = new QueryCache()
 
