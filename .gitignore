@@ -4,7 +4,11 @@
 /server/node_modules
 /client/node_modules
 
+<<<<<<< HEAD
 # coverage
+=======
+#coverage
+>>>>>>> account_page
 /server/coverage
 /client/coverage
 
