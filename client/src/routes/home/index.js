@@ -9,14 +9,8 @@ import Screen from '../../general/Screen'
 import Background from '../../general/Background'
 import man from '../../general/man.png'
 import scooby from '../../general/scooby.png'
+import config from '../../config'
 
-import config, { helloWorld } from '../../config'
-
-// function useState(value) {
-// 	let state = value
-// 	let setState = (newState) => state = value
-// 	return [state, setState]
-// }
 
 export default function Home() {
 	const [email, setEmail] = useState('')
@@ -28,7 +22,6 @@ export default function Home() {
 		<Screen>
 			<Background>
 				<Header text="Welcome to Dan's Bagel Shop"></Header>
-
 				<Form>
 					<div>
 						<div className="email">
@@ -54,13 +47,11 @@ export default function Home() {
 							/>
 						</div>
 					</div>
-
 					<div className="flex-container" style={{ 'padding-top': '5px' }}>
 						<div className="flex-child">
 							<Button
 								onClick={() => {
 									console.log({ email, password })
-
 									// Insert logic for sign up
 								}}
 								color="primary"
