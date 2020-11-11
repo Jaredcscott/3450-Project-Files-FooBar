@@ -29,7 +29,7 @@ const NavElement = styled.div`
 	color: ${({ theme }) => theme.color.on.base};
 	padding: 8px;
 	margin-right: ${({ theme }) => theme.spacing.veryLarge};
-	color: #FFFFF0;
+	color: #fffff0;
 
 	&:hover {
 		background-color: ${({ theme }) => theme.color.base.normal};

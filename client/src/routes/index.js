@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Home from './home'
 import Order from './order'
 import styled from 'styled-components'
-import ServerExample from './serverExample'
 import Account from './account'
 
 export default function Routing() {
