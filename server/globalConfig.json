@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"mongoUri":"mongodb://127.0.0.1:52065/jest?","mongoDBName":"jest"}
-=======
 {"mongoUri":"mongodb://127.0.0.1:65031/jest?","mongoDBName":"jest"}
->>>>>>> account_page

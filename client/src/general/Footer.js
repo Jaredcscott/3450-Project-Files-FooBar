@@ -27,7 +27,7 @@ export default function Footer({ children } : Props ) {
 const Content = styled.div`
 	background-color: #BDB76B;
     width: 90%;
-    height: 22%;
+    height: 100%;
     margin: auto;
     display: flex;
     flex-direction: column;

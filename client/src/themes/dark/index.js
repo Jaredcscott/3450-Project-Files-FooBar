@@ -16,7 +16,7 @@ const DARK_THEME: Theme = {
 		},
 
 		base: {
-			lighter: '#000000',
+			lighter: '#00008B',
 			normal: '#191919',
 			darker: '#101010',
 		},
