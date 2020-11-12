@@ -1,16 +1,63 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
+import { useQuery, useQueryCache } from 'react-query'
+import axios from 'axios'
+
+function getSignedInUser() {
+	return axios
+		.get('http://localhost:8100/user')
+		.then((res) => {
+			return res.data.data
+		})
+		.catch(() => null)
+}
+
+const ONE_SECOND = 1000 // ms
 
 export default function Navigation() {
 	const history = useHistory()
-	return (
-		<Navbar>
-			<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-			<NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
-			<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
-		</Navbar>
-	)
+	const loggedin = useQuery('user', getSignedInUser, {
+		cacheTime: ONE_SECOND,
+		refetchOnWindowFocus: false,
+	})
+
+	if (loggedin.data) {
+		if (loggedin.data.roles.includes("MANAGER")){
+			return (
+				<Navbar>
+					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
+					<NavElement onClick={() => history.replace('/test')}>Test</NavElement>
+					<NavElement onClick={() => history.replace('/serverExample')}>
+						Example Server Communication
+					</NavElement>
+					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
+					<NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement>
+				</Navbar>
+			)
+		}
+		else {
+			return (
+				<Navbar>
+					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
+					<NavElement onClick={() => history.replace('/test')}>Test</NavElement>
+					<NavElement onClick={() => history.replace('/serverExample')}>
+						Example Server Communication
+					</NavElement>
+					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
+				</Navbar>
+			)
+		}
+	} else {
+		return (
+			<Navbar>
+				<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
+			  <NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
+				<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
+			</Navbar>
+		)
+	}
+
 }
 
 const Navbar = styled.nav`
