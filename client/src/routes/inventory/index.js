@@ -106,7 +106,7 @@ export default function Inventory() {
 					}>
 					Add Item
 				</Button>
-				<Button color="primary" onClick={() => addDefault(loggedin, queryCache)}>
+				<Button color="primary" onClick={() => populateDatabase(loggedin, queryCache)}>
 					Populate Database
 				</Button>
 			</div>
@@ -151,7 +151,7 @@ function addItem(
 		})
 }
 
-function addDefault(loggedin: res.data.data, queryCache: any) {
+function populateDatabase(queryCache: any) {
 	var i
 	for (i = 0; i < default_inventory.length; i++) {
 		var name = default_inventory[i].name
@@ -181,33 +181,31 @@ function addDefault(loggedin: res.data.data, queryCache: any) {
 }
 
 // getItem needs refactored
-function getItem(loggedin: res.data.data, queryCache: any) {
-	var i
-	for (i = 0; i < default_inventory.length; i++) {
-		var name = default_inventory[i].name
-		var category = default_inventory[i].category
-		var quantity = default_inventory[i].quantity
-		var price = default_inventory[i].price
-		var onMenu = false
-		var targetCount = default_inventory[i].targetCount
-
-		axios
-			.post(`http://localhost:8100/inventory/${loggedin.data._id}`, {
-				category,
-				name,
-				quantity,
-				price,
-				onMenu,
-				targetCount,
-			})
-			.then(() => {
-				console.log('successful added item')
-			})
-			.catch((err) => {
-				console.log('failed to add item')
-				console.error(err)
-			})
-	}
+function updateItem(
+	itemId: string,
+	name: string,
+	category: string,
+	quantity: string | number,
+	price: string | number,
+	onMenu: boolean,
+	targetCount: string | number
+) {
+	axios
+		.post(`http://localhost:8100/inventory/${itemId}`, {
+			category,
+			name,
+			quantity: Number(quantity),
+			price: Number(price),
+			onMenu: Boolean(onMenu),
+			targetCount: Number(targetCount),
+		})
+		.then(() => {
+			console.log('successful updated item')
+		})
+		.catch((err) => {
+			console.log('failed to update item')
+			console.error(err)
+		})
 }
 
 const Screen = styled.div`
