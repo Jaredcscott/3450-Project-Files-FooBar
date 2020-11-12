@@ -8,22 +8,10 @@ import { getTheme, setTheme } from '../../redux-store/theme'
 import axios from 'axios'
 // import {default_inventory} from './inventory_data'
 
-function getSignedInUser() {
-	return axios
-		.get('http://localhost:8100/user')
-		.then((res) => {
-			return res.data.data
-		})
-		.catch(() => null)
-}
 
-const ONE_SECOND = 1000 // ms
+
 
 export default function Inventory() {
-	const loggedin = useQuery('user', getSignedInUser, {
-		cacheTime: ONE_SECOND,
-		refetchOnWindowFocus: false,
-	})
 
 	const [name, setName] = useState('')
 	const [qty, setQty] = useState('')
@@ -106,7 +94,7 @@ export default function Inventory() {
 					}>
 					Add Item
 				</Button>
-				<Button color="primary" onClick={() => populateDatabase(loggedin, queryCache)}>
+				<Button color="primary" onClick={() => populateDatabase(queryCache)}>
 					Populate Database
 				</Button>
 			</div>
@@ -180,7 +168,6 @@ function populateDatabase(queryCache: any) {
 	}
 }
 
-// getItem needs refactored
 function updateItem(
 	itemId: string,
 	name: string,
@@ -219,12 +206,31 @@ const Screen = styled.div`
 
 var default_inventory = [
 	{ name: 'Plain', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{
-		name: 'Strawberry',
-		category: 'SMEAR',
-		quantity: 100,
-		price: 10,
-		onMenu: true,
-		targetCount: 50,
-	},
+    { name: "Onion", category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+    { name: "Cinnamon raisin", category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+    { name: "Sesame", category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+    { name: "Cheesy", category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+    { name: "Pumpernickel", category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+
+
+    { name: "Plain", category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
+    { name: "Honey_nut", category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
+    { name: "Strawberry", category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
+    { name: "French_onion", category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
+
+    { name: "Bacon", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
+    { name: "Egg", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+    { name: "Cheese", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
+    { name: "Sausage", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+    { name: "Avocado", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 1000, onMenu: true, targetCount: 50 },
+    { name: "Turkey", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+    { name: "Ham", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+    { name: "Spinach", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
+    { name: "Tomato", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
+    { name: "Lox", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 1000, onMenu: true, targetCount: 50 },
+
+    { name: "Coffee", category: 'BEVERAGE', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+    { name: "Milk", category: 'BEVERAGE', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+    { name: "OJ", category: 'BEVERAGE', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+    { name: "Water", category: 'BEVERAGE', quantity: 100, price: 500, onMenu: true, targetCount: 50 },
 ]
