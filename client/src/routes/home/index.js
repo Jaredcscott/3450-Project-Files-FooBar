@@ -12,7 +12,24 @@ import scooby from '../../general/scooby.png'
 import config from '../../config'
 
 
+function getSignedInUser() {
+	return axios
+		.get('http://localhost:8100/user')
+		.then((res) => {
+			return res.data.data
+		})
+		.catch(() => null)
+}
+
+const ONE_SECOND = 1000 // ms
+
 export default function Home() {
+	const loggedin = useQuery('user', getSignedInUser, {
+		cacheTime: ONE_SECOND,
+		refetchOnWindowFocus: false,
+	})
+	const queryCache = useQueryCache()
+	
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [verify, setVerifyPassword] = useState({})
@@ -52,18 +69,24 @@ export default function Home() {
 							<Button
 								onClick={() => {
 									console.log({ email, password })
+<<<<<<< HEAD
 									// Insert logic for sign up
+=======
+									register(name, email, password, password, queryCache)
+									
+>>>>>>> 21ab6ddefd66f5ce73e692a3ad7936274ba3f2a5
 								}}
 								color="primary"
 								width="">
 								Register
 							</Button>
+
 						</div>
 						<div className="flex-child">
 							<Button
 								onClick={() => {
 									console.log({ email, password })
-									// Insert logic for sign in
+									login(email, password, queryCache)
 								}}
 								color="primary"
 								width="">
@@ -97,4 +120,57 @@ export default function Home() {
 			</Background>
 		</Screen>
 	)
+}
+
+
+function login(email: string, password: string, queryCache: any) {
+	axios
+		.post(`${config.serverUrl}/auth/login`, {
+			email,
+			password,
+		})
+		.then((res) => {
+			console.log('successfully loged in')
+			console.log(res)
+			queryCache.invalidateQueries('user')
+		})
+		.catch((err) => {
+			console.log('failed to login')
+			console.error(err)
+		})
+}
+
+
+function logout() {
+	axios
+		.get(`${config.serverUrl}/auth/logout`, { credentials: 'include' })
+		.then(() => {
+			console.log('successfully logged out')
+			console.log()
+			window.location.reload(false)
+		})
+		.catch((err) => {
+			console.log('failed to logout')
+			console.error(err)
+		})
+}
+
+
+function register(
+	name: string,
+	email: string,
+	password: string,
+	verifyPassword: string,
+	queryCache: any
+) {
+	axios
+		.post(`${config.serverUrl}/auth/register`, { name, email, password, verifyPassword })
+		.then(() => {
+			console.log('successful register')
+			queryCache.invalidateQueries('user')
+		})
+		.catch((err) => {
+			console.log('failed to register')
+			console.error(err)
+		})
 }
