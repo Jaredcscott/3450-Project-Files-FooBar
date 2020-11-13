@@ -5,7 +5,6 @@ import { useQuery, useQueryCache } from 'react-query'
 import Button from '../../general/Button'
 import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
 import { getTheme, setTheme } from '../../redux-store/theme'
-import config from '../../config'
 import axios from 'axios'
 
 function getSignedInUser() {
@@ -33,7 +32,7 @@ class ProfileInfo extends Component {
 				<h4>Account Balance: {balance}</h4>
 				<h5>Role: {role}</h5>
 				<Button color="primary" onClick={() => logout()}>
-					Logout
+						Logout
 				</Button>
 			</section>
 		)
@@ -116,7 +115,7 @@ function register(
 	queryCache: any
 ) {
 	axios
-		.post(`${config.serverUrl}/auth/register`, { name, email, password, verifyPassword })
+		.post('http://localhost:8100/auth/register', { name, email, password, verifyPassword })
 		.then(() => {
 			console.log('successful register')
 			queryCache.invalidateQueries('user')
@@ -129,7 +128,7 @@ function register(
 
 function login(email: string, password: string, queryCache: any) {
 	axios
-		.post(`${config.serverUrl}/auth/login`, {
+		.post('http://localhost:8100/auth/login', {
 			email,
 			password,
 		})
@@ -146,11 +145,12 @@ function login(email: string, password: string, queryCache: any) {
 
 function logout() {
 	axios
-		.get(`${config.serverUrl}/auth/logout`, { credentials: 'include' })
+		.get('http://localhost:8100/auth/logout', {credentials: 'include',})
 		.then(() => {
 			console.log('successfully logged out')
 			console.log()
-			window.location.reload(false)
+			window.location.reload(false);
+			
 		})
 		.catch((err) => {
 			console.log('failed to logout')
@@ -158,11 +158,12 @@ function logout() {
 		})
 }
 
+
 // 	return fetch('http://localhost:8100/auth/logout', {
-// 	credentials: 'include',
-// }).then(() => {
-// 	window.queryCache.refetchQueries()
-// })
+	// 	credentials: 'include',
+	// }).then(() => {
+	// 	window.queryCache.refetchQueries()
+	// })
 
 const Screen = styled.div`
 	width: 100%;

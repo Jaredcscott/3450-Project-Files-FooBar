@@ -27,11 +27,8 @@ export default function Navigation() {
 			return (
 				<Navbar>
 					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-					<NavElement onClick={() => history.replace('/test')}>Test</NavElement>
-					<NavElement onClick={() => history.replace('/serverExample')}>
-						Example Server Communication
-					</NavElement>
 					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
+					<NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
 					<NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement>
 				</Navbar>
 			)
@@ -40,10 +37,7 @@ export default function Navigation() {
 			return (
 				<Navbar>
 					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-					<NavElement onClick={() => history.replace('/test')}>Test</NavElement>
-					<NavElement onClick={() => history.replace('/serverExample')}>
-						Example Server Communication
-					</NavElement>
+					<NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
 					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
 				</Navbar>
 			)
@@ -52,7 +46,6 @@ export default function Navigation() {
 		return (
 			<Navbar>
 				<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-			  <NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
 				<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
 			</Navbar>
 		)
