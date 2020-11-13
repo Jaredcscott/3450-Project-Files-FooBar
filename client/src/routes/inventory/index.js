@@ -6,12 +6,30 @@ import Button from '../../general/Button'
 import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
 import { getTheme, setTheme } from '../../redux-store/theme'
 import axios from 'axios'
-// import {default_inventory} from './inventory_data'
 
+
+const ONE_SECOND = 1 // ms
+
+function getInventory() {
+  return axios
+	  .get('http://localhost:8100/inventory')
+	  .then((res) => {
+		  return res.data.data
+		  console.log('successful gotten inventory')
+	  })
+	  .catch(() => null)
+}
 
 
 
 export default function Inventory() {
+
+	const inventory = useQuery('inventory', getInventory, {
+		cacheTime: ONE_SECOND,
+		refetchOnWindowFocus: false,
+	})
+
+
 
 	const [name, setName] = useState('')
 	const [qty, setQty] = useState('')
@@ -21,8 +39,90 @@ export default function Inventory() {
 	const [isOnMenu, setIsOnMenu] = useState(false)
 
 	const queryCache = useQueryCache()
-
-	return (
+	const PRODUCTS = inventory.data
+	console.log(inventory)
+	if (!PRODUCTS){
+		return (
+			<Screen>
+				<div>
+					<label>
+						Name:{' '}
+						<input
+							type="text"
+							value={name}
+							onChange={(event) => setName(event.target.value)}
+						/>
+					</label>{' '}
+					<br></br>
+					<label>
+						Category:{' '}
+						<select value={category} onChange={(event) => setCategory(event.target.value)}>
+							{INVENTORY_ITEM_CATEGORIES.map((category) => {
+								return (
+									<option key={category} value={category}>
+										{category}
+									</option>
+								)
+							})}
+						</select>
+					</label>
+					<label>
+						{' '}
+						<br></br>
+						isOnMenu:{' '}
+						<input
+							type="checkbox"
+							checked={isOnMenu}
+							onChange={(event) => setIsOnMenu(event.target.checked)}
+						/>
+					</label>
+					<label>
+						{' '}
+						<br></br>
+						Quantity:{' '}
+						<input
+							type="number"
+							value={qty}
+							onChange={(event) => setQty(event.target.value)}
+						/>
+					</label>
+					<label>
+						{' '}
+						<br></br>
+						Price:{' '}
+						<input
+							type="number"
+							value={price}
+							onChange={(event) => setPrice(event.target.value)}
+						/>
+					</label>
+					<label>
+						{' '}
+						<br></br>
+						Target Count:{' '}
+						<input
+							type="number"
+							value={targetCount}
+							onChange={(event) => setTargetCount(event.target.value)}
+						/>
+					</label>{' '}
+					<br></br>
+					<Button
+						color="primary"
+						onClick={() =>
+							addItem(name, category, qty, price, targetCount, isOnMenu, queryCache)
+						}>
+						Add Item
+					</Button>
+					<Button color="primary" onClick={() => populateDatabase(queryCache)}>
+						Populate Database
+					</Button>
+				</div> <br></br>
+	
+			</Screen>
+		)
+	}
+	else return (
 		<Screen>
 			<div>
 				<label>
@@ -97,7 +197,11 @@ export default function Inventory() {
 				<Button color="primary" onClick={() => populateDatabase(queryCache)}>
 					Populate Database
 				</Button>
-			</div>
+			</div> <br></br>
+
+			
+			<FilterableProductTable products={PRODUCTS} />
+
 		</Screen>
 	)
 }
@@ -234,3 +338,108 @@ var default_inventory = [
     { name: "OJ", category: 'BEVERAGE', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
     { name: "Water", category: 'BEVERAGE', quantity: 100, price: 500, onMenu: true, targetCount: 50 },
 ]
+
+
+//  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
+class ProductCategoryRow extends React.Component {
+	render() {
+	  const category = this.props.category;
+	  return (
+		<tr>
+		  <th colSpan="2">
+			{category}
+		  </th>
+		</tr>
+	  );
+	}
+  }
+
+
+  class ProductRow extends React.Component {
+	render() {
+	  const product = this.props.product;
+	  const name = product.stocked ?
+		product.name :
+		<span style={{color: 'red'}}>
+		  {product.name}
+		</span>;
+  
+	  return (
+		<tr>
+		  <td>{name}</td>
+		  <td>{product.price}</td>
+		  <td>{product.onMenu}</td>
+		  <td>{product.quantity}</td>
+		  <td>{product.targetCount}</td>
+		</tr>
+	  );
+	}
+  }
+
+
+  class ProductTable extends React.Component {
+	render() {
+	  const rows = [];
+	  let lastCategory = null;
+	  
+	  this.props.products.forEach((product) => {
+		if (product.category !== lastCategory) {
+		  rows.push(
+			<ProductCategoryRow
+			  category={product.category}
+			  key={product.category} />
+		  );
+		}
+		rows.push(
+		  <ProductRow
+			product={product}
+			key={product.name} />
+		);
+		lastCategory = product.category;
+	  });
+  
+	  return (
+		<table>
+		  <thead>
+			<tr>
+			  <th>Name</th>
+			  <th>Price</th>
+			  <th>On Menu</th>
+			  <th>Quantity</th>
+			  <th>Target Count</th>
+			</tr>
+		  </thead>
+		  <tbody>{rows}</tbody>
+		</table>
+	  );
+	}
+  }
+  
+
+  class SearchBar extends React.Component {
+	render() {
+	  return (
+		<form>
+		  <input type="text" placeholder="Search..." />
+		  <p>
+			<input type="checkbox" />
+			{' '}
+			Only show products in stock
+		  </p>
+		</form>
+	  );
+	}
+  }
+
+  class FilterableProductTable extends React.Component {
+	render() {
+	  return (
+		<div>
+		  <SearchBar />
+		  <ProductTable products={this.props.products} />
+		</div>
+	  );
+	}
+  }
+
+
