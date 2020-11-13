@@ -23,7 +23,7 @@ export default function Navigation() {
 	})
 
 	if (loggedin.data) {
-		if (loggedin.data.roles.includes("MANAGER")){
+		if (loggedin.data.roles.includes("MANAGER") ){
 			return (
 				<Navbar>
 					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>

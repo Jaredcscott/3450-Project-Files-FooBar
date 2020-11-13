@@ -10,7 +10,14 @@ import Background from '../../general/Background'
 import man from '../../general/man.png'
 import scooby from '../../general/scooby.png'
 import config from '../../config'
+import axios from 'axios'
+import { useQuery, useQueryCache } from 'react-query'
 
+// function useState(value) {
+// 	let state = value
+// 	let setState = (newState) => state = value
+// 	return [state, setState]
+// }
 
 function getSignedInUser() {
 	return axios
@@ -69,12 +76,8 @@ export default function Home() {
 							<Button
 								onClick={() => {
 									console.log({ email, password })
-<<<<<<< HEAD
-									// Insert logic for sign up
-=======
 									register(name, email, password, password, queryCache)
 									
->>>>>>> 21ab6ddefd66f5ce73e692a3ad7936274ba3f2a5
 								}}
 								color="primary"
 								width="">
