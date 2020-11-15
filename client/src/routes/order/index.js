@@ -210,9 +210,7 @@ export default function Order() {
 					</p>
 					<Button
 						width="250px"
-						onClick={() => {
-							console.log('place order code')
-						}}
+						onClick={() => addOrder(null, null, null)}
 						color="primary">
 						Place Order
 					</Button>
@@ -233,4 +231,21 @@ function getMenu() {
 			return res.data.data
 		})
 		.catch(() => null)
+}
+
+function addOrder(bagelList: list, beverageList: list, pickupAt: string, queryCache: any) {
+	console.log({})
+	axios
+		.post('http://localhost:8100/order', {
+			bagels: bagelList,
+			beverages: beverageList,
+			pickupAt: pickupAt,
+		})
+		.then(() => {
+			console.log('successful Order')
+		})
+		.catch((err) => {
+			console.log('failed to Order')
+			console.error(err)
+		})
 }
