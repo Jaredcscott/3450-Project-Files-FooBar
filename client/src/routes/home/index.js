@@ -50,21 +50,21 @@ export default function Home() {
 				<Background>
 					<Header text="Welcome to Dan's Bagel Shop"></Header>
 					<Form>
-						<div className="flex-container" style={{ 'padding-top': '5px' , 'padding-left': '0px' , 'font-size': '25px'}}>
+						<div className="flex-container" style={{ 'padding-top': '5px' , 'margin-top':'50px', 'margin': 'auto' , 'font-size': '25px'}}>
 							<div className="flex-child">
-								<h2>Hello {loggedin.data.name}, we missed you! You are now logged in.</h2>
+								<h2 style={{'text-shadow': '3px 3px 5px blue'}}>Hello {loggedin.data.name}, we missed you! You are now logged in.</h2>
 								<div className="flex-container">
-									<div style={{ 'padding-left':'90px'}}>
+									<div style={{ 'padding-left':'25%'}}>
 									<Button color="primary" onClick={() => logout()}>
 										Logout
 									</Button>
 									</div>
-									<div  style={{ 'padding-left':'5px'}}>
+									<div  style={{ 'padding-left':'25px'}}>
 									<Button color="primary" onClick={() => history.replace('/order')}>
 										Place An Order
 									</Button>
 									</div>
-									<div   style={{ 'padding-left':'5px'}}>
+									<div   style={{ 'padding-left':'25px'}}>
 									<Button color="primary" onClick={() => history.replace('/account')}>
 										Account Information
 									</Button>
@@ -73,10 +73,18 @@ export default function Home() {
 							</div>
 						</div>
 					</Form>
-					<Footer>
+					<Body text="">
 						<div className="Testimonials">
-							<div className="flex-container" style={{ 'padding-top': '5px' }}>
-								<Body text="'Dan's Bagel Shop has the best shmears!'-Jimmy Joe">
+							<div className="flex-container" style={{ 
+								'margin-bottom': '10px',
+								'padding':'5px', 
+								'margin-top':'100px', 
+								'border-style':'ridge', 
+								'border-color': 'blue', 
+								'border-width':'15px', 
+								'text-shadow': '3px 3px 5px blue'
+								}}>
+								<Body text="'Dan's Bagel Shop has the best shmears!'-Sheldon Jones">
 									<img
 										src={man}
 										className="photo"
@@ -89,11 +97,19 @@ export default function Home() {
 										src={scooby}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '25%px', 'display':'flex' }}
+										style={{ 'padding-left': '25px', 'display':'flex' }}
 									/>
 								</Body>
 							</div>
 						</div>
+					</Body>
+					<Footer>
+						<ul>
+							<li><a href="account">Take Me To My Account</a></li>
+							<li><a href="order">Place An Order</a></li>
+							<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
+							<li><a href="<Fill In">Contact Us</a></li>
+						</ul>
 					</Footer>
 				</Background>
 			</Screen>
@@ -105,7 +121,7 @@ export default function Home() {
 				<Background>
 					<Header text="Welcome to Dan's Bagel Shop"></Header>
 					<Form>
-						<div>
+						<div style={{'margin-top':'50px', }}>
 							<div className="email">
 								<input
 									type="text"
@@ -154,10 +170,18 @@ export default function Home() {
 							</div>
 						</div>
 					</Form>
-					<Footer>
+					<Body text="">
 						<div className="Testimonials">
-							<div className="flex-container" style={{ 'padding-top': '5px' }}>
-								<Body text="'Dan's Bagel Shop has the best shmears!'-Jimmy Joe">
+							<div className="flex-container" style={{ 
+								'margin-bottom': '10px',
+								'padding':'5px', 
+								'margin-top':'100px', 
+								'border-style':'ridge', 
+								'border-color': 'blue', 
+								'border-width':'15px', 
+								'text-shadow': '3px 3px 5px blue'
+								}}>
+								<Body text="'Dan's Bagel Shop has the best shmears!'-Sheldon Jones">
 									<img
 										src={man}
 										className="photo"
@@ -170,11 +194,17 @@ export default function Home() {
 										src={scooby}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '75px' }}
+										style={{ 'padding-left': '25px', 'display':'flex' }}
 									/>
 								</Body>
 							</div>
 						</div>
+					</Body>
+					<Footer>
+						<ul>
+							<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
+							<li><a href="<Fill In">Contact Us</a></li>
+						</ul>
 					</Footer>
 				</Background>
 			</Screen>

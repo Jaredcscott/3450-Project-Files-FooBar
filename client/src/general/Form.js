@@ -19,7 +19,7 @@ export default function Form({children }: Props) {
 }
 
 const FormBackground = styled.div`
-    background-color: #BDB76B;
+    background-color: #fccb00;
     height: 100%;
     width: 90%;
     display: flex;

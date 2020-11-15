@@ -16,10 +16,10 @@ export default function Body({text, children} : Props) {
 }
 
 const Paragraph = styled.div`
-    background-color: #BDB76B;
+    background-color: #fccb00;
     width: 90%;
     height: 68%;
-    font-size: 25px;
-    color: #FFFFFF;
+    font-size: 20px;
+    color: #FFFFF0;
     margin: auto;
 `

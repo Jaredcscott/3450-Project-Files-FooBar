@@ -22,12 +22,12 @@ const Content = styled.div`
 	}
 
 	.Testimonials {
-		background-color: #BDB76B;
+		background-color: #fccb00;
 		height: 100%;
 		width: 90%;
 		display: flex;
 		flex-direction: column;
-		align-items: left;
+		align-items: center;
 		justify-content: top;
 		color: #FFFFF0;
 		margin: auto;
