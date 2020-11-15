@@ -264,6 +264,7 @@ function populateDatabase(queryCache: any) {
 			})
 			.then(() => {
 				console.log('successful added item')
+				window.location.reload(false);
 			})
 			.catch((err) => {
 				console.log('failed to add item')
