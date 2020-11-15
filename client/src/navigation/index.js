@@ -29,7 +29,7 @@ export default function Navigation() {
 					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
 					<NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
 					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
-					<NavElement onClick={() => history.replace('/orders')}>History</NavElement>
+					<NavElement onClick={() => history.replace('/orders')}>Order History</NavElement>
 					<NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement>
 					<NavElement onClick={() => history.replace('/users')}>Users</NavElement>
 				</Navbar>
@@ -41,7 +41,7 @@ export default function Navigation() {
 					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
 					<NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
 					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
-					<NavElement onClick={() => history.replace('/orders')}>History</NavElement>
+					<NavElement onClick={() => history.replace('/orders')}>Order History</NavElement>
 				</Navbar>
 			)
 		}
