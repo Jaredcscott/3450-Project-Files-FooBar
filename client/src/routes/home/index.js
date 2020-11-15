@@ -52,9 +52,9 @@ export default function Home() {
 					<Form>
 						<div className="flex-container" style={{ 'padding-top': '5px' , 'padding-left': '0px' , 'font-size': '25px'}}>
 							<div className="flex-child">
-								<h2>Welcome {loggedin.data.name} to Dan's Bagel Shop</h2>
+								<h2>Hello {loggedin.data.name}, we missed you! You are now logged in.</h2>
 								<div className="flex-container">
-									<div style={{ 'padding-left':'80px'}}>
+									<div style={{ 'padding-left':'90px'}}>
 									<Button color="primary" onClick={() => logout()}>
 										Logout
 									</Button>
@@ -89,7 +89,7 @@ export default function Home() {
 										src={scooby}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '75px' }}
+										style={{ 'padding-left': '25%px', 'display':'flex' }}
 									/>
 								</Body>
 							</div>

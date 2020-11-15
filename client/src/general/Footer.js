@@ -6,10 +6,9 @@ type Props = {
 }
 
 var phantom = {
-  display: 'block',
-  padding: '20px',
-  height: '60px',
-  width: '100%',
+    display: 'flex',
+    padding: '20px',
+    height: '60px',
 }
 
 export default function Footer({ children } : Props ) {

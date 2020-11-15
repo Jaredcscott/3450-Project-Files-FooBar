@@ -35,5 +35,4 @@ const Paragraph = styled.div`
     font-size: calc(35px + 2vmin);
     color: #FFFFF0;
     margin-top: 0px;
-
 `

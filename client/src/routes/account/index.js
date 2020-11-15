@@ -7,6 +7,8 @@ import Background from '../../general/Background'
 import Header from '../../general/Header'
 import Screen from '../../general/Screen'
 import Form from '../../general/Form'
+import Footer from '../../general/Footer'
+import Body from '../../general/Body'
 import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
 import { getTheme, setTheme } from '../../redux-store/theme'
 import axios from 'axios'
@@ -70,6 +72,10 @@ export default function Account() {
 							role={loggedin.data.roles}
 						/>
 					</Form>
+					<Footer>
+						<Body text='Reward Status'>
+						</Body>
+					</Footer>
 				</Background>
 			</Screen>
 		)
