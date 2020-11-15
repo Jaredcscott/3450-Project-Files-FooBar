@@ -35,7 +35,7 @@ export default function Order() {
 			<Background>
 				<Header text="Hungry? Lets Get You A Bagel."></Header>
 				<Form>	
-					<div style={{'margin':'auto'}}>
+					<div style={{'margin':'auto', 'margin-top':'25px', 'margin-bottom':'25px'}}>
 				
 					<Body text="">
 						<Button

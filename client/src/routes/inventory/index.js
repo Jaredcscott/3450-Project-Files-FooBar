@@ -533,11 +533,11 @@ class ProductTable extends React.Component {
 			<table>
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Price</th>
-						<th>On Menu</th>
-						<th>Quantity</th>
-						<th>Target Count</th>
+						<th>Name  |</th>
+						<th> Price  |</th>
+						<th> On Menu  |</th>
+						<th> Quantity  |</th>
+						<th> Target Count</th>
 					</tr>
 				</thead>
 				<tbody>{rows}</tbody>

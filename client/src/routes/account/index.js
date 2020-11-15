@@ -63,34 +63,36 @@ export default function Account() {
 				<Background>
 					<Header text="Account Information"></Header>							
 					<Form>
-						<ProfileInfo
-							name={loggedin.data.name}
-							email={loggedin.data.email}
-							balance={loggedin.data.balance}
-							role={loggedin.data.roles}
-						/>
-						<div className="flex-container">
-							<Button color="primary" onClick={
-								() => {
-									history.replace('/home')
-									logout()
-								}
-							}>
-									Logout
-							</Button>
-							<div  style={{ 'padding-left':'25px'}}>
-									<Button color="primary" onClick={() => history.replace('/order')}>
-										Place An Order
-									</Button>
-									</div>
-							<div style={{'padding-left': '25px'}}>
+						<div style={{'margin-bottom':'25px'}}>
+							<ProfileInfo
+								name={loggedin.data.name}
+								email={loggedin.data.email}
+								balance={loggedin.data.balance}
+								role={loggedin.data.roles}
+							/>
+							<div className="flex-container">
 								<Button color="primary" onClick={
 									() => {
-										history.replace('/orders')
+										history.replace('/home')
+										logout()
 									}
 								}>
-										Order History
+										Logout
 								</Button>
+								<div  style={{ 'padding-left':'25px'}}>
+										<Button color="primary" onClick={() => history.replace('/order')}>
+											Place An Order
+										</Button>
+										</div>
+								<div style={{'padding-left': '25px'}}>
+									<Button color="primary" onClick={
+										() => {
+											history.replace('/orders')
+										}
+									}>
+											Order History
+									</Button>
+								</div>
 							</div>
 						</div>
 					</Form>
@@ -112,7 +114,7 @@ export default function Account() {
 				<Background>
 					<Header text="Account Information"></Header>
 					<Form>
-						<h1>Not Signed in</h1>
+						<h3>Join The Dan's Family</h3>
 						<div>
 							<label>
 								Name:{' '}
@@ -121,7 +123,7 @@ export default function Account() {
 									value={name}
 									onChange={(event) => setName(event.target.value)}
 								/>
-							</label>
+							</label><br></br>
 							<label>
 								Email:{' '}
 								<input
@@ -129,7 +131,7 @@ export default function Account() {
 									value={email}
 									onChange={(event) => setEmail(event.target.value)}
 								/>
-							</label>
+							</label><br></br>
 							<label>
 								Password:{' '}
 								<input
@@ -137,14 +139,14 @@ export default function Account() {
 									value={password}
 									onChange={(event) => setPassword(event.target.value)}
 								/>
-							</label>
+							</label><br></br>
 							<Button
 								color="primary"
-								onClick={() => register(name, email, password, password, queryCache)}>
+								onClick={() => {
+									register(name, email, password, password, queryCache)
+									history.replace('/home')
+									}}>
 								Register
-							</Button>
-							<Button color="primary" onClick={() => login(email, password, queryCache)}>
-								Login
 							</Button>
 						</div>
 					</Form>
@@ -157,7 +159,7 @@ export default function Account() {
 						</ul>
 					</Footer>
 				</Background>
-			</Screen>
+			</Screen>		
 		)
 	}
 }

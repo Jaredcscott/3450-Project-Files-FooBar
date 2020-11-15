@@ -148,10 +148,7 @@ export default function Home() {
 						<div className="flex-container" style={{ 'padding-top': '5px' }}>
 							<div className="flex-child">
 								<Button
-									onClick={() => {
-										register(name, email, password, password, queryCache)
-										
-									}}
+									onClick={() => history.replace('/account')}
 									color="primary"
 									width="">
 									Register
