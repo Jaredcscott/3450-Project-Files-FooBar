@@ -6,187 +6,231 @@ import Screen from '../../general/Screen'
 import Button from '../../general/Button'
 import Header from '../../general/Header'
 import Body from '../../general/Body'
+import produce from 'immer'
 // import { useSelector, useDispatch } from 'react-redux'
 // import { getTheme } from '../../redux-store/theme'
 // import reactRouterDom from 'react-router-dom'
 
 import axios from 'axios'
 
-
 export default function Order() {
+	const info = useQuery('menu', getMenu)
 
+	const [orderBagels, setOrderBagels] = useState([])
+	const [orderBeverages, setOrderBeverages] = useState([])
 
-	function none() {
-
-	}
-    //const info = useQuery('menu', getMenu)
-
-    //function getMenu() {
-	//return fetch('http://localhost:8100/menu',{  
-	//    //Add needed fields	
-	//	  credentials: 'include' //needed to use authentication info. 
-    //}{
-    //    //Fill in with query info
-    //})
-	//	.then((res) => res.json())
-    //}
-
-	//Instead of appending child, useState('Bagels')
-	//One Fetch and then unpack into the seperate categories
-	//Create a bagel component which can be edited live while creating an order
-
-	function getMenu(){
-		axios
-		.get('http://localhost:8100/menu')
-		.then((res) => {
-			console.log(res.data.data)
-			console.log('successful gotten inventory')
-			return res.data.data
-		})
-		.catch(() => null)
+	if (!info.data) {
+		return <div>Loading</div>
 	}
 
-
-	function getBagels() {
-		if (getMenu()){
-			var bagels = getMenu()
-			return bagels.BAGEL
-		}else{
-			return null
-		}
-	}
-
-	
-	function getSmears() {
-		return {plain : 1, honey_nut: 1, strawberry: 1, french_onion: 1}
-	}
-	function getSammicheStuff () {
-		return {bacon: 1, egg: 2, cheese: 1, sausage: 2, avacado: 10, turkey: 2, ham: 2, spinach: 1, tomato: 1, lox: 10}
-	}
-	function getBeverages (){
-		return {coffee: 2, milk: 2, oj: 2, water: 5}
-	}
-
-	const bagels = getBagels();
-	const smears = getSmears();
-	const sammicheStuff = getSammicheStuff(); 
-	const beverages = getBeverages();
-
-	function addSmear() {
-		let smearMenu = document.createElement("form");
-		smearMenu.setAttribute("id", "smear");
-		smearMenu.setAttribute("style","text-align: left")
-		for (var x in smears){
-			smearMenu.innerHTML = smearMenu.innerHTML  + "<input type=\"checkbox\" id=\"" + x + "\" name=\"" + x + "\" value=\"" + x + "\"><label for=\"" + x + "\">" + x +"($" + smears[x] + ")</label>"
-		}
-		if(this.parentNode.querySelector("form") == null){
-			this.parentNode.appendChild(smearMenu)
-		}else(this.parentNode.insertBefore(smearMenu, this.parentNode.querySelector("form")))
-		
-		this.onclick = removeSmear;
-		this.textContent = "remove smear from this bagel"
-
-	}
-	function removeSmear() {
-		this.parentNode.removeChild(this.parentNode.querySelector("#smear"));
-		this.onclick = addSmear;
-		this.textContent = "add a smear to this bagel"
-	}
-
-	function addStuff() {
-		this.textContent = "cancel the sammiche";
-		let stuffMenu = document.createElement("form");
-		stuffMenu.setAttribute("id", "stuff");
-		stuffMenu.setAttribute("style", "text-align: left")
-		stuffMenu.innerHTML = "<br>"
-		for (var x in sammicheStuff){
-			stuffMenu.innerHTML = stuffMenu.innerHTML + "<label for=\"" + x + "\" style=\"display: inline-block;width: 115px\"> " + x + "($" + sammicheStuff[x] + ")</label><input type=\"numeric\" id=\"" + x + "\" name=\"" +x + "\" value=\"" + 0 + "\" style= \"display: inline-block; width: 8px\"><br>"
-		}
-		this.parentNode.appendChild(stuffMenu);
-		this.onclick = removeStuff;
-	}
-	function removeStuff() {
-		this.parentNode.removeChild(this.parentNode.querySelector("#stuff"));
-		this.textContent = "make this a sammiche";
-		this.onclick = addStuff;
-	}
-	
-
-	function addBagle(){
-		let list = document.getElementById("bagelOrder");
-		let bagelMenu = document.createElement("select");
-		for (var x in bagels){
-			bagelMenu.innerHTML = bagelMenu.innerHTML + "<option value=\"" + x + "\">" + x + "($" + bagels[x] + ") </option>"
-		}
-		let temp = document.createElement("li");
-		temp.setAttribute("style", "display: inline-block;")
-		temp.appendChild(bagelMenu);
-		let smearButton = document.createElement("button");
-		smearButton.textContent = "add a smear to this bagel"
-		smearButton.onclick = addSmear;
-		temp.appendChild(smearButton);
-		let sammicheButton = document.createElement("button");
-		sammicheButton.textContent = "make this a sammiche";
-		sammicheButton.onclick = addStuff;
-		temp.appendChild(sammicheButton)
-		let remove = document.createElement("button")
-		remove.textContent = "remove this bagel";
-		remove.onclick = () => {
-			remove.parentNode.parentNode.removeChild(remove.parentNode.nextSibling);
-			remove.parentNode.parentNode.removeChild(remove.parentNode);
-		}
-		temp.appendChild(remove);
-		list.appendChild(temp);
-		list.appendChild(document.createElement("br"));
-	};
-	function addBeverage() {
-		let list = document.getElementById("beverageOrder");
-		let beverageMenu = document.createElement("select");
-		for (var x in beverages){
-			beverageMenu.innerHTML = beverageMenu.innerHTML + "<option value=\"" + x + "\">" + x + "($" + beverages[x] + ") </option>"
-		}
-		let temp = document.createElement("li");
-		temp.setAttribute("style", "display: inline-block;")
-		temp.appendChild(beverageMenu);
-		let remove = document.createElement("button")
-		remove.textContent = "remove this beverage";
-		remove.onclick = () => {
-			remove.parentNode.parentNode.removeChild(remove.parentNode.nextSibling);
-			remove.parentNode.parentNode.removeChild(remove.parentNode)
-		}
-		temp.appendChild(remove)
-		list.appendChild(temp);
-		list.appendChild(document.createElement("br"));
-	};
+	const bagels = info.data.BAGEL
+	const smears = info.data.SMEAR
+	const toppings = info.data.SAMMICHE_TOPPINGS
+	const beverages = info.data.BEVERAGE
 
 	return (
 		<Screen>
 			<Background>
-				<Header text="Hungry? Lets Get You A Bagel.">
-				</Header>
+				<Header text="Hungry? Lets Get You A Bagel."></Header>
 				<Body>
-					<Button width=''
-						onClick={addBagle}
-						color='primary'>Add Bagel To Order
+					<Button
+						width=""
+						onClick={() =>
+							setOrderBagels([
+								...orderBagels,
+								{ bagel: null, toppings: [], smears: [] },
+							])
+						}
+						color="primary">
+						Add Bagel To Order
 					</Button>
-					<Button width=''
-						onClick={addBeverage}
-						color='primary'>Add Beverage To Order
+					<Button
+						width=""
+						onClick={() => {
+							setOrderBeverages([...orderBeverages, null])
+						}}
+						color="primary">
+						Add Beverage To Order
 					</Button>
-					<ul id="bagelOrder" style={{textAlign: "center"}}></ul>
-					<ul id="beverageOrder"style={{textAlign: "center"}}></ul>
+					<h3>Bagels</h3>
+					<ul id="bagelOrder" style={{ textAlign: 'center' }}>
+						{orderBagels.map((bagelOrder, index) => (
+							<OrderRow key={index}>
+								<select
+									selected={bagelOrder.bagel}
+									onChange={(event) => {
+										setOrderBagels(
+											produce(orderBagels, (orderBagels) => {
+												orderBagels[index].bagel = event.target.value
+											})
+										)
+									}}>
+									{bagelOrder.bagel === null ? (
+										<option
+											key={'no_item_selected'}
+											value={null}
+											selected
+											disabled>
+											None
+										</option>
+									) : null}
+									{bagels.map((bagel) => {
+										return (
+											<option key={bagel._id} value={bagel._id}>
+												{bagel.name}
+											</option>
+										)
+									})}
+								</select>
+								{bagelOrder.smears.map((smear, smearIndex) => {
+									return (
+										<select
+											selected={smear}
+											key={smearIndex}
+											onChange={(event) => {
+												setOrderBagels(
+													produce(orderBagels, (orderBagels) => {
+														orderBagels[index].smears[smearIndex] =
+															event.target.value
+													})
+												)
+											}}>
+											{smear === null ? (
+												<option
+													key={'no_item_selected'}
+													value={null}
+													selected
+													disabled>
+													None
+												</option>
+											) : null}
+											{smears.map((smear) => {
+												return (
+													<option key={smear._id} value={smear._id}>
+														{smear.name}
+													</option>
+												)
+											})}
+										</select>
+									)
+								})}
+								{bagelOrder.toppings.map((topping, toppingIndex) => {
+									return (
+										<select
+											selected={topping}
+											key={toppingIndex}
+											onChange={(event) => {
+												setOrderBagels(
+													produce(orderBagels, (orderBagels) => {
+														orderBagels[index].toppings[toppingIndex] =
+															event.target.value
+													})
+												)
+											}}>
+											{topping === null ? (
+												<option
+													key={'no_item_selected'}
+													value={null}
+													selected
+													disabled>
+													None
+												</option>
+											) : null}
+											{toppings.map((topping) => {
+												return (
+													<option key={topping._id} value={topping._id}>
+														{topping.name}
+													</option>
+												)
+											})}
+										</select>
+									)
+								})}
+								<div
+									onClick={() => {
+										setOrderBagels(
+											produce(orderBagels, (orderBagels) => {
+												orderBagels[index].smears.push(null)
+											})
+										)
+									}}>
+									Add Smear
+								</div>
+								<div
+									onClick={() => {
+										setOrderBagels(
+											produce(orderBagels, (orderBagels) => {
+												orderBagels[index].toppings.push(null)
+											})
+										)
+									}}>
+									Add Topping
+								</div>
+							</OrderRow>
+						))}
+					</ul>
+					<h3>Beverages</h3>
+					<ul id="beverageOrder" style={{ textAlign: 'center' }}>
+						{orderBeverages.map((beverageOrder, index) => (
+							<OrderRow key={index}>
+								<select
+									selected={beverageOrder}
+									onChange={(event) => {
+										setOrderBeverages(
+											produce(orderBeverages, (orderBeverages) => {
+												orderBeverages[index] = event.target.value
+											})
+										)
+									}}>
+									{beverageOrder === null ? (
+										<option
+											key={'no_item_selected'}
+											value={null}
+											selected
+											disabled>
+											None
+										</option>
+									) : null}
+									{beverages.map((beverage) => {
+										return (
+											<option key={beverage._id} value={beverage._id}>
+												{beverage.name}
+											</option>
+										)
+									})}
+								</select>
+							</OrderRow>
+						))}
+					</ul>
 					<p>
-						I would like my order to be ready at  
+						I would like my order to be ready at
 						<input type="time" id="time"></input>
 						on
 						<input type="date" id="date"></input>
 					</p>
-					<Button width='250px'
-						onClick={none}
-						color='primary'>Place Order
+					<Button
+						width="250px"
+						onClick={() => {
+							console.log('place order code')
+						}}
+						color="primary">
+						Place Order
 					</Button>
-			</Body>			
+				</Body>
 			</Background>
 		</Screen>
 	)
+}
+
+const OrderRow = styled.div`
+	display: flex;
+`
+
+function getMenu() {
+	return axios
+		.get('http://localhost:8100/menu')
+		.then((res) => {
+			return res.data.data
+		})
+		.catch(() => null)
 }

@@ -16,17 +16,15 @@ import Background from '../../general/Background'
 const ONE_SECOND = 1 // ms
 
 function getInventory() {
-  return axios
-	  .get('http://localhost:8100/inventory')
-	  .then((res) => {
-		  return res.data.data
-		  console.log('successful gotten inventory')
-	  })
-	  .catch(() => null)
+	return axios
+		.get('http://localhost:8100/inventory')
+		.then((res) => {
+			return res.data.data
+		})
+		.catch(() => null)
 }
 
 export default function Inventory() {
-
 	const inventory = useQuery('inventory', getInventory, {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
@@ -42,7 +40,7 @@ export default function Inventory() {
 	const queryCache = useQueryCache()
 	const PRODUCTS = inventory.data
 	console.log(inventory)
-	if (!PRODUCTS){
+	if (!PRODUCTS) {
 		return (
 			<Screen>
 				<Background>
@@ -56,14 +54,13 @@ export default function Inventory() {
 									value={name}
 									onChange={(event) => setName(event.target.value)}
 								/>
-							</label>{' '}<br></br>
+							</label>{' '}
+							<br></br>
 							<label>
 								Category:{' '}
-								<select 
-									value={category} 
-									onChange={(event) => 
-										setCategory(event.target.value)
-									}>
+								<select
+									value={category}
+									onChange={(event) => setCategory(event.target.value)}>
 									{INVENTORY_ITEM_CATEGORIES.map((category) => {
 										return (
 											<option key={category} value={category}>
@@ -73,7 +70,9 @@ export default function Inventory() {
 									})}
 								</select>
 							</label>
-							<label>{' '}<br></br>
+							<label>
+								{' '}
+								<br></br>
 								isOnMenu:{' '}
 								<input
 									type="checkbox"
@@ -81,7 +80,9 @@ export default function Inventory() {
 									onChange={(event) => setIsOnMenu(event.target.checked)}
 								/>
 							</label>
-							<label>{' '}<br></br>
+							<label>
+								{' '}
+								<br></br>
 								Quantity:{' '}
 								<input
 									type="number"
@@ -89,7 +90,9 @@ export default function Inventory() {
 									onChange={(event) => setQty(event.target.value)}
 								/>
 							</label>
-							<label>{' '}<br></br>
+							<label>
+								{' '}
+								<br></br>
 								Price:{' '}
 								<input
 									type="number"
@@ -97,108 +100,137 @@ export default function Inventory() {
 									onChange={(event) => setPrice(event.target.value)}
 								/>
 							</label>
-							<label>{' '}<br></br>
+							<label>
+								{' '}
+								<br></br>
 								Target Count:{' '}
 								<input
 									type="number"
 									value={targetCount}
 									onChange={(event) => setTargetCount(event.target.value)}
 								/>
-							</label>{' '}<br></br>
+							</label>{' '}
+							<br></br>
 							<Button
 								color="primary"
 								onClick={() =>
-									addItem(name, category, qty, price, targetCount, isOnMenu, queryCache)
+									addItem(
+										name,
+										category,
+										qty,
+										price,
+										targetCount,
+										isOnMenu,
+										queryCache
+									)
 								}>
 								Add Item
 							</Button>
-							<Button 
-								color="primary" 
-								onClick={() => 
-									populateDatabase(queryCache)
-								}>
+							<Button color="primary" onClick={() => populateDatabase(queryCache)}>
 								Populate Database
 							</Button>
-						</div> <br></br>
+						</div>{' '}
+						<br></br>
 					</Form>
 				</Background>
 			</Screen>
 		)
-	}
-	else return (
-		<Screen>
-			<Background>
-				<Header text="Inventory"></Header>
-				<Form>
-					<div  style={{ 'width':"80%" }}>
-						<label>
-							Name:{' '}
-							<input
-								type="text"
-								value={name}
-								onChange={(event) => setName(event.target.value)}
-							/>
-						</label>{' '}<br></br>
-						<label>
-							Category:{' '}
-							<select value={category} onChange={(event) => setCategory(event.target.value)}>
-								{INVENTORY_ITEM_CATEGORIES.map((category) => {
-									return (
-										<option key={category} value={category}>
-											{category}
-										</option>
+	} else
+		return (
+			<Screen>
+				<Background>
+					<Header text="Inventory"></Header>
+					<Form>
+						<div style={{ width: '80%' }}>
+							<label>
+								Name:{' '}
+								<input
+									type="text"
+									value={name}
+									onChange={(event) => setName(event.target.value)}
+								/>
+							</label>{' '}
+							<br></br>
+							<label>
+								Category:{' '}
+								<select
+									value={category}
+									onChange={(event) => setCategory(event.target.value)}>
+									{INVENTORY_ITEM_CATEGORIES.map((category) => {
+										return (
+											<option key={category} value={category}>
+												{category}
+											</option>
+										)
+									})}
+								</select>
+							</label>
+							<label>
+								{' '}
+								<br></br>
+								isOnMenu:{' '}
+								<input
+									type="checkbox"
+									checked={isOnMenu}
+									onChange={(event) => setIsOnMenu(event.target.checked)}
+								/>
+							</label>
+							<label>
+								{' '}
+								<br></br>
+								Quantity:{' '}
+								<input
+									type="number"
+									value={qty}
+									onChange={(event) => setQty(event.target.value)}
+								/>
+							</label>
+							<label>
+								{' '}
+								<br></br>
+								Price:{' '}
+								<input
+									type="number"
+									value={price}
+									onChange={(event) => setPrice(event.target.value)}
+								/>
+							</label>
+							<label>
+								{' '}
+								<br></br>
+								Target Count:{' '}
+								<input
+									type="number"
+									value={targetCount}
+									onChange={(event) => setTargetCount(event.target.value)}
+								/>
+							</label>{' '}
+							<br></br>
+							<Button
+								color="primary"
+								onClick={() =>
+									addItem(
+										name,
+										category,
+										qty,
+										price,
+										targetCount,
+										isOnMenu,
+										queryCache
 									)
-								})}
-							</select>
-						</label>
-						<label>{' '}<br></br>
-							isOnMenu:{' '}
-							<input
-								type="checkbox"
-								checked={isOnMenu}
-								onChange={(event) => setIsOnMenu(event.target.checked)}
-							/>
-						</label>
-						<label>{' '}<br></br>
-							Quantity:{' '}
-							<input
-								type="number"
-								value={qty}
-								onChange={(event) => setQty(event.target.value)}
-							/>
-						</label>
-						<label>{' '}<br></br>
-							Price:{' '}
-							<input
-								type="number"
-								value={price}
-								onChange={(event) => setPrice(event.target.value)}
-							/>
-						</label>
-						<label>{' '}<br></br>
-							Target Count:{' '}
-							<input
-								type="number"
-								value={targetCount}
-								onChange={(event) => setTargetCount(event.target.value)}
-							/>
-						</label>{' '}<br></br>
-						<Button
-							color="primary"
-							onClick={() =>
-								addItem(name, category, qty, price, targetCount, isOnMenu, queryCache)
-							}>
-							Add Item
-						</Button>
-						<Button color="primary" onClick={() => populateDatabase(queryCache)}>
-							Populate Database
-						</Button>
-					</div> <br></br>			
-					<FilterableProductTable products={PRODUCTS} />
-				</Form>
-			</Background>
-		</Screen>
-	)
+								}>
+								Add Item
+							</Button>
+							<Button color="primary" onClick={() => populateDatabase(queryCache)}>
+								Populate Database
+							</Button>
+						</div>{' '}
+						<br></br>
+						<FilterableProductTable products={PRODUCTS} />
+					</Form>
+				</Background>
+			</Screen>
+		)
 }
 
 const INVENTORY_ITEM_CATEGORIES = ['BEVERAGE', 'SAMMICHE_TOPPINGS', 'SMEAR', 'BAGEL']
@@ -245,7 +277,7 @@ function populateDatabase(queryCache: any) {
 		var category = default_inventory[i].category
 		var quantity = default_inventory[i].quantity
 		var price = default_inventory[i].price
-		var onMenu = false
+		var onMenu = default_inventory[i].onMenu
 		var targetCount = default_inventory[i].targetCount
 
 		axios
@@ -259,7 +291,7 @@ function populateDatabase(queryCache: any) {
 			})
 			.then(() => {
 				console.log('successful added item')
-				window.location.reload(false);
+				queryCache.invalidateQueries('inventory')
 			})
 			.catch((err) => {
 				console.log('failed to add item')
@@ -297,134 +329,243 @@ function updateItem(
 
 var default_inventory = [
 	{ name: 'Plain', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "Onion", category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "Cinnamon raisin", category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "Sesame", category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "Cheesy", category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "Pumpernickel", category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+	{ name: 'Onion', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+	{
+		name: 'Cinnamon raisin',
+		category: 'BAGEL',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{ name: 'Sesame', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+	{ name: 'Cheesy', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+	{
+		name: 'Pumpernickel',
+		category: 'BAGEL',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
 
+	{ name: 'Plain', category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
+	{
+		name: 'Honey_nut',
+		category: 'SMEAR',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Strawberry',
+		category: 'SMEAR',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'French_onion',
+		category: 'SMEAR',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
 
-    { name: "Plain", category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
-    { name: "Honey_nut", category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
-    { name: "Strawberry", category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
-    { name: "French_onion", category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
+	{
+		name: 'Bacon',
+		category: 'SAMMICHE_TOPPINGS',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Egg',
+		category: 'SAMMICHE_TOPPINGS',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Cheese',
+		category: 'SAMMICHE_TOPPINGS',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Sausage',
+		category: 'SAMMICHE_TOPPINGS',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Avocado',
+		category: 'SAMMICHE_TOPPINGS',
+		quantity: 100,
+		price: 1000,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Turkey',
+		category: 'SAMMICHE_TOPPINGS',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Ham',
+		category: 'SAMMICHE_TOPPINGS',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Spinach',
+		category: 'SAMMICHE_TOPPINGS',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Tomato',
+		category: 'SAMMICHE_TOPPINGS',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Lox',
+		category: 'SAMMICHE_TOPPINGS',
+		quantity: 100,
+		price: 1000,
+		onMenu: true,
+		targetCount: 50,
+	},
 
-    { name: "Bacon", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
-    { name: "Egg", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "Cheese", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
-    { name: "Sausage", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "Avocado", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 1000, onMenu: true, targetCount: 50 },
-    { name: "Turkey", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "Ham", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "Spinach", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
-    { name: "Tomato", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
-    { name: "Lox", category: 'SAMMICHE_TOPPINGS', quantity: 100, price: 1000, onMenu: true, targetCount: 50 },
-
-    { name: "Coffee", category: 'BEVERAGE', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "Milk", category: 'BEVERAGE', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "OJ", category: 'BEVERAGE', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-    { name: "Water", category: 'BEVERAGE', quantity: 100, price: 500, onMenu: true, targetCount: 50 },
+	{
+		name: 'Coffee',
+		category: 'BEVERAGE',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Milk',
+		category: 'BEVERAGE',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{ name: 'OJ', category: 'BEVERAGE', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
+	{
+		name: 'Water',
+		category: 'BEVERAGE',
+		quantity: 100,
+		price: 500,
+		onMenu: true,
+		targetCount: 50,
+	},
 ]
-
 
 //  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
 class ProductCategoryRow extends React.Component {
 	render() {
-	  const category = this.props.category;
-	  return (
-		<tr>
-		  <th colSpan="2">
-			{category}
-		  </th>
-		</tr>
-	  );
-	}
-  }
-
-
-  class ProductRow extends React.Component {
-	render() {
-	  const product = this.props.product;
-	  const name = product.stocked ?
-		product.name :
-		<span style={{color: 'red'}}>
-		  {product.name}
-		</span>;
-  
-	  return (
-		<tr>
-		  <td>{name}</td>
-		  <td>{product.price}</td>
-		  <td>{product.onMenu}</td>
-		  <td>{product.quantity}</td>
-		  <td>{product.targetCount}</td>
-		</tr>
-	  );
-	}
-  }
-
-
-  class ProductTable extends React.Component {
-	render() {
-	  const rows = [];
-	  let lastCategory = null;
-	  
-	  this.props.products.forEach((product) => {
-		if (product.category !== lastCategory) {
-		  rows.push(
-			<ProductCategoryRow
-			  category={product.category}
-			  key={product.category} />
-		  );
-		}
-		rows.push(
-		  <ProductRow
-			product={product}
-			key={product.name} />
-		);
-		lastCategory = product.category;
-	  });
-  
-	  return (
-		<table>
-		  <thead>
+		const category = this.props.category
+		return (
 			<tr>
-			  <th>Name</th>
-			  <th>Price</th>
-			  <th>On Menu</th>
-			  <th>Quantity</th>
-			  <th>Target Count</th>
+				<th colSpan="2">{category}</th>
 			</tr>
-		  </thead>
-		  <tbody>{rows}</tbody>
-		</table>
-	  );
+		)
 	}
-  }
-  
+}
 
-  class SearchBar extends React.Component {
+class ProductRow extends React.Component {
 	render() {
-	  return (
-		<form>
-		  <input type="text" placeholder="Search..." />
-		  <p>
-			<input type="checkbox" />
-			{' '}
-			Only show products in stock
-		  </p>
-		</form>
-	  );
-	}
-  }
+		const product = this.props.product
+		const name = product.stocked ? (
+			product.name
+		) : (
+			<span style={{ color: 'red' }}>{product.name}</span>
+		)
 
-  class FilterableProductTable extends React.Component {
-	render() {
-	  return (
-		<div>
-		  <SearchBar />
-		  <ProductTable products={this.props.products} />
-		</div>
-	  );
+		return (
+			<tr>
+				<td>{name}</td>
+				<td>{product.price}</td>
+				<td>{product.onMenu}</td>
+				<td>{product.quantity}</td>
+				<td>{product.targetCount}</td>
+			</tr>
+		)
 	}
-  }
+}
+
+class ProductTable extends React.Component {
+	render() {
+		const rows = []
+		let lastCategory = null
+
+		this.props.products.forEach((product) => {
+			if (product.category !== lastCategory) {
+				rows.push(<ProductCategoryRow category={product.category} key={product.category} />)
+			}
+			rows.push(<ProductRow product={product} key={product.name} />)
+			lastCategory = product.category
+		})
+
+		return (
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Price</th>
+						<th>On Menu</th>
+						<th>Quantity</th>
+						<th>Target Count</th>
+					</tr>
+				</thead>
+				<tbody>{rows}</tbody>
+			</table>
+		)
+	}
+}
+
+class SearchBar extends React.Component {
+	render() {
+		return (
+			<form>
+				<input type="text" placeholder="Search..." />
+				<p>
+					<input type="checkbox" /> Only show products in stock
+				</p>
+			</form>
+		)
+	}
+}
+
+class FilterableProductTable extends React.Component {
+	render() {
+		return (
+			<div>
+				<SearchBar />
+				<ProductTable products={this.props.products} />
+			</div>
+		)
+	}
+}
