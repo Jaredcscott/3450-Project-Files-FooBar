@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import Button from '../../general/Button'
 import Body from '../../general/Body'
@@ -36,6 +37,7 @@ export default function Home() {
 		refetchOnWindowFocus: false,
 	})
 	const queryCache = useQueryCache()
+	const history = useHistory()
 	
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -48,12 +50,26 @@ export default function Home() {
 				<Background>
 					<Header text="Welcome to Dan's Bagel Shop"></Header>
 					<Form>
-						<div className="flex-container" style={{ 'padding-top': '5px' }}>
+						<div className="flex-container" style={{ 'padding-top': '5px' , 'padding-left': '0px' , 'font-size': '25px'}}>
 							<div className="flex-child">
 								<h2>Welcome {loggedin.data.name} to Dan's Bagel Shop</h2>
-								<Button color="primary" onClick={() => logout()}>
-									Logout
-								</Button>
+								<div className="flex-container">
+									<div style={{ 'padding-left':'80px'}}>
+									<Button color="primary" onClick={() => logout()}>
+										Logout
+									</Button>
+									</div>
+									<div  style={{ 'padding-left':'5px'}}>
+									<Button color="primary" onClick={() => history.replace('/order')}>
+										Place An Order
+									</Button>
+									</div>
+									<div   style={{ 'padding-left':'5px'}}>
+									<Button color="primary" onClick={() => history.replace('/account')}>
+										Account Information
+									</Button>
+									</div>
+								</div>
 							</div>
 						</div>
 					</Form>
