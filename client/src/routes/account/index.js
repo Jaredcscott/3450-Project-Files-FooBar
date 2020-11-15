@@ -37,7 +37,7 @@ class ProfileInfo extends Component {
 				</h4>
 				<h4>Email Id: {email}</h4>
 				<h4>Account Balance: {balance}</h4>
-				<h5>Role: {role}</h5>
+				<h5>Role(s): {role}</h5>
 			</section>
 		)
 	}
