@@ -14,58 +14,9 @@ import axios from 'axios'
 
 
 export default function Order() {
-
-
-	function none() {
-
-	}
-    //const info = useQuery('menu', getMenu)
-
-    //function getMenu() {
-	//return fetch('http://localhost:8100/menu',{  
-	//    //Add needed fields	
-	//	  credentials: 'include' //needed to use authentication info. 
-    //}{
-    //    //Fill in with query info
-    //})
-	//	.then((res) => res.json())
-    //}
-
-	//Instead of appending child, useState('Bagels')
-	//One Fetch and then unpack into the seperate categories
-	//Create a bagel component which can be edited live while creating an order
-
-	function getMenu(){
-		axios
-		.get('http://localhost:8100/menu')
-		.then((res) => {
-			console.log(res.data.data)
-			console.log('successful gotten inventory')
-			return res.data.data
-		})
-		.catch(() => null)
-	}
-
-
-	function getBagels() {
-		if (getMenu()){
-			var bagels = getMenu()
-			return bagels.BAGEL
-		}else{
-			return null
-		}
-	}
-
-	
-	function getSmears() {
-		return {plain : 1, honey_nut: 1, strawberry: 1, french_onion: 1}
-	}
-	function getSammicheStuff () {
-		return {bacon: 1, egg: 2, cheese: 1, sausage: 2, avacado: 10, turkey: 2, ham: 2, spinach: 1, tomato: 1, lox: 10}
-	}
-	function getBeverages (){
-		return {coffee: 2, milk: 2, oj: 2, water: 5}
-	}
+	const bagelList = []
+	const beverageList = []
+	const pickupAt = 0;
 
 	const bagels = getBagels();
 	const smears = getSmears();
@@ -177,16 +128,81 @@ export default function Order() {
 					<ul id="beverageOrder"style={{textAlign: "center"}}></ul>
 					<p>
 						I would like my order to be ready at  
-						<input type="time" id="time"></input>
+						<input type="time" id="time">
+
+
+						</input>
 						on
-						<input type="date" id="date"></input>
+						<input type="date" id="date">
+
+
+						</input>
 					</p>
 					<Button width='250px'
-						onClick={none}
+							onClick={() =>
+								addOrder(bagelList, beverageList, pickupAt)
+							}
 						color='primary'>Place Order
 					</Button>
 			</Body>			
 			</Background>
 		</Screen>
 	)
+}
+
+
+
+function addOrder(
+	bagelList: list,
+	beverageList: list,
+	pickupAt: string,
+	queryCache: any
+) {
+	console.log({
+
+	})
+	axios
+		.post('http://localhost:8100/order', {
+			bagels: bagelList,
+			beverages: beverageList,
+			pickupAt: pickupAt,
+
+		})
+		.then(() => {
+			console.log('successful Order')
+		})
+		.catch((err) => {
+			console.log('failed to Order')
+			console.error(err)
+		})
+}
+
+function getMenu(){
+	axios
+	.get('http://localhost:8100/menu')
+	.then((res) => {
+		console.log(res.data.data)
+		console.log('successful gotten inventory')
+		return res.data.data
+	})
+	.catch(() => null)
+}
+
+function getBagels() {
+	if (getMenu()){
+		var bagels = getMenu()
+		return bagels.BAGEL
+	}else{
+		return null
+	}
+}
+
+function getSmears() {
+	return {plain : 1, honey_nut: 1, strawberry: 1, french_onion: 1}
+}
+function getSammicheStuff () {
+	return {bacon: 1, egg: 2, cheese: 1, sausage: 2, avacado: 10, turkey: 2, ham: 2, spinach: 1, tomato: 1, lox: 10}
+}
+function getBeverages (){
+	return {coffee: 2, milk: 2, oj: 2, water: 5}
 }
