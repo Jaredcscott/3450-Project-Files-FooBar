@@ -51,6 +51,9 @@ export default function Home() {
 						<div className="flex-container" style={{ 'padding-top': '5px' }}>
 							<div className="flex-child">
 								<h2>Welcome {loggedin.data.name} to Dan's Bagel Shop</h2>
+								<Button color="primary" onClick={() => logout()}>
+									Logout
+								</Button>
 							</div>
 						</div>
 					</Form>

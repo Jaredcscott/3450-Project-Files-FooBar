@@ -23,13 +23,14 @@ export default function Navigation() {
 	})
 
 	if (loggedin.data) {
-		if (loggedin.data.roles.includes("MANAGER") ){
+		if (loggedin.data.roles.includes("MANAGER") || loggedin.data.roles.includes("ADMIN")){
 			return (
 				<Navbar>
 					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
 					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
 					<NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
 					<NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement>
+					<NavElement onClick={() => history.replace('/users')}>Users</NavElement>
 				</Navbar>
 			)
 		}

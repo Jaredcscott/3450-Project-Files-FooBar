@@ -55,6 +55,8 @@ export default function Order() {
 			return null
 		}
 	}
+
+	
 	function getSmears() {
 		return {plain : 1, honey_nut: 1, strawberry: 1, french_onion: 1}
 	}

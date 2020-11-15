@@ -6,6 +6,7 @@ import Order from './order'
 import styled from 'styled-components'
 import Account from './account'
 import Inventory from './inventory'
+import Users from './users'
 
 export default function Routing() {
 	return (
@@ -18,6 +19,7 @@ export default function Routing() {
 					<Route path="/order" component={Order} />
 					<Route path="/account" component={Account}/>
 					<Route path="/inventory" component={Inventory}/>
+					<Route path="/users" component={Users}/>
 				</Switch>
 			</Screen>
 		</BrowserRouter>
