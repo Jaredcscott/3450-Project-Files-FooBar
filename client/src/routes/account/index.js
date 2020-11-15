@@ -69,14 +69,30 @@ export default function Account() {
 							balance={loggedin.data.balance}
 							role={loggedin.data.roles}
 						/>
-						<Button color="primary" onClick={
-							() => {
-								history.replace('/home')
-								logout()
-							}
-						}>
-								Logout
-						</Button>
+						<div className="flex-container">
+							<Button color="primary" onClick={
+								() => {
+									history.replace('/home')
+									logout()
+								}
+							}>
+									Logout
+							</Button>
+							<div  style={{ 'padding-left':'25px'}}>
+									<Button color="primary" onClick={() => history.replace('/order')}>
+										Place An Order
+									</Button>
+									</div>
+							<div style={{'padding-left': '25px'}}>
+								<Button color="primary" onClick={
+									() => {
+										history.replace('/orders')
+									}
+								}>
+										Order History
+								</Button>
+							</div>
+						</div>
 					</Form>
 					
 					<Footer>

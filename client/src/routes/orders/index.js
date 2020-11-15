@@ -124,13 +124,13 @@ class ProductCategoryRow extends React.Component {
 		<table>
 		  <thead>
 			<tr>
-			  <th>beverages </th>
-			  <th>bagels </th>
-			  <th>placed </th>
-			  <th>pickupAt </th>
-              <th>placedBy </th>
-              <th>price </th>
-              <th>status </th>
+			  <th>Beverages  |  </th>
+			  <th> Bagels  |  </th>
+			  <th> Placed  |  </th>
+			  <th> Pickup At  |  </th>
+              <th> Placed By  |  </th>
+              <th> Price  |  </th>
+              <th> Status</th>
 			</tr>
 		  </thead>
 		  <tbody>{rows}</tbody>
