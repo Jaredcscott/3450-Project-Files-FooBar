@@ -144,7 +144,7 @@ class ProductCategoryRow extends React.Component {
   class FilterableProductTable extends React.Component {
 	render() {
 	  return (
-		<div>
+		<div style={{'text-shadow': '3px 3px 5px blue'}}>
 		  <ProductTable products={this.props.products} />
 		</div>
 	  );

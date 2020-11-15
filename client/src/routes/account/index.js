@@ -30,11 +30,11 @@ class ProfileInfo extends Component {
 		const balance = this.props.balance
 		const role = this.props.role
 		return (
-			<section>
-				<h3>
+			<section style={{'text-shadow': '3px 3px 5px blue'}}>
+				<h4>
 					{' '}
 					<strong>Account Name: {name}</strong>
-				</h3>
+				</h4>
 				<h4>Email Id: {email}</h4>
 				<h4>Account Balance: {balance}</h4>
 				<h5>Role: {role}</h5>

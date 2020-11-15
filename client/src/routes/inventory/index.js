@@ -139,9 +139,10 @@ export default function Inventory() {
 		return (
 			<Screen>
 				<Background>
+
 					<Header text="Inventory"></Header>
 					<Form>
-						<div style={{ width: '80%' }}>
+						<div style={{ width: '80%', 'text-shadow': '3px 3px 5px blue'}}>
 							<label>
 								Name:{' '}
 								<input
@@ -562,7 +563,7 @@ class SearchBar extends React.Component {
 class FilterableProductTable extends React.Component {
 	render() {
 		return (
-			<div>
+			<div style={{'text-shadow': '3px 3px 5px blue'}}>
 				<SearchBar />
 				<ProductTable products={this.props.products} />
 			</div>
