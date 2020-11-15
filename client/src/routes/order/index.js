@@ -10,6 +10,7 @@ import Body from '../../general/Body'
 // import { getTheme } from '../../redux-store/theme'
 // import reactRouterDom from 'react-router-dom'
 
+import axios from 'axios'
 
 
 export default function Order() {
@@ -34,10 +35,25 @@ export default function Order() {
 	//One Fetch and then unpack into the seperate categories
 	//Create a bagel component which can be edited live while creating an order
 
+	function getMenu(){
+		axios
+		.get('http://localhost:8100/menu')
+		.then((res) => {
+			console.log(res.data.data)
+			console.log('successful gotten inventory')
+			return res.data.data
+		})
+		.catch(() => null)
+	}
+
 
 	function getBagels() {
-
-		return  {plain: 2, onion: 2, cinnamon_raisen: 2, sesame: 2, cheesy: 2, pumpernickel: 2}
+		if (getMenu()){
+			var bagels = getMenu()
+			return bagels.BAGEL
+		}else{
+			return null
+		}
 	}
 	function getSmears() {
 		return {plain : 1, honey_nut: 1, strawberry: 1, french_onion: 1}
