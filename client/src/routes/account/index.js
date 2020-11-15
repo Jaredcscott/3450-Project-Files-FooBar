@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useQuery, useQueryCache } from 'react-query'
 import Button from '../../general/Button'
+import Background from '../../general/Background'
+import Header from '../../general/Header'
+import Screen from '../../general/Screen'
+import Form from '../../general/Form'
 import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
 import { getTheme, setTheme } from '../../redux-store/theme'
 import axios from 'axios'
@@ -56,52 +60,60 @@ export default function Account() {
 	if (loggedin.data) {
 		return (
 			<Screen>
-				<ProfileInfo
-					name={loggedin.data.name}
-					email={loggedin.data.email}
-					balance={loggedin.data.balance}
-					role={loggedin.data.roles}
-				/>
+				<Background>
+					<Header text="Account Information"></Header>
+					<Form>
+						<ProfileInfo
+							name={loggedin.data.name}
+							email={loggedin.data.email}
+							balance={loggedin.data.balance}
+							role={loggedin.data.roles}
+						/>
+					</Form>
+				</Background>
 			</Screen>
 		)
 	} else {
 		return (
 			<Screen>
-				<h1>Not Signed in</h1>
-				<div>
-					<label>
-						Name:{' '}
-						<input
-							type="text"
-							value={name}
-							onChange={(event) => setName(event.target.value)}
-						/>
-					</label>
-					<label>
-						Email:{' '}
-						<input
-							type="text"
-							value={email}
-							onChange={(event) => setEmail(event.target.value)}
-						/>
-					</label>
-					<label>
-						Password:{' '}
-						<input
-							type="text"
-							value={password}
-							onChange={(event) => setPassword(event.target.value)}
-						/>
-					</label>
-					<Button
-						color="primary"
-						onClick={() => register(name, email, password, password, queryCache)}>
-						Register
-					</Button>
-					<Button color="primary" onClick={() => login(email, password, queryCache)}>
-						Login
-					</Button>
-				</div>
+				<Background>
+					<Header text="Account Information"></Header>
+					<h1>Not Signed in</h1>
+					<div>
+						<label>
+							Name:{' '}
+							<input
+								type="text"
+								value={name}
+								onChange={(event) => setName(event.target.value)}
+							/>
+						</label>
+						<label>
+							Email:{' '}
+							<input
+								type="text"
+								value={email}
+								onChange={(event) => setEmail(event.target.value)}
+							/>
+						</label>
+						<label>
+							Password:{' '}
+							<input
+								type="text"
+								value={password}
+								onChange={(event) => setPassword(event.target.value)}
+							/>
+						</label>
+						<Button
+							color="primary"
+							onClick={() => register(name, email, password, password, queryCache)}>
+							Register
+						</Button>
+						<Button color="primary" onClick={() => login(email, password, queryCache)}>
+							Login
+						</Button>
+					</div>
+				</Background>
 			</Screen>
 		)
 	}
@@ -165,11 +177,11 @@ function logout() {
 	// 	window.queryCache.refetchQueries()
 	// })
 
-const Screen = styled.div`
-	width: 100%;
-	flex: 1 0 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: ${({ theme }) => theme.color.base.darker};
-`
+//const Screen = styled.div`
+//	width: 100%;
+//	flex: 1 0 0;
+//	display: flex;
+//	justify-content: center;
+//	align-items: center;
+//	background-color: ${({ theme }) => theme.color.base.darker};
+//`

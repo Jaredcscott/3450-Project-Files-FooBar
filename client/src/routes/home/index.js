@@ -117,7 +117,6 @@ export default function Home() {
 							<div className="flex-child">
 								<Button
 									onClick={() => {
-										console.log({ email, password })
 										register(name, email, password, password, queryCache)
 										
 									}}
@@ -130,7 +129,6 @@ export default function Home() {
 							<div className="flex-child">
 								<Button
 									onClick={() => {
-										console.log({ email, password })
 										login(email, password, queryCache)
 									}}
 									color="primary"

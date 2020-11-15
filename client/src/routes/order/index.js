@@ -32,7 +32,7 @@ export default function Order() {
 		<Screen>
 			<Background>
 				<Header text="Hungry? Lets Get You A Bagel."></Header>
-				<Body>
+				<Body text="">
 					<Button
 						width=""
 						onClick={() =>
