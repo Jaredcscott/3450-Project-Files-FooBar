@@ -18,7 +18,7 @@ export default function Body({text, children} : Props) {
 const Paragraph = styled.div`
     background-color: #fccb00;
     width: 90%;
-    height: 68%;
+    height: 100%;
     font-size: 20px;
     color: #FFFFF0;
     margin: auto;

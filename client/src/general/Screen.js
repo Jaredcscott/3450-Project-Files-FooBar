@@ -8,7 +8,9 @@ type Props = {
 export default function Screen({ children } : Props ) {
     return (
         <Content>
-            { children }
+			<div style={{'min-width': '100%', 'min-height': '100vh', 'background-color': '#000000'}}>
+            	{ children }
+			</div>
         </Content>
     )
 }
@@ -16,6 +18,7 @@ export default function Screen({ children } : Props ) {
 
 const Content = styled.div`
     flex: 1 0 auto;
+
 
 	.App {
 		text-align: center;
