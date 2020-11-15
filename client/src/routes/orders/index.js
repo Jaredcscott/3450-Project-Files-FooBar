@@ -46,6 +46,14 @@ export default function Orders() {
 				<Form>		
 					<FilterableProductTable products={PRODUCTS} />
 				</Form>
+				<Footer>
+					<ul>
+						<li><a href="account">Take Me To My Account</a></li>
+						<li><a href="home">Home Page</a></li>
+						<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
+						<li><a href="<Fill In">Contact Us</a></li>
+					</ul>
+				</Footer>
 			</Background>
 		</Screen>
 	)

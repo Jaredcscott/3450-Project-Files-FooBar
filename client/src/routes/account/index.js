@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { useQuery, useQueryCache } from 'react-query'
@@ -37,9 +38,6 @@ class ProfileInfo extends Component {
 				<h4>Email Id: {email}</h4>
 				<h4>Account Balance: {balance}</h4>
 				<h5>Role: {role}</h5>
-				<Button color="primary" onClick={() => logout()}>
-						Logout
-				</Button>
 			</section>
 		)
 	}
@@ -52,7 +50,7 @@ export default function Account() {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
-
+	const history = useHistory()
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [name, setName] = useState('')
@@ -63,7 +61,7 @@ export default function Account() {
 		return (
 			<Screen>
 				<Background>
-					<Header text="Account Information"></Header>
+					<Header text="Account Information"></Header>							
 					<Form>
 						<ProfileInfo
 							name={loggedin.data.name}
@@ -71,10 +69,23 @@ export default function Account() {
 							balance={loggedin.data.balance}
 							role={loggedin.data.roles}
 						/>
+						<Button color="primary" onClick={
+							() => {
+								history.replace('/home')
+								logout()
+							}
+						}>
+								Logout
+						</Button>
 					</Form>
+					
 					<Footer>
-						<Body text='Reward Status'>
-						</Body>
+						<ul>
+							<li><a href="account">Take Me To My Account</a></li>
+							<li><a href="home">Home Page</a></li>
+							<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
+							<li><a href="<Fill In">Contact Us</a></li>
+						</ul>
 					</Footer>
 				</Background>
 			</Screen>
@@ -84,41 +95,51 @@ export default function Account() {
 			<Screen>
 				<Background>
 					<Header text="Account Information"></Header>
-					<h1>Not Signed in</h1>
-					<div>
-						<label>
-							Name:{' '}
-							<input
-								type="text"
-								value={name}
-								onChange={(event) => setName(event.target.value)}
-							/>
-						</label>
-						<label>
-							Email:{' '}
-							<input
-								type="text"
-								value={email}
-								onChange={(event) => setEmail(event.target.value)}
-							/>
-						</label>
-						<label>
-							Password:{' '}
-							<input
-								type="text"
-								value={password}
-								onChange={(event) => setPassword(event.target.value)}
-							/>
-						</label>
-						<Button
-							color="primary"
-							onClick={() => register(name, email, password, password, queryCache)}>
-							Register
-						</Button>
-						<Button color="primary" onClick={() => login(email, password, queryCache)}>
-							Login
-						</Button>
-					</div>
+					<Form>
+						<h1>Not Signed in</h1>
+						<div>
+							<label>
+								Name:{' '}
+								<input
+									type="text"
+									value={name}
+									onChange={(event) => setName(event.target.value)}
+								/>
+							</label>
+							<label>
+								Email:{' '}
+								<input
+									type="text"
+									value={email}
+									onChange={(event) => setEmail(event.target.value)}
+								/>
+							</label>
+							<label>
+								Password:{' '}
+								<input
+									type="text"
+									value={password}
+									onChange={(event) => setPassword(event.target.value)}
+								/>
+							</label>
+							<Button
+								color="primary"
+								onClick={() => register(name, email, password, password, queryCache)}>
+								Register
+							</Button>
+							<Button color="primary" onClick={() => login(email, password, queryCache)}>
+								Login
+							</Button>
+						</div>
+					</Form>
+					<Footer>
+						<ul>
+							<li><a href="account">Take Me To My Account</a></li>
+							<li><a href="home">Home Page</a></li>
+							<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
+							<li><a href="<Fill In">Contact Us</a></li>
+						</ul>
+					</Footer>
 				</Background>
 			</Screen>
 		)
@@ -175,19 +196,3 @@ function logout() {
 			console.error(err)
 		})
 }
-
-
-// 	return fetch('http://localhost:8100/auth/logout', {
-	// 	credentials: 'include',
-	// }).then(() => {
-	// 	window.queryCache.refetchQueries()
-	// })
-
-//const Screen = styled.div`
-//	width: 100%;
-//	flex: 1 0 0;
-//	display: flex;
-//	justify-content: center;
-//	align-items: center;
-//	background-color: ${({ theme }) => theme.color.base.darker};
-//`

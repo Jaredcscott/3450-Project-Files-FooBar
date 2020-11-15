@@ -7,6 +7,7 @@ import Button from '../../general/Button'
 import Header from '../../general/Header'
 import Body from '../../general/Body'
 import Form from '../../general/Form'
+import Footer from '../../general/Footer'
 import produce from 'immer'
 // import { useSelector, useDispatch } from 'react-redux'
 // import { getTheme } from '../../redux-store/theme'
@@ -221,6 +222,14 @@ export default function Order() {
 					</Body>
 					</div>
 				</Form>
+				<Footer>
+					<ul>
+						<li><a href="account">Take Me To My Account</a></li>
+						<li><a href="home">Home Page</a></li>
+						<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
+						<li><a href="<Fill In">Contact Us</a></li>
+					</ul>
+				</Footer>
 			</Background>
 		</Screen>
 	)

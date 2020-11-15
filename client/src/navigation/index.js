@@ -49,7 +49,6 @@ export default function Navigation() {
 		return (
 			<Navbar>
 				<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-				<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
 			</Navbar>
 		)
 	}
