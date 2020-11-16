@@ -38,36 +38,50 @@ export default function Home() {
 	})
 	const queryCache = useQueryCache()
 	const history = useHistory()
-	
+
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [verify, setVerifyPassword] = useState({})
 	const [name, setName] = useState('')
 
-	if (loggedin.data){
+	if (loggedin.data) {
 		return (
 			<Screen>
 				<Background>
 					<Header text="Welcome to Dan's Bagel Shop"></Header>
 					<Form>
-						<div className="flex-container" style={{ 'padding-top': '5px' , 'margin-top':'50px', 'margin': 'auto' , 'font-size': '25px'}}>
+						<div
+							className="flex-container"
+							style={{
+								'padding-top': '5px',
+								'margin-top': '50px',
+								margin: 'auto',
+								'font-size': '25px',
+							}}>
 							<div className="flex-child">
-								<h2 style={{'text-shadow': '3px 3px 5px blue'}}>Hello {loggedin.data.name}, we missed you! You are now logged in.</h2>
+								<h2 style={{ 'text-shadow': '3px 3px 5px blue' }}>
+									Hello {loggedin.data.name}, we missed you! You are now logged
+									in.
+								</h2>
 								<div className="flex-container">
-									<div style={{ 'padding-left':'25%'}}>
-									<Button color="primary" onClick={() => logout()}>
-										Logout
-									</Button>
+									<div style={{ 'padding-left': '25%' }}>
+										<Button color="primary" onClick={() => logout()}>
+											Logout
+										</Button>
 									</div>
-									<div  style={{ 'padding-left':'25px'}}>
-									<Button color="primary" onClick={() => history.replace('/order')}>
-										Place An Order
-									</Button>
+									<div style={{ 'padding-left': '25px' }}>
+										<Button
+											color="primary"
+											onClick={() => history.replace('/order')}>
+											Place An Order
+										</Button>
 									</div>
-									<div   style={{ 'padding-left':'25px'}}>
-									<Button color="primary" onClick={() => history.replace('/account')}>
-										Account Information
-									</Button>
+									<div style={{ 'padding-left': '25px' }}>
+										<Button
+											color="primary"
+											onClick={() => history.replace('/account')}>
+											Account Information
+										</Button>
 									</div>
 								</div>
 							</div>
@@ -75,14 +89,16 @@ export default function Home() {
 					</Form>
 					<Body text="">
 						<div className="Testimonials">
-							<div className="flex-container" style={{ 
-								'margin-bottom': '10px',
-								'padding':'5px', 
-								'margin-top':'100px', 
-								'border-style':'ridge', 
-								'border-color': 'blue', 
-								'border-width':'15px', 
-								'text-shadow': '3px 3px 5px blue'
+							<div
+								className="flex-container"
+								style={{
+									'margin-bottom': '10px',
+									padding: '5px',
+									'margin-top': '100px',
+									'border-style': 'ridge',
+									'border-color': 'blue',
+									'border-width': '15px',
+									'text-shadow': '3px 3px 5px blue',
 								}}>
 								<Body text="'Dan's Bagel Shop has the best shmears!'-Sheldon Jones">
 									<img
@@ -97,7 +113,7 @@ export default function Home() {
 										src={scooby}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '25px', 'display':'flex' }}
+										style={{ 'padding-left': '25px', display: 'flex' }}
 									/>
 								</Body>
 							</div>
@@ -105,23 +121,30 @@ export default function Home() {
 					</Body>
 					<Footer>
 						<ul>
-							<li><a href="account">Take Me To My Account</a></li>
-							<li><a href="order">Place An Order</a></li>
-							<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
-							<li><a href="<Fill In">Contact Us</a></li>
+							<li>
+								<a href="account">Take Me To My Account</a>
+							</li>
+							<li>
+								<a href="order">Place An Order</a>
+							</li>
+							<li>
+								<a href="<Fill In>">About Dan's Bagel Shop</a>
+							</li>
+							<li>
+								<a href="<Fill In">Contact Us</a>
+							</li>
 						</ul>
 					</Footer>
 				</Background>
 			</Screen>
 		)
-	}
-	else{
+	} else {
 		return (
 			<Screen>
 				<Background>
 					<Header text="Welcome to Dan's Bagel Shop"></Header>
 					<Form>
-						<div style={{'margin-top':'50px', }}>
+						<div style={{ 'margin-top': '50px' }}>
 							<div className="email">
 								<input
 									type="text"
@@ -153,7 +176,6 @@ export default function Home() {
 									width="">
 									Register
 								</Button>
-
 							</div>
 							<div className="flex-child">
 								<Button
@@ -169,14 +191,16 @@ export default function Home() {
 					</Form>
 					<Body text="">
 						<div className="Testimonials">
-							<div className="flex-container" style={{ 
-								'margin-bottom': '10px',
-								'padding':'5px', 
-								'margin-top':'100px', 
-								'border-style':'ridge', 
-								'border-color': 'blue', 
-								'border-width':'15px', 
-								'text-shadow': '3px 3px 5px blue'
+							<div
+								className="flex-container"
+								style={{
+									'margin-bottom': '10px',
+									padding: '5px',
+									'margin-top': '100px',
+									'border-style': 'ridge',
+									'border-color': 'blue',
+									'border-width': '15px',
+									'text-shadow': '3px 3px 5px blue',
 								}}>
 								<Body text="'Dan's Bagel Shop has the best shmears!'-Sheldon Jones">
 									<img
@@ -191,7 +215,7 @@ export default function Home() {
 										src={scooby}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '25px', 'display':'flex' }}
+										style={{ 'padding-left': '25px', display: 'flex' }}
 									/>
 								</Body>
 							</div>
@@ -199,8 +223,12 @@ export default function Home() {
 					</Body>
 					<Footer>
 						<ul>
-							<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
-							<li><a href="<Fill In">Contact Us</a></li>
+							<li>
+								<a href="<Fill In>">About Dan's Bagel Shop</a>
+							</li>
+							<li>
+								<a href="<Fill In">Contact Us</a>
+							</li>
 						</ul>
 					</Footer>
 				</Background>
@@ -208,7 +236,6 @@ export default function Home() {
 		)
 	}
 }
-
 
 function login(email: string, password: string, queryCache: any) {
 	axios
@@ -227,7 +254,6 @@ function login(email: string, password: string, queryCache: any) {
 		})
 }
 
-
 function logout() {
 	axios
 		.get(`${config.serverUrl}/auth/logout`, { credentials: 'include' })
@@ -241,7 +267,6 @@ function logout() {
 			console.error(err)
 		})
 }
-
 
 function register(
 	name: string,

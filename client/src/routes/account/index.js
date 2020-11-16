@@ -30,7 +30,7 @@ class ProfileInfo extends Component {
 		const balance = this.props.balance
 		const role = this.props.role
 		return (
-			<section style={{'text-shadow': '3px 3px 5px blue'}}>
+			<section style={{ 'text-shadow': '3px 3px 5px blue' }}>
 				<h4>
 					{' '}
 					<strong>Account Name: {name}</strong>
@@ -61,9 +61,9 @@ export default function Account() {
 		return (
 			<Screen>
 				<Background>
-					<Header text="Account Information"></Header>							
+					<Header text="Account Information"></Header>
 					<Form>
-						<div style={{'margin-bottom':'25px'}}>
+						<div style={{ 'margin-bottom': '25px' }}>
 							<ProfileInfo
 								name={loggedin.data.name}
 								email={loggedin.data.email}
@@ -71,38 +71,48 @@ export default function Account() {
 								role={loggedin.data.roles}
 							/>
 							<div className="flex-container">
-								<Button color="primary" onClick={
-									() => {
+								<Button
+									color="primary"
+									onClick={() => {
 										history.replace('/home')
 										logout()
-									}
-								}>
-										Logout
+									}}>
+									Logout
 								</Button>
-								<div  style={{ 'padding-left':'25px'}}>
-										<Button color="primary" onClick={() => history.replace('/order')}>
-											Place An Order
-										</Button>
-										</div>
-								<div style={{'padding-left': '25px'}}>
-									<Button color="primary" onClick={
-										() => {
+								<div style={{ 'padding-left': '25px' }}>
+									<Button
+										color="primary"
+										onClick={() => history.replace('/order')}>
+										Place An Order
+									</Button>
+								</div>
+								<div style={{ 'padding-left': '25px' }}>
+									<Button
+										color="primary"
+										onClick={() => {
 											history.replace('/orders')
-										}
-									}>
-											Order History
+										}}>
+										Order History
 									</Button>
 								</div>
 							</div>
 						</div>
 					</Form>
-					
+
 					<Footer>
 						<ul>
-							<li><a href="account">Take Me To My Account</a></li>
-							<li><a href="home">Home Page</a></li>
-							<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
-							<li><a href="<Fill In">Contact Us</a></li>
+							<li>
+								<a href="account">Take Me To My Account</a>
+							</li>
+							<li>
+								<a href="home">Home Page</a>
+							</li>
+							<li>
+								<a href="<Fill In>">About Dan's Bagel Shop</a>
+							</li>
+							<li>
+								<a href="<Fill In">Contact Us</a>
+							</li>
 						</ul>
 					</Footer>
 				</Background>
@@ -123,7 +133,8 @@ export default function Account() {
 									value={name}
 									onChange={(event) => setName(event.target.value)}
 								/>
-							</label><br></br>
+							</label>
+							<br></br>
 							<label>
 								Email:{' '}
 								<input
@@ -131,7 +142,8 @@ export default function Account() {
 									value={email}
 									onChange={(event) => setEmail(event.target.value)}
 								/>
-							</label><br></br>
+							</label>
+							<br></br>
 							<label>
 								Password:{' '}
 								<input
@@ -139,27 +151,36 @@ export default function Account() {
 									value={password}
 									onChange={(event) => setPassword(event.target.value)}
 								/>
-							</label><br></br>
+							</label>
+							<br></br>
 							<Button
 								color="primary"
 								onClick={() => {
 									register(name, email, password, password, queryCache)
 									history.replace('/home')
-									}}>
+								}}>
 								Register
 							</Button>
 						</div>
 					</Form>
 					<Footer>
 						<ul>
-							<li><a href="account">Take Me To My Account</a></li>
-							<li><a href="home">Home Page</a></li>
-							<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
-							<li><a href="<Fill In">Contact Us</a></li>
+							<li>
+								<a href="account">Take Me To My Account</a>
+							</li>
+							<li>
+								<a href="home">Home Page</a>
+							</li>
+							<li>
+								<a href="<Fill In>">About Dan's Bagel Shop</a>
+							</li>
+							<li>
+								<a href="<Fill In">Contact Us</a>
+							</li>
 						</ul>
 					</Footer>
 				</Background>
-			</Screen>		
+			</Screen>
 		)
 	}
 }
@@ -202,12 +223,11 @@ function login(email: string, password: string, queryCache: any) {
 
 function logout() {
 	axios
-		.get('http://localhost:8100/auth/logout', {credentials: 'include',})
+		.get('http://localhost:8100/auth/logout', { credentials: 'include' })
 		.then(() => {
 			console.log('successfully logged out')
 			console.log()
-			window.location.reload(false);
-			
+			window.location.reload(false)
 		})
 		.catch((err) => {
 			console.log('failed to logout')

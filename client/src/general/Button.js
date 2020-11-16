@@ -7,7 +7,7 @@ type Props = {
 	children: React$Node,
 }
 
-export default function Button({ onClick, color, children}: Props) {
+export default function Button({ onClick, color, children }: Props) {
 	return (
 		<ButtonBackground onClick={onClick} color={color}>
 			{children}

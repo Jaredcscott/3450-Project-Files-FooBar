@@ -18,10 +18,10 @@ export default function Routing() {
 					<Route exact path="/" component={Home} />
 					<Route path="/home" component={Home} />
 					<Route path="/order" component={Order} />
-					<Route path="/account" component={Account}/>
-					<Route path="/inventory" component={Inventory}/>
-					<Route path="/users" component={Users}/>
-					<Route path="/orders" component={Orders}/>
+					<Route path="/account" component={Account} />
+					<Route path="/inventory" component={Inventory} />
+					<Route path="/users" component={Users} />
+					<Route path="/orders" component={Orders} />
 				</Switch>
 			</Screen>
 		</BrowserRouter>

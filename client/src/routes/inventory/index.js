@@ -140,9 +140,9 @@ export default function Inventory() {
 			<Screen>
 				<Background>
 					<Header text="Inventory"></Header>
-						<Form>
-							<div style={{'margin-top': '25px','margin-bottom':'25px'}}>
-							<div style={{ width: '80%', 'text-shadow': '3px 3px 5px blue'}}>
+					<Form>
+						<div style={{ 'margin-top': '25px', 'margin-bottom': '25px' }}>
+							<div style={{ width: '80%', 'text-shadow': '3px 3px 5px blue' }}>
 								<label>
 									Name:{' '}
 									<input
@@ -222,20 +222,30 @@ export default function Inventory() {
 									}>
 									Add Item
 								</Button>
-								<Button color="primary" onClick={() => populateDatabase(queryCache)}>
+								<Button
+									color="primary"
+									onClick={() => populateDatabase(queryCache)}>
 									Populate Database
 								</Button>
 							</div>{' '}
 							<br></br>
 							<FilterableProductTable products={PRODUCTS} />
-							</div>
-						</Form>
+						</div>
+					</Form>
 					<Footer>
 						<ul>
-							<li><a href="account">Take Me To My Account</a></li>
-							<li><a href="home">Home Page</a></li>
-							<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
-							<li><a href="<Fill In">Contact Us</a></li>
+							<li>
+								<a href="account">Take Me To My Account</a>
+							</li>
+							<li>
+								<a href="home">Home Page</a>
+							</li>
+							<li>
+								<a href="<Fill In>">About Dan's Bagel Shop</a>
+							</li>
+							<li>
+								<a href="<Fill In">Contact Us</a>
+							</li>
 						</ul>
 					</Footer>
 				</Background>
@@ -543,10 +553,10 @@ class ProductTable extends React.Component {
 			<table>
 				<thead>
 					<tr>
-						<th>Name  |</th>
-						<th> Price  |</th>
-						<th> On Menu  |</th>
-						<th> Quantity  |</th>
+						<th>Name |</th>
+						<th> Price |</th>
+						<th> On Menu |</th>
+						<th> Quantity |</th>
 						<th> Target Count</th>
 					</tr>
 				</thead>
@@ -572,7 +582,7 @@ class SearchBar extends React.Component {
 class FilterableProductTable extends React.Component {
 	render() {
 		return (
-			<div style={{'text-shadow': '3px 3px 5px blue'}}>
+			<div style={{ 'text-shadow': '3px 3px 5px blue' }}>
 				<SearchBar />
 				<ProductTable products={this.props.products} />
 			</div>

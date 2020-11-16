@@ -3,23 +3,23 @@ import styled from 'styled-components'
 
 type Props = {
 	text: string,
-    children: React$Node,
+	children: React$Node,
 }
 
-export default function Body({text, children} : Props) {
+export default function Body({ text, children }: Props) {
 	return (
-        <Paragraph>
-            {text}
-            {children}
-        </Paragraph>
+		<Paragraph>
+			{text}
+			{children}
+		</Paragraph>
 	)
 }
 
 const Paragraph = styled.div`
-    background-color: #fccb00;
-    width: 90%;
-    height: 100%;
-    font-size: 20px;
-    color: #FFFFF0;
-    margin: auto;
+	background-color: #fccb00;
+	width: 90%;
+	height: 100%;
+	font-size: 20px;
+	color: #fffff0;
+	margin: auto;
 `

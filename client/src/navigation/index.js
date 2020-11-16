@@ -23,25 +23,32 @@ export default function Navigation() {
 	})
 
 	if (loggedin.data) {
-		if (loggedin.data.roles.includes("MANAGER") || loggedin.data.roles.includes("ADMIN")){
+		if (loggedin.data.roles.includes('MANAGER') || loggedin.data.roles.includes('ADMIN')) {
 			return (
 				<Navbar>
 					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-					<NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
+					<NavElement onClick={() => history.replace('/order')}>
+						Place An Order
+					</NavElement>
 					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
-					<NavElement onClick={() => history.replace('/orders')}>Order History</NavElement>
+					<NavElement onClick={() => history.replace('/orders')}>
+						Order History
+					</NavElement>
 					<NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement>
 					<NavElement onClick={() => history.replace('/users')}>Users</NavElement>
 				</Navbar>
 			)
-		}
-		else {
+		} else {
 			return (
 				<Navbar>
 					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-					<NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
+					<NavElement onClick={() => history.replace('/order')}>
+						Place An Order
+					</NavElement>
 					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
-					<NavElement onClick={() => history.replace('/orders')}>Order History</NavElement>
+					<NavElement onClick={() => history.replace('/orders')}>
+						Order History
+					</NavElement>
 				</Navbar>
 			)
 		}
@@ -52,7 +59,6 @@ export default function Navigation() {
 			</Navbar>
 		)
 	}
-
 }
 
 const Navbar = styled.nav`
