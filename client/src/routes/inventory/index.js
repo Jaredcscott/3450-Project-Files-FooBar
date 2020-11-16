@@ -139,96 +139,105 @@ export default function Inventory() {
 		return (
 			<Screen>
 				<Background>
-
 					<Header text="Inventory"></Header>
-					<Form>
-						<div style={{ width: '80%', 'text-shadow': '3px 3px 5px blue'}}>
-							<label>
-								Name:{' '}
-								<input
-									type="text"
-									value={name}
-									onChange={(event) => setName(event.target.value)}
-								/>
-							</label>{' '}
-							<br></br>
-							<label>
-								Category:{' '}
-								<select
-									value={category}
-									onChange={(event) => setCategory(event.target.value)}>
-									{INVENTORY_ITEM_CATEGORIES.map((category) => {
-										return (
-											<option key={category} value={category}>
-												{category}
-											</option>
+						<Form>
+							<div style={{'margin-top': '25px','margin-bottom':'25px'}}>
+							<div style={{ width: '80%', 'text-shadow': '3px 3px 5px blue'}}>
+								<label>
+									Name:{' '}
+									<input
+										type="text"
+										value={name}
+										onChange={(event) => setName(event.target.value)}
+									/>
+								</label>{' '}
+								<br></br>
+								<label>
+									Category:{' '}
+									<select
+										value={category}
+										onChange={(event) => setCategory(event.target.value)}>
+										{INVENTORY_ITEM_CATEGORIES.map((category) => {
+											return (
+												<option key={category} value={category}>
+													{category}
+												</option>
+											)
+										})}
+									</select>
+								</label>
+								<label>
+									{' '}
+									<br></br>
+									isOnMenu:{' '}
+									<input
+										type="checkbox"
+										checked={isOnMenu}
+										onChange={(event) => setIsOnMenu(event.target.checked)}
+									/>
+								</label>
+								<label>
+									{' '}
+									<br></br>
+									Quantity:{' '}
+									<input
+										type="number"
+										value={qty}
+										onChange={(event) => setQty(event.target.value)}
+									/>
+								</label>
+								<label>
+									{' '}
+									<br></br>
+									Price:{' '}
+									<input
+										type="number"
+										value={price}
+										onChange={(event) => setPrice(event.target.value)}
+									/>
+								</label>
+								<label>
+									{' '}
+									<br></br>
+									Target Count:{' '}
+									<input
+										type="number"
+										value={targetCount}
+										onChange={(event) => setTargetCount(event.target.value)}
+									/>
+								</label>{' '}
+								<br></br>
+								<Button
+									color="primary"
+									onClick={() =>
+										addItem(
+											name,
+											category,
+											qty,
+											price,
+											targetCount,
+											isOnMenu,
+											queryCache
 										)
-									})}
-								</select>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								isOnMenu:{' '}
-								<input
-									type="checkbox"
-									checked={isOnMenu}
-									onChange={(event) => setIsOnMenu(event.target.checked)}
-								/>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								Quantity:{' '}
-								<input
-									type="number"
-									value={qty}
-									onChange={(event) => setQty(event.target.value)}
-								/>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								Price:{' '}
-								<input
-									type="number"
-									value={price}
-									onChange={(event) => setPrice(event.target.value)}
-								/>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								Target Count:{' '}
-								<input
-									type="number"
-									value={targetCount}
-									onChange={(event) => setTargetCount(event.target.value)}
-								/>
-							</label>{' '}
+									}>
+									Add Item
+								</Button>
+								<Button color="primary" onClick={() => populateDatabase(queryCache)}>
+									Populate Database
+								</Button>
+							</div>{' '}
 							<br></br>
-							<Button
-								color="primary"
-								onClick={() =>
-									addItem(
-										name,
-										category,
-										qty,
-										price,
-										targetCount,
-										isOnMenu,
-										queryCache
-									)
-								}>
-								Add Item
-							</Button>
-							<Button color="primary" onClick={() => populateDatabase(queryCache)}>
-								Populate Database
-							</Button>
-						</div>{' '}
-						<br></br>
-						<FilterableProductTable products={PRODUCTS} />
-					</Form>
+							<FilterableProductTable products={PRODUCTS} />
+							</div>
+						</Form>
+					<Footer>
+						<ul>
+							<li><a href="account">Take Me To My Account</a></li>
+							<li><a href="home">Home Page</a></li>
+							<li><a href="<Fill In>">About Dan's Bagel Shop</a></li>
+							<li><a href="<Fill In">Contact Us</a></li>
+						</ul>
+					</Footer>
 				</Background>
 			</Screen>
 		)
