@@ -63,6 +63,7 @@ export default function Navigation() {
 
 const Navbar = styled.nav`
 	position: sticky;
+	z-index: 50;
 	top: 0;
 	left: 0;
 	right: 0;
