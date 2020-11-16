@@ -2,20 +2,24 @@ import React from 'react'
 import styled from 'styled-components'
 
 type Props = {
-	text: string
+	text: string,
+	children: React$Node,
 }
 
-export default function Body({text} : Props) {
+export default function Body({ text, children }: Props) {
 	return (
-        <Paragraph className="Text">
-            {text}
-        </Paragraph>
+		<Paragraph>
+			{text}
+			{children}
+		</Paragraph>
 	)
 }
 
 const Paragraph = styled.div`
-    height: 68%;
-    font-size: 25px;
-    color: #FFFFF0;
-    margin: auto;
+	background-color: #fccb00;
+	width: 90%;
+	height: 100%;
+	font-size: 20px;
+	color: #fffff0;
+	margin: auto;
 `

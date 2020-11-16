@@ -2,9 +2,12 @@ import React from 'react'
 import Navigation from '../navigation'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Home from './home'
-import Test from './test'
+import Order from './order'
 import styled from 'styled-components'
-import ServerExample from './serverExample'
+import Account from './account'
+import Inventory from './inventory'
+import Users from './users'
+import Orders from './orders'
 
 export default function Routing() {
 	return (
@@ -14,8 +17,11 @@ export default function Routing() {
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route path="/home" component={Home} />
-					<Route path="/test" component={Test} />
-					<Route path="/serverExample" component={ServerExample} />
+					<Route path="/order" component={Order} />
+					<Route path="/account" component={Account} />
+					<Route path="/inventory" component={Inventory} />
+					<Route path="/users" component={Users} />
+					<Route path="/orders" component={Orders} />
 				</Switch>
 			</Screen>
 		</BrowserRouter>

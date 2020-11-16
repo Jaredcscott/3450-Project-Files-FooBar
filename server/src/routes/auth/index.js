@@ -64,12 +64,11 @@ router.post(
 			password,
 			(err) => {
 				if (err) {
-					console.error(err)
 					res.status(500).json({ error: 'Internal Server Error (check logs)' })
 					return
 				}
 				passport.authenticate('local')(req, res, function () {
-					res.redirect('/')
+					res.status(200).end()
 				})
 			}
 		)
@@ -77,12 +76,12 @@ router.post(
 )
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
-	res.redirect('/')
+	res.status(200).end()
 })
 
 router.get('/logout', function (req, res) {
 	req.logout()
-	res.redirect('/')
+	res.status(200).end()
 })
 
 export default router

@@ -22,7 +22,7 @@ describe('Auth Route', () => {
 					password: 'HelloWorld123',
 					verifyPassword: 'HelloWorld123',
 				})
-				.expect(302)
+				.expect(200)
 				.then((response) => {
 					expect(
 						response.headers['set-cookie'].some((cookie) =>
@@ -97,7 +97,7 @@ describe('Auth Route', () => {
 					password: 'HelloWorld123',
 					verifyPassword: 'HelloWorld123',
 				})
-				.expect(302)
+				.expect(200)
 				.then(() => {
 					return request(app)
 						.post('/auth/register')
@@ -123,7 +123,7 @@ describe('Auth Route', () => {
 					email: 'test@test.com',
 					password: 'testAccount1',
 				})
-				.expect(302)
+				.expect(200)
 				.then((response) => {
 					expect(
 						response.headers['set-cookie'].some((cookie) =>
@@ -156,7 +156,7 @@ describe('Auth Route', () => {
 
 	describe('/logout', () => {
 		it('Should login with the correct credentials', () => {
-			return request(app).get('/auth/logout').expect(302)
+			return request(app).get('/auth/logout').expect(200)
 		})
 	})
 })
