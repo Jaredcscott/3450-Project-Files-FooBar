@@ -16,6 +16,7 @@ import userRoutes from './routes/user'
 import inventoryRoutes from './routes/inventory'
 import menuRoutes from './routes/menu'
 import orderRoutes from './routes/order'
+import analyticsRoutes from './routes/analytics'
 
 const MongoStore = require('connect-mongo')(session)
 
@@ -65,6 +66,7 @@ app.use('/user', userRoutes)
 app.use('/inventory', inventoryRoutes)
 app.use('/menu', menuRoutes)
 app.use('/order', orderRoutes)
+app.use('/analytics', analyticsRoutes)
 
 app.use((req: express$Request, res: express$Response) => {
 	res.status(404)

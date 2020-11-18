@@ -138,6 +138,7 @@ router.get(
 	}
 )
 
+// post for placing an order and checking if order is valid
 router.post(
 	'/',
 	verifiedUserSignedIn,
@@ -206,6 +207,7 @@ router.get(
 	}
 )
 
+// calls calculate price if order works and returns it.
 router.post(
 	'/price',
 	verifiedUserSignedIn,
@@ -237,6 +239,7 @@ router.post(
 	}
 )
 
+// finds orders placed by the user
 router.get(
 	'/:id',
 	verifiedUserSignedIn,
@@ -264,6 +267,7 @@ const UPDATE_STATUS_VALIDATOR = validate.isObjectWith({
 	status: validate.isInEnum(ORDER_STATUS_ENUM),
 })
 
+// returns the status of the order
 router.post(
 	'/:id',
 	verifiedUserSignedIn,

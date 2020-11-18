@@ -14,6 +14,7 @@ export type InventoryItem = {|
 	quantity: number,
 	price: number,
 	onMenu: boolean,
+	_id: string,
 |}
 
 export type Order = {|

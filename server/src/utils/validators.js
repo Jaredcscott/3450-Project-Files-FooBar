@@ -102,6 +102,19 @@ export function isNumber(element: any): boolean %checks {
 }
 
 /**
+ * isNumeric - check if an element is a number type or can be converted to a number
+ *
+ * @param  {any} element - the element to check if it is or can be converted to a number type
+ * @returns boolean - true if the element is or can be converted to a number type, false otherwise
+ */
+export function isNumeric(element: any): boolean %checks {
+	return (
+		isNumber(element) ||
+		(isString(element) && element.length > 0 && !Number.isNaN(Number(element)))
+	)
+}
+
+/**
  * isGreaterOrEqualTo - check if an element is greater or equal to amount
  *
  * @param  {number} amount - check if the element is greater than or equal to amount
