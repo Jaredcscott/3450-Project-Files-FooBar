@@ -93,8 +93,8 @@ class ProductRow extends React.Component {
 			<tr>
 				<td>{name}</td>
 				<td>{product.email}</td>
-				<td>{product.balance}</td>
-				<td>{product.roles}</td>
+				<td>${ product.balance / 100}</td>
+				<td>{product.roles.join(',')}</td>
 			</tr>
 		)
 	}

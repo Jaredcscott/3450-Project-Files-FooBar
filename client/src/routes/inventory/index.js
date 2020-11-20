@@ -169,7 +169,7 @@ export default function Inventory() {
 								<label>
 									{' '}
 									<br></br>
-									isOnMenu:{' '}
+									On Menu:{' '}
 									<input
 										type="checkbox"
 										checked={isOnMenu}
@@ -527,7 +527,7 @@ class ProductRow extends React.Component {
 		return (
 			<tr>
 				<td>{name}</td>
-				<td>{product.price}</td>
+				<td>${product.price / 100}</td>
 				<td>{product.onMenu}</td>
 				<td>{product.quantity}</td>
 				<td>{product.targetCount}</td>

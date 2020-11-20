@@ -36,7 +36,7 @@ class ProfileInfo extends Component {
 					<strong>Account Name: {name}</strong>
 				</h4>
 				<h4>Email Id: {email}</h4>
-				<h4>Account Balance: {balance}</h4>
+				<h4>Account Balance: ${balance / 100}</h4>
 				<h5>Role(s): {role}</h5>
 			</section>
 		)
@@ -68,7 +68,7 @@ export default function Account() {
 								name={loggedin.data.name}
 								email={loggedin.data.email}
 								balance={loggedin.data.balance}
-								role={loggedin.data.roles}
+								role={loggedin.data.roles.join(',')}
 							/>
 							<div className="flex-container">
 								<Button
