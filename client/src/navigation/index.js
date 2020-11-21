@@ -36,9 +36,48 @@ export default function Navigation() {
 					</NavElement>
 					<NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement>
 					<NavElement onClick={() => history.replace('/users')}>Users</NavElement>
+					<NavElement onClick={() => history.replace('/cashier')}>Cashier</NavElement>
+					<NavElement onClick={() => history.replace('/chef')}>Chef</NavElement>
 				</Navbar>
 			)
-		} else {
+		}
+		else if (loggedin.data.roles.includes('CASHIER')) {
+			return (
+				<Navbar>
+					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
+					<NavElement onClick={() => history.replace('/order')}>
+						Place An Order
+					</NavElement>
+					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
+					<NavElement onClick={() => history.replace('/orders')}>
+						Order History
+					</NavElement>
+					<NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement>
+					<NavElement onClick={() => history.replace('/users')}>Users</NavElement>
+					<NavElement onClick={() => history.replace('/cashier')}>Cashier</NavElement>
+				</Navbar>
+			)
+		}
+		else if (loggedin.data.roles.includes('Chef')) {
+			return (
+				<Navbar>
+					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
+					<NavElement onClick={() => history.replace('/order')}>
+						Place An Order
+					</NavElement>
+					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
+					<NavElement onClick={() => history.replace('/orders')}>
+						Order History
+					</NavElement>
+					<NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement>
+					<NavElement onClick={() => history.replace('/users')}>Users</NavElement>
+					<NavElement onClick={() => history.replace('/chef')}>Chef</NavElement>
+				</Navbar>
+			)
+		}
+		
+		
+		else {
 			return (
 				<Navbar>
 					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>

@@ -8,6 +8,8 @@ import Account from './account'
 import Inventory from './inventory'
 import Users from './users'
 import Orders from './orders'
+import Chef from './chef'
+import Cashier from './cashier'
 
 export default function Routing() {
 	return (
@@ -22,6 +24,8 @@ export default function Routing() {
 					<Route path="/inventory" component={Inventory} />
 					<Route path="/users" component={Users} />
 					<Route path="/orders" component={Orders} />
+					<Route path="/chef" component={Chef} />
+					<Route path="/cashier" component={Cashier} />
 				</Switch>
 			</Screen>
 		</BrowserRouter>
