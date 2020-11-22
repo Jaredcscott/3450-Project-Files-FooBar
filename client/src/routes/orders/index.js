@@ -96,10 +96,44 @@ class ProductRow extends React.Component {
 				<td>{product.placedBy}</td>
 				<td>{product.price}</td>
 				<td>{product.status}</td>
+				<td><Button
+						width="250px"
+						onClick={() => addOrder(product.bagels, product.beverages)}
+						color="primary">
+						Reorder
+					</Button></td>
 			</tr>
 		)
+
 	}
 }
+
+
+function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
+	var date = new Date();
+	var currentDate = date.toISOString().slice(0,10);
+	var currentTime = date.getHours() + ':' + date.getMinutes();
+
+	var orderTime = new Date(currentDate + " " + currentTime)
+	var pickupAt = orderTime.getTime()
+	console.log(bagelList)
+	axios
+		.post('http://localhost:8100/order', {
+			bagels: bagelList,
+			beverages: beverageList,
+			pickupAt: pickupAt,
+		})
+		.then(() => {
+			console.log('successful Order')
+			window.location.reload(false);
+		})
+		.catch((err) => {
+			console.log('failed to Order')
+			console.error(err)
+		})
+}
+
+
 
 class ProductTable extends React.Component {
 	render() {
@@ -124,7 +158,8 @@ class ProductTable extends React.Component {
 						<th> Pickup At | </th>
 						<th> Placed By | </th>
 						<th> Price | </th>
-						<th> Status</th>
+						<th> Status |</th>
+						<th> Order again?</th>
 					</tr>
 				</thead>
 				<tbody>{rows}</tbody>
