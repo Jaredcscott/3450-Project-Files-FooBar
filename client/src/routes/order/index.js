@@ -279,7 +279,7 @@ function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
 	console.log({})
 	var orderTime = new Date(currentDate + " " + currentTime)
 	var pickupAt = orderTime.getTime()
-	console.log(pickupAt)
+	console.log(bagelList)
 	axios
 		.post('http://localhost:8100/order', {
 			bagels: bagelList,
