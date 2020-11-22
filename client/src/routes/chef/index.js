@@ -66,6 +66,19 @@ export default function Chef() {
 		)
 }
 
+const ORDER_STATUS = ['PLACED', 'PREPARING', 'PREPARED', 'FULFILLED', 'CANCELED', 'DID_NOT_PICKUP',]
+
+function updateOrderStatus(orderID: string, status: sting) {
+	return axios
+		.post(`http://localhost:8100/order/${orderID}`)
+		.send({ status })
+		.then((res) => {
+			window.location.reload(false);
+		})
+		.catch(() => null)
+}
+
+
 //  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
 class ProductCategoryRow extends React.Component {
 	render() {
@@ -78,18 +91,15 @@ class ProductCategoryRow extends React.Component {
 	}
 }
 
-
 class ProductRow extends React.Component {
+	
 	render() {
 		const product = this.props.product
 		const name = product.stocked ? (
 			product.name
 		) : (
 			<span style={{ color: 'red' }}>{product.name}</span>
-		)
-		
-		// const [status, setStatus] = useState(ORDER_STATUS)
-		
+		)	
 
 		return (
 			<tr>
@@ -97,21 +107,15 @@ class ProductRow extends React.Component {
 				<td>{product.bagels}</td>
 				<td>{product.placed}</td>
 				<td>{product.placedBy}</td>
-				{/* <td><label>
-						Order Status:{' '}
-						<select
-							value={status}
-							onChange={(event) => setStatus(event.target.value)}>
-							{ORDER_STATUS.map((status) => {
-								return (
-									<option key={status} value={status}>
-										{status}
-									</option>
-								)
-							})}
-						</select>
-					</label>
-				</td> */}
+				<td>{product.status}</td>
+				<td><button onClick={() =>
+										updateOrderStatus(product._id, ORDER_STATUS[2])}>
+						Mark As Preparing
+				</button></td>
+				<td><button onClick={() =>
+										updateOrderStatus(product._id, ORDER_STATUS[3])}>
+						Mark As Prepared
+				</button></td>
 			</tr>
 		)
 	}
@@ -156,3 +160,5 @@ class FilterableProductTable extends React.Component {
 		)
 	}
 }
+
+
