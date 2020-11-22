@@ -54,10 +54,10 @@ export default function Chef() {
 								<a href="home">Home Page</a>
 							</li>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>
@@ -77,27 +77,26 @@ class ProductCategoryRow extends React.Component {
 		)
 	}
 }
-
+ 
 
 class ProductRow extends React.Component {
 	render() {
+		const ORDER_STATUS = ['Placed']
 		const product = this.props.product
+		const [status, setStatus] = useState(ORDER_STATUS[0])
 		const name = product.stocked ? (
 			product.name
 		) : (
 			<span style={{ color: 'red' }}>{product.name}</span>
 		)
 		
-		// const [status, setStatus] = useState(ORDER_STATUS)
-		
-
 		return (
 			<tr>
 				<td>{product.beverages}</td>
 				<td>{product.bagels}</td>
 				<td>{product.placed}</td>
 				<td>{product.placedBy}</td>
-				{/* <td><label>
+				<td><label>
 						Order Status:{' '}
 						<select
 							value={status}
@@ -111,7 +110,7 @@ class ProductRow extends React.Component {
 							})}
 						</select>
 					</label>
-				</td> */}
+				</td> 
 			</tr>
 		)
 	}
