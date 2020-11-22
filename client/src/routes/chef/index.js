@@ -54,10 +54,10 @@ export default function Chef() {
 								<a href="home">Home Page</a>
 							</li>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>
@@ -90,23 +90,35 @@ class ProductCategoryRow extends React.Component {
 		)
 	}
 }
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> e6aff4a92a7867997beffda410c7cd52d67bc11f
 
 class ProductRow extends React.Component {
 	
 	render() {
+		const ORDER_STATUS = ['Placed']
 		const product = this.props.product
+		const [status, setStatus] = useState(ORDER_STATUS[0])
 		const name = product.stocked ? (
 			product.name
 		) : (
 			<span style={{ color: 'red' }}>{product.name}</span>
+<<<<<<< HEAD
 		)	
 
+=======
+		)
+		
+>>>>>>> e6aff4a92a7867997beffda410c7cd52d67bc11f
 		return (
 			<tr>
 				<td>{product.beverages}</td>
 				<td>{product.bagels}</td>
 				<td>{product.placed}</td>
 				<td>{product.placedBy}</td>
+<<<<<<< HEAD
 				<td>{product.status}</td>
 				<td><button onClick={() =>
 										updateOrderStatus(product._id, ORDER_STATUS[2])}>
@@ -116,6 +128,23 @@ class ProductRow extends React.Component {
 										updateOrderStatus(product._id, ORDER_STATUS[3])}>
 						Mark As Prepared
 				</button></td>
+=======
+				<td><label>
+						Order Status:{' '}
+						<select
+							value={status}
+							onChange={(event) => setStatus(event.target.value)}>
+							{ORDER_STATUS.map((status) => {
+								return (
+									<option key={status} value={status}>
+										{status}
+									</option>
+								)
+							})}
+						</select>
+					</label>
+				</td> 
+>>>>>>> e6aff4a92a7867997beffda410c7cd52d67bc11f
 			</tr>
 		)
 	}

@@ -123,6 +123,24 @@ describe('Validators', () => {
 		})
 	})
 
+	describe('isNumeric', () => {
+		it('should return true if element is number or can be converted to a number type', () => {
+			expect(validate.isNumeric(1)).toBe(true)
+			expect(validate.isNumeric(0)).toBe(true)
+			expect(validate.isNumeric(-1)).toBe(true)
+			expect(validate.isNumeric('123')).toBe(true)
+		})
+
+		it('should return false if element is not a number or can not be converted into a number type', () => {
+			expect(validate.isNumeric(undefined)).toBe(false)
+			expect(validate.isNumeric({})).toBe(false)
+			expect(validate.isNumeric([])).toBe(false)
+			expect(validate.isNumeric('123ee2')).toBe(false)
+			expect(validate.isNumeric('')).toBe(false)
+			expect(validate.isNumeric(null)).toBe(false)
+		})
+	})
+
 	describe('isBoolean', () => {
 		it('should return true if element is a boolean type', () => {
 			expect(validate.isBoolean(true)).toBe(true)

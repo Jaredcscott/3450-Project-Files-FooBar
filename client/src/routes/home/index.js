@@ -224,7 +224,7 @@ export default function Home() {
 					<Footer>
 						<ul>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
 								<a href="contact">Contact Us</a>

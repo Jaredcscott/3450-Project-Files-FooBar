@@ -23,7 +23,7 @@ function getSignedInUser() {
 
 const ONE_SECOND = 1000 // ms
 
-export default function Contact() {
+export default function About() {
 	const loggedin = useQuery('user', getSignedInUser, {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
@@ -36,47 +36,41 @@ export default function Contact() {
 	const [verify, setVerifyPassword] = useState({})
 	const [name, setName] = useState('')
 
-		return (
-			<Screen>
-				<Background>
-					<Header text="Who is Dan?"></Header>
-					<Form>
-						<div
-							className="flex-container"
-							style={{
-								'padding-top': '5px',
-								'margin-top': '50px',
-								margin: 'auto',
-								'font-size': '25px',
-							}}>
-							<div className="flex-child">
-								<h2 style={{ 'text-shadow': '3px 3px 5px blue' }}>
-									Fill In
-                                </h2>
-								<div className="flex-container">
-								</div>
-							</div>
-						</div>
-					</Form>
-					<Footer>
-						<ul>
-							<li>
-								<a href="account">Take Me To My Account</a>
-							</li>
-							<li>
-								<a href="order">Place An Order</a>
-							</li>
-							<li>
-								<a href="about">About Dan's Bagel Shop</a>
-							</li>
-							<li>
-								<a href="home">Home</a>
-							</li>
-						</ul>
-					</Footer>
-				</Background>
-			</Screen>
-        )
+    return (
+        <Screen>
+            <Background>
+                <Header text="Who is Dan?"></Header>
+                <Form>
+                    <div
+                        className="flex-container"
+                        style={{
+                            'padding-top': '5px',
+                            'margin-top': '50px',
+                            margin: 'auto',
+                            'font-size': '25px',
+                        }}>
+                        <div className="flex-child">
+                            <h2 style={{ 'text-shadow': '3px 3px 5px blue' }}>
+                                Fill In
+                            </h2>
+                            <div className="flex-container">
+                            </div>
+                        </div>
+                    </div>
+                </Form>
+                <Footer>
+                    <ul>
+                        <li>
+                            <a href="home">Home</a>
+                        </li>
+                        <li>
+                            <a href="contact">Contact Us</a>
+                        </li>
+                    </ul>
+                </Footer>
+            </Background>
+        </Screen>
+    )
 }
 
 function logout() {
