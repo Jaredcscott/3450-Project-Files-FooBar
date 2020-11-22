@@ -128,10 +128,10 @@ export default function Home() {
 								<a href="order">Place An Order</a>
 							</li>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>
@@ -227,7 +227,7 @@ export default function Home() {
 								<a href="<Fill In>">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>
