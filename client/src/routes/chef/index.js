@@ -30,7 +30,7 @@ export default function Chef() {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
-
+	
 	const queryCache = useQueryCache()
 	const PRODUCTS = orders.data
 	console.log(orders)
@@ -78,6 +78,7 @@ class ProductCategoryRow extends React.Component {
 	}
 }
 
+
 class ProductRow extends React.Component {
 	render() {
 		const product = this.props.product
@@ -86,16 +87,31 @@ class ProductRow extends React.Component {
 		) : (
 			<span style={{ color: 'red' }}>{product.name}</span>
 		)
+		
+		// const [status, setStatus] = useState(ORDER_STATUS)
+		
 
 		return (
 			<tr>
 				<td>{product.beverages}</td>
 				<td>{product.bagels}</td>
 				<td>{product.placed}</td>
-				<td>{product.pickupAt}</td>
 				<td>{product.placedBy}</td>
-				<td>{product.price}</td>
-				<td>{product.status}</td>
+				{/* <td><label>
+						Order Status:{' '}
+						<select
+							value={status}
+							onChange={(event) => setStatus(event.target.value)}>
+							{ORDER_STATUS.map((status) => {
+								return (
+									<option key={status} value={status}>
+										{status}
+									</option>
+								)
+							})}
+						</select>
+					</label>
+				</td> */}
 			</tr>
 		)
 	}
@@ -121,9 +137,7 @@ class ProductTable extends React.Component {
 						<th>Beverages | </th>
 						<th> Bagels | </th>
 						<th> Placed | </th>
-						<th> Pickup At | </th>
 						<th> Placed By | </th>
-						<th> Price | </th>
 						<th> Status</th>
 					</tr>
 				</thead>

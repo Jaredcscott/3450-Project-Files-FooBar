@@ -92,11 +92,14 @@ class ProductRow extends React.Component {
 				<td>{product.beverages}</td>
 				<td>{product.bagels}</td>
 				<td>{product.placed}</td>
-				<td>{product.pickupAt}</td>
+				<td><input type="time" id="time" value={product.pickupAt}></input>
+					<input type="date" id="date" value={product.pickupAt}></input></td>
 				<td>{product.placedBy}</td>
 				<td>{product.price}</td>
 				<td>{product.status}</td>
+				<button>Mark Order Complete</button>
 			</tr>
+			
 		)
 	}
 }

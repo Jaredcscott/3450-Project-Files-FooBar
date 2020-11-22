@@ -33,6 +33,7 @@ const OrderSchema = new Schema(
 			type: String,
 			enum: ORDER_STATUS_ENUM,
 			default: ORDER_STATUS.PLACED,
+			required: true,
 		},
 		placedBy: { type: ObjectId, required: true },
 	},
