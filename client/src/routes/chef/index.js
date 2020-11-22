@@ -66,8 +66,6 @@ export default function Chef() {
 		)
 }
 
-const ORDER_STATUS = ['PLACED', 'PREPARING', 'PREPARED', 'FULFILLED', 'CANCELED', 'DID_NOT_PICKUP',]
-
 function updateOrderStatus(orderID: string, status: sting) {
 	return axios
 		.post(`http://localhost:8100/order/${orderID}`)
@@ -90,61 +88,34 @@ class ProductCategoryRow extends React.Component {
 		)
 	}
 }
-<<<<<<< HEAD
-=======
  
->>>>>>> e6aff4a92a7867997beffda410c7cd52d67bc11f
 
 class ProductRow extends React.Component {
 	
 	render() {
 		const ORDER_STATUS = ['Placed']
 		const product = this.props.product
-		const [status, setStatus] = useState(ORDER_STATUS[0])
 		const name = product.stocked ? (
 			product.name
 		) : (
 			<span style={{ color: 'red' }}>{product.name}</span>
-<<<<<<< HEAD
-		)	
-
-=======
 		)
 		
->>>>>>> e6aff4a92a7867997beffda410c7cd52d67bc11f
 		return (
 			<tr>
 				<td>{product.beverages}</td>
 				<td>{product.bagels}</td>
 				<td>{product.placed}</td>
 				<td>{product.placedBy}</td>
-<<<<<<< HEAD
 				<td>{product.status}</td>
 				<td><button onClick={() =>
-										updateOrderStatus(product._id, ORDER_STATUS[2])}>
+										updateOrderStatus(product._id, 'PREPARING')}>
 						Mark As Preparing
 				</button></td>
 				<td><button onClick={() =>
-										updateOrderStatus(product._id, ORDER_STATUS[3])}>
+										updateOrderStatus(product._id, 'PREPARED')}>
 						Mark As Prepared
 				</button></td>
-=======
-				<td><label>
-						Order Status:{' '}
-						<select
-							value={status}
-							onChange={(event) => setStatus(event.target.value)}>
-							{ORDER_STATUS.map((status) => {
-								return (
-									<option key={status} value={status}>
-										{status}
-									</option>
-								)
-							})}
-						</select>
-					</label>
-				</td> 
->>>>>>> e6aff4a92a7867997beffda410c7cd52d67bc11f
 			</tr>
 		)
 	}
