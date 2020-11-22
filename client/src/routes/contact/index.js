@@ -90,6 +90,54 @@ export default function Contact() {
 			</Screen>
         )
 	}
+    else {
+        return (
+			<Screen>
+				<Background>
+					<Header text="Whats On Your Mind? "></Header>
+					<Form>
+						<div
+							className="flex-container"
+							style={{
+								'padding-top': '5px',
+								'margin-top': '50px',
+								margin: 'auto',
+								'font-size': '25px',
+							}}>
+							<div className="flex-child">
+								<h2 style={{ 'text-shadow': '3px 3px 5px blue' }}>
+									To Contact Us Fill Out This Form
+								</h2>
+								<div className="flex-container">
+                                <div className="email">
+								<input
+									type="text"
+									id="email"
+									placeholder="Email"
+									value={email}
+									autoFocus="1"
+									aria-label="Email"
+									style={{ width: '350px', height: '30px' }}
+								/>
+							</div>
+								</div>
+							</div>
+						</div>
+					</Form>
+					<Footer>
+						<ul>
+							<li>
+								<a href="about">About Dan's Bagel Shop</a>
+							</li>
+							<li>
+								<a href="home">Home</a>
+							</li>
+						</ul>
+					</Footer>
+				</Background>
+			</Screen>
+        )
+    }
 }
 
 function logout() {

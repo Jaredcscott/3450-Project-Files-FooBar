@@ -10,6 +10,8 @@ import Users from './users'
 import Orders from './orders'
 import Chef from './chef'
 import Cashier from './cashier'
+import About from './about'
+import Contact from './contact'
 
 export default function Routing() {
 	return (
@@ -26,6 +28,9 @@ export default function Routing() {
 					<Route path="/orders" component={Orders} />
 					<Route path="/chef" component={Chef} />
 					<Route path="/cashier" component={Cashier} />
+					<Route path="/about" component={About} />
+					<Route path="/contact" component={Contact} />
+
 				</Switch>
 			</Screen>
 		</BrowserRouter>
