@@ -16,6 +16,10 @@ import produce from 'immer'
 
 import axios from 'axios'
 
+var date = new Date();
+var currentDate = date.toISOString().slice(0,10);
+var currentTime = date.getHours() + ':' + date.getMinutes();
+
 export default function Order() {
 	const info = useQuery('menu', getMenu)
 
@@ -224,13 +228,13 @@ export default function Order() {
 							</ul>
 							<p>
 								I would like my order to be ready at
-								<input type="time" id="time"></input>
+								<input type="time" id="time" value={currentTime}></input>
 								on
-								<input type="date" id="date"></input>
+								<input type="date" id="date" value={currentDate}></input>
 							</p>
 							<Button
 								width="250px"
-								onClick={() => addOrder(null, null, null)}
+								onClick={() => addOrder(orderBagels, orderBeverages)}
 								color="primary">
 								Place Order
 							</Button>
@@ -271,8 +275,11 @@ function getMenu() {
 		.catch(() => null)
 }
 
-function addOrder(bagelList: list, beverageList: list, pickupAt: string, queryCache: any) {
+function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
 	console.log({})
+	var orderTime = new Date(currentDate + " " + currentTime)
+	var pickupAt = orderTime.getTime()
+	console.log(bagelList)
 	axios
 		.post('http://localhost:8100/order', {
 			bagels: bagelList,
