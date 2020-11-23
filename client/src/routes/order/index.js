@@ -16,10 +16,6 @@ import produce from 'immer'
 
 import axios from 'axios'
 
-var date = new Date()
-var currentDate = date.toISOString().slice(0, 10)
-var currentTime = date.getHours() + ':' + date.getMinutes()
-
 export default function Order() {
 	const info = useQuery('menu', getMenu)
 
@@ -27,6 +23,15 @@ export default function Order() {
 		{ bagel: string, toppings: (?string)[], smears: (?string)[] }[]
 	>([])
 	const [orderBeverages, setOrderBeverages] = useState<string[]>([])
+	const [currentDate, setCurrentDate] = useState(() => {
+		const today = new Date()
+		return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getUTCDate()}`
+	})
+
+	const [currentTime, setCurrentTime] = useState(() => {
+		const today = new Date()
+		return `${today.getHours()}:${today.getMinutes()}`
+	})
 
 	if (!info.data) {
 		return <div>Loading</div>
@@ -228,13 +233,27 @@ export default function Order() {
 							</ul>
 							<p>
 								I would like my order to be ready at
-								<input type="time" id="time" value={currentTime}></input>
+								<input
+									type="time"
+									id="time"
+									value={currentTime}
+									onChange={(event) =>
+										setCurrentTime(event.target.value)
+									}></input>
 								on
-								<input type="date" id="date" value={currentDate}></input>
+								<input
+									type="date"
+									id="date"
+									value={currentDate}
+									onChange={(event) =>
+										setCurrentDate(event.target.value)
+									}></input>
 							</p>
 							<Button
 								width="250px"
-								onClick={() => addOrder(orderBagels, orderBeverages)}
+								onClick={() =>
+									addOrder(orderBagels, orderBeverages, currentDate, currentTime)
+								}
 								color="primary">
 								Place Order
 							</Button>
@@ -275,11 +294,14 @@ function getMenu() {
 		.catch(() => null)
 }
 
-function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
-	console.log({})
-	var orderTime = new Date(currentDate + ' ' + currentTime)
-	var pickupAt = orderTime.getTime()
-	console.log(bagelList)
+function addOrder(
+	bagelList: Array,
+	beverageList: Array,
+	date: string,
+	time: string,
+	queryCache: any
+) {
+	var pickupAt = new Date(date + ' ' + time).getTime()
 	axios
 		.post('http://localhost:8100/order', {
 			bagels: bagelList
