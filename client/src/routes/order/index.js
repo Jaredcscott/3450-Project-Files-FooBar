@@ -16,9 +16,9 @@ import produce from 'immer'
 
 import axios from 'axios'
 
-var date = new Date();
-var currentDate = date.toISOString().slice(0,10);
-var currentTime = date.getHours() + ':' + date.getMinutes();
+var date = new Date()
+var currentDate = date.toISOString().slice(0, 10)
+var currentTime = date.getHours() + ':' + date.getMinutes()
 
 export default function Order() {
 	const info = useQuery('menu', getMenu)
@@ -277,13 +277,23 @@ function getMenu() {
 
 function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
 	console.log({})
-	var orderTime = new Date(currentDate + " " + currentTime)
+	var orderTime = new Date(currentDate + ' ' + currentTime)
 	var pickupAt = orderTime.getTime()
 	console.log(bagelList)
 	axios
 		.post('http://localhost:8100/order', {
-			bagels: bagelList,
-			beverages: beverageList,
+			bagels: bagelList
+				.filter((bagelOrder) => bagelOrder.bagel)
+				.map((bagelOrder) => {
+					return {
+						bagel: bagelOrder.bagel,
+						toppings: [
+							...bagelOrder.toppings.filter((item) => item),
+							...bagelOrder.smears.filter((item) => item),
+						],
+					}
+				}),
+			beverages: beverageList.filter((item) => item),
 			pickupAt: pickupAt,
 		})
 		.then(() => {
