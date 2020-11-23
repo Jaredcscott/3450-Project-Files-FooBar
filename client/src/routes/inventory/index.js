@@ -141,8 +141,8 @@ export default function Inventory() {
 				<Background>
 					<Header text="Inventory"></Header>
 					<Form>
-						<div style={{ 'margin-top': '25px', 'margin-bottom': '25px' }}>
-							<div style={{ width: '80%', 'text-shadow': '3px 3px 5px blue' }}>
+						<div style={{ marginTop: '25px', marginBottom: '25px' }}>
+							<div style={{ width: '80%', textShadow: '3px 3px 5px blue' }}>
 								<label>
 									Name:{' '}
 									<input
@@ -348,6 +348,8 @@ function updateItem(
 		})
 }
 
+function none() {}
+
 var default_inventory = [
 	{ name: 'Plain', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
 	{ name: 'Onion', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
@@ -510,7 +512,9 @@ class ProductCategoryRow extends React.Component {
 		const category = this.props.category
 		return (
 			<tr>
-				<th colSpan="2">{category}</th>
+				<th colSpan="2" style={{ fontSize: '30px' }}>
+					{category}
+				</th>
 			</tr>
 		)
 	}
@@ -520,25 +524,25 @@ class ProductRow extends React.Component {
 	render() {
 		const product = this.props.product
 		const name = product.stocked ? (
-			product.name
+			<span>product.name</span>
 		) : (
-			<span style={{ color: 'red' }}>{product.name}</span>
+			<span style={{ color: 'red', fontSize: '25px' }}>{product.name}</span>
 		)
 
 		return (
 			<tr>
 				<td>{name}</td>
 				<td>
-					$<input type="number" value={product.price / 100}></input>
+					$<input type="number" value={product.price / 100} onChange={none}></input>
 				</td>
 				<td>
-					<input type="boolean" value={product.onMenu}></input>
+					<input type="boolean" value={product.onMenu} onChange={none}></input>
 				</td>
 				<td>
-					<input type="number" value={product.quantity}></input>
+					<input type="number" value={product.quantity} onChange={none}></input>
 				</td>
 				<td>
-					<input type="number" value={product.targetCount}></input>
+					<input type="number" value={product.targetCount} onChange={none}></input>
 				</td>
 			</tr>
 		)
@@ -548,25 +552,36 @@ class ProductRow extends React.Component {
 class ProductTable extends React.Component {
 	render() {
 		const rows = []
+		const categories = []
 		let lastCategory = null
+		console.log(this.props.products)
 
+		this.props.products.sort((product1, product2) =>
+			String(product1.category).localeCompare(String(product2.category))
+		)
 		this.props.products.forEach((product) => {
 			if (product.category !== lastCategory) {
-				rows.push(<ProductCategoryRow category={product.category} key={product.category} />)
+				// categories.push(product.category)
+				rows.push(
+					<ProductCategoryRow
+						category={product.category}
+						key={product.category + ' ' + product.name}
+					/>
+				)
 			}
 			rows.push(<ProductRow product={product} key={product._id} />)
 			lastCategory = product.category
 		})
 
 		return (
-			<table>
+			<table style={{ fontSize: '30px' }}>
 				<thead>
 					<tr>
-						<th>Name |</th>
-						<th> Price |</th>
-						<th> On Menu |</th>
-						<th> Quantity |</th>
-						<th> Target Count</th>
+						<th> Name </th>
+						<th> Price </th>
+						<th> On Menu </th>
+						<th> Quantity </th>
+						<th> Target Count </th>
 					</tr>
 				</thead>
 				<tbody>{rows}</tbody>
@@ -591,7 +606,7 @@ class SearchBar extends React.Component {
 class FilterableProductTable extends React.Component {
 	render() {
 		return (
-			<div style={{ 'text-shadow': '3px 3px 5px blue' }}>
+			<div style={{ textShadow: '3px 3px 5px blue' }}>
 				<SearchBar />
 				<ProductTable products={this.props.products} />
 			</div>

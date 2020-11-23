@@ -15,8 +15,8 @@ var phantom = {
 export default function Footer({ children }: Props) {
 	return (
 		<Content>
-			<div className="flex-container" style={{ 'padding-top': '5px' }}>
-				<div className="flex-child" style={{ 'padding-top': '15px' }}>
+			<div className="flex-container" style={{ 'paddingTop': '5px' }}>
+				<div className="flex-child" style={{ 'paddingTop': '15px' }}>
 					{children}
 				</div>
 				<div style={{ margin: '20px' }}>

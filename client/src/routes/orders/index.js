@@ -120,7 +120,6 @@ function Order({
 		bagels: Array<{ bagel: OrderItem, toppings: Array<OrderItem> }>,
 	},
 }) {
-	console.log(order.beverages)
 	return (
 		<OrderWrapper>
 			<OrderHeader>
