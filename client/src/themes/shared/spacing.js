@@ -4,4 +4,5 @@ export default {
 	normal: '4px',
 	large: '8px',
 	veryLarge: '16px',
+	indent: '5vw',
 }

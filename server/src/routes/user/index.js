@@ -112,7 +112,9 @@ router.get(
 
 router.get(
 	'/:id',
-	verifyUserHasRole(([ROLES.ADMIN, ROLES.MANAGER]: any)),
+	verifyUserHasRole(
+		([ROLES.ADMIN, ROLES.MANAGER, ROLES.CASHIER, ROLES.CHEF]: any)
+	),
 	async (
 		req: AuthenticatedUserRequest<{}, {| id: string |}>,
 		res: express$Response
