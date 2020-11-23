@@ -84,7 +84,7 @@ class ProductRow extends React.Component {
 		const name = product.stocked ? (
 			product.name
 		) : (
-			<span style={{ color: 'red' }}>{product.name}</span>
+			<span style={{ color: 'red'}}>{product.name}</span>
 		)
 
 		return (
@@ -118,19 +118,19 @@ function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
 	var pickupAt = orderTime.getTime()
 	console.log(bagelList)
 	axios
-		.post('http://localhost:8100/order', {
-			bagels: bagelList,
-			beverages: beverageList,
-			pickupAt: pickupAt,
-		})
-		.then(() => {
-			console.log('successful Order')
-			window.location.reload(false);
-		})
-		.catch((err) => {
-			console.log('failed to Order')
-			console.error(err)
-		})
+	.post('http://localhost:8100/order', {
+		bagels: bagelList,
+		beverages: beverageList,
+		pickupAt: pickupAt,
+	})
+	.then(() => {
+		console.log('successful Order')
+		window.location.reload(false);
+	})
+	.catch((err) => {
+		console.log('failed to Order')
+		console.error(err)
+	})
 }
 
 

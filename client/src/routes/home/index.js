@@ -100,7 +100,7 @@ export default function Home() {
 									'border-width': '15px',
 									'text-shadow': '3px 3px 5px blue',
 								}}>
-								<Body text="'Dan's Bagel Shop has the best shmears!'-Sheldon Jones">
+								<Body text="'Dan's Bagel Shop has the best smears!'-Sheldon Jones">
 									<img
 										src={man}
 										className="photo"
