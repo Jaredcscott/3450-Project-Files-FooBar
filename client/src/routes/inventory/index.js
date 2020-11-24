@@ -256,7 +256,7 @@ export default function Inventory() {
 		)
 }
 
-const INVENTORY_ITEM_CATEGORIES = ['BEVERAGE', 'SAMMICHE_TOPPINGS', 'SMEAR', 'BAGEL']
+const INVENTORY_ITEM_CATEGORIES = ['BEVERAGE', 'SAMMICHE TOPPINGS', 'SMEAR', 'BAGEL']
 
 function addItem(
 	name: string,
@@ -357,31 +357,31 @@ function none(
 var default_inventory = [
 	{ name: 'Plain', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
 	{ name: 'Onion', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{ name: 'Cinnamon raisin', category: 'BAGEL', quantity: 100,price: 200,onMenu: true,targetCount: 50},
+	{ name: 'Cinnamon Raisin', category: 'BAGEL', quantity: 100,price: 200,onMenu: true,targetCount: 50 },
 	{ name: 'Sesame', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
 	{ name: 'Cheesy', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{name: 'Pumpernickel',category: 'BAGEL',quantity: 100,price: 200,onMenu: true,targetCount: 50,},
+	{ name: 'Pumpernickel',category: 'BAGEL',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
 
 	{ name: 'Plain', category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
-	{name: 'Honey_nut',category: 'SMEAR',quantity: 100,price: 100,onMenu: true,targetCount: 50,},
-	{name: 'Strawberry',category: 'SMEAR',quantity: 100,price: 100,onMenu: true,targetCount: 50,},
-	{name: 'French_onion',category: 'SMEAR',quantity: 100,price: 100,onMenu: true,targetCount: 50,},
+	{ name: 'Honey Nut',category: 'SMEAR',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
+	{ name: 'Strawberry',category: 'SMEAR',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
+	{ name: 'French Onion',category: 'SMEAR',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
 
-	{name: 'Bacon',category: 'SAMMICHE_TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50,},
-	{name: 'Egg',category: 'SAMMICHE_TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50,},
-	{name: 'Cheese',category: 'SAMMICHE_TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50,},
-	{name: 'Sausage',category: 'SAMMICHE_TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50,},
-	{name: 'Avocado',category: 'SAMMICHE_TOPPINGS',quantity: 100,price: 1000,onMenu: true,targetCount: 50,},
-	{name: 'Turkey',category: 'SAMMICHE_TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50,},
-	{name: 'Ham',category: 'SAMMICHE_TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50,},
-	{name: 'Spinach',category: 'SAMMICHE_TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50,},
-	{name: 'Tomato',category: 'SAMMICHE_TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50,},
-	{name: 'Lox',category: 'SAMMICHE_TOPPINGS',quantity: 100,price: 1000,onMenu: true,targetCount: 50,},
+	{ name: 'Bacon',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
+	{ name: 'Egg',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
+	{ name: 'Cheese',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
+	{ name: 'Sausage',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
+	{ name: 'Avocado',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 1000,onMenu: true,targetCount: 50 },
+	{ name: 'Turkey',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
+	{ name: 'Ham',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
+	{ name: 'Spinach',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
+	{ name: 'Tomato',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
+	{ name: 'Lox',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 1000,onMenu: true,targetCount: 50 },
 
-	{name: 'Coffee',category: 'BEVERAGE',quantity: 100,price: 200,onMenu: true,targetCount: 50,},
-	{name: 'Milk',category: 'BEVERAGE',quantity: 100,price: 200,onMenu: true,targetCount: 50,},
+	{ name: 'Coffee',category: 'BEVERAGE',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
+	{ name: 'Milk',category: 'BEVERAGE',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
 	{ name: 'OJ', category: 'BEVERAGE', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{name: 'Water',category: 'BEVERAGE',quantity: 100,price: 500,onMenu: true,targetCount: 50,},
+	{ name: 'Water',category: 'BEVERAGE',quantity: 100,price: 500,onMenu: true,targetCount: 50 },
 ]
 
 //  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
@@ -421,7 +421,6 @@ class ProductRow extends React.Component {
 class ProductTable extends React.Component {
 	render() {
 		const rows = []
-		const categories = []
 		let lastCategory = null
 		console.log(this.props.products)
 
@@ -431,7 +430,6 @@ class ProductTable extends React.Component {
 		this.props.products.forEach((product) => {
 			
 			if (product.category !== lastCategory) {
-				//categories.push(product.category)
 				rows.push(<ProductCategoryRow category={product.category} key={product.category + " " + product.name} />)
 			}
 			rows.push(<ProductRow product={product} key={product._id} />)
@@ -439,7 +437,7 @@ class ProductTable extends React.Component {
 		})
 
 		return (
-			<table style={{'fontSize':'30px'}}>
+			<table style={{'fontSize':'30px', 'textAlign':'left'}}>
 				<thead>
 					<tr>
 						<th> Name </th>
