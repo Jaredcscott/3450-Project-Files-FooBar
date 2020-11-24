@@ -141,8 +141,8 @@ export default function Inventory() {
 				<Background>
 					<Header text="Inventory"></Header>
 					<Form>
-						<div style={{ 'marginTop': '25px', 'marginBottom': '25px' }}>
-							<div style={{ width: '80%', 'textShadow': '3px 3px 5px blue' }}>
+						<div style={{ marginTop: '25px', marginBottom: '25px' }}>
+							<div style={{ width: '80%', textShadow: '3px 3px 5px blue' }}>
 								<label>
 									Name:{' '}
 									<input
@@ -230,9 +230,7 @@ export default function Inventory() {
 							</div>{' '}
 							<br></br>
 							<FilterableProductTable products={PRODUCTS} />
-							<button>
-								Save This inventory
-							</button>
+							<button>Save This inventory</button>
 						</div>
 					</Form>
 					<Footer>
@@ -350,38 +348,162 @@ function updateItem(
 		})
 }
 
-function none(
-){
-}
+function none() {}
 
 var default_inventory = [
 	{ name: 'Plain', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
 	{ name: 'Onion', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{ name: 'Cinnamon Raisin', category: 'BAGEL', quantity: 100,price: 200,onMenu: true,targetCount: 50 },
+	{
+		name: 'Cinnamon raisin',
+		category: 'BAGEL',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
 	{ name: 'Sesame', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
 	{ name: 'Cheesy', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{ name: 'Pumpernickel',category: 'BAGEL',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
+	{
+		name: 'Pumpernickel',
+		category: 'BAGEL',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
 
 	{ name: 'Plain', category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
-	{ name: 'Honey Nut',category: 'SMEAR',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
-	{ name: 'Strawberry',category: 'SMEAR',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
-	{ name: 'French Onion',category: 'SMEAR',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
+	{
+		name: 'Honey Nut',
+		category: 'SMEAR',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Strawberry',
+		category: 'SMEAR',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'French Onion',
+		category: 'SMEAR',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
 
-	{ name: 'Bacon',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
-	{ name: 'Egg',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
-	{ name: 'Cheese',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
-	{ name: 'Sausage',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
-	{ name: 'Avocado',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 1000,onMenu: true,targetCount: 50 },
-	{ name: 'Turkey',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
-	{ name: 'Ham',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
-	{ name: 'Spinach',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
-	{ name: 'Tomato',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 100,onMenu: true,targetCount: 50 },
-	{ name: 'Lox',category: 'SAMMICHE TOPPINGS',quantity: 100,price: 1000,onMenu: true,targetCount: 50 },
+	{
+		name: 'Bacon',
+		category: 'SAMMICHE TOPPINGS',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Egg',
+		category: 'SAMMICHETOPPINGS',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Cheese',
+		category: 'SAMMICHE TOPPINGS',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Sausage',
+		category: 'SAMMICHE TOPPINGS',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Avocado',
+		category: 'SAMMICHE TOPPINGS',
+		quantity: 100,
+		price: 1000,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Turkey',
+		category: 'SAMMICHE TOPPINGS',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Ham',
+		category: 'SAMMICHE TOPPINGS',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Spinach',
+		category: 'SAMMICHE TOPPINGS',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Tomato',
+		category: 'SAMMICHE TOPPINGS',
+		quantity: 100,
+		price: 100,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Lox',
+		category: 'SAMMICHE TOPPINGS',
+		quantity: 100,
+		price: 1000,
+		onMenu: true,
+		targetCount: 50,
+	},
 
-	{ name: 'Coffee',category: 'BEVERAGE',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
-	{ name: 'Milk',category: 'BEVERAGE',quantity: 100,price: 200,onMenu: true,targetCount: 50 },
+	{
+		name: 'Coffee',
+		category: 'BEVERAGE',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
+	{
+		name: 'Milk',
+		category: 'BEVERAGE',
+		quantity: 100,
+		price: 200,
+		onMenu: true,
+		targetCount: 50,
+	},
 	{ name: 'OJ', category: 'BEVERAGE', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{ name: 'Water',category: 'BEVERAGE',quantity: 100,price: 500,onMenu: true,targetCount: 50 },
+	{
+		name: 'Water',
+		category: 'BEVERAGE',
+		quantity: 100,
+		price: 500,
+		onMenu: true,
+		targetCount: 50,
+	},
 ]
 
 //  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
@@ -390,7 +512,9 @@ class ProductCategoryRow extends React.Component {
 		const category = this.props.category
 		return (
 			<tr>
-				<th colSpan="2" style={{'fontSize':'30px'}}>{category}</th>
+				<th colSpan="2" style={{ fontSize: '30px' }}>
+					{category}
+				</th>
 			</tr>
 		)
 	}
@@ -402,17 +526,24 @@ class ProductRow extends React.Component {
 		const name = product.stocked ? (
 			<span>product.name</span>
 		) : (
-			<span style={{ color: 'red' , 'fontSize':'25px'}}>{product.name}</span>
+			<span style={{ color: 'red', fontSize: '25px' }}>{product.name}</span>
 		)
 
 		return (
-			
 			<tr>
 				<td>{name}</td>
-				<td>$<input type="number" value={product.price / 100} onChange={none}></input></td>
-				<td><input type="boolean" value={product.onMenu} onChange={none}></input></td>
-				<td><input type="number" value={product.quantity} onChange={none}></input></td>
-				<td><input type="number" value={product.targetCount} onChange={none}></input></td>
+				<td>
+					$<input type="number" value={product.price / 100} onChange={none}></input>
+				</td>
+				<td>
+					<input type="boolean" value={product.onMenu} onChange={none}></input>
+				</td>
+				<td>
+					<input type="number" value={product.quantity} onChange={none}></input>
+				</td>
+				<td>
+					<input type="number" value={product.targetCount} onChange={none}></input>
+				</td>
 			</tr>
 		)
 	}
@@ -425,19 +556,32 @@ class ProductTable extends React.Component {
 		console.log(this.props.products)
 
 		this.props.products.sort((product1, product2) =>
-            String(product1.category).localeCompare(String(product2.category))
-        )
+			String(product1.category).localeCompare(String(product2.category))
+		)
 		this.props.products.forEach((product) => {
-			
 			if (product.category !== lastCategory) {
+<<<<<<< HEAD
 				rows.push(<ProductCategoryRow category={product.category} key={product.category + " " + product.name} />)
+=======
+				// categories.push(product.category)
+				rows.push(
+					<ProductCategoryRow
+						category={product.category}
+						key={product.category + ' ' + product.name}
+					/>
+				)
+>>>>>>> 604f2431e834c5968584ddc99df3b4d269ccd935
 			}
 			rows.push(<ProductRow product={product} key={product._id} />)
 			lastCategory = product.category
 		})
 
 		return (
+<<<<<<< HEAD
 			<table style={{'fontSize':'30px', 'textAlign':'left'}}>
+=======
+			<table style={{ fontSize: '30px' }}>
+>>>>>>> 604f2431e834c5968584ddc99df3b4d269ccd935
 				<thead>
 					<tr>
 						<th> Name </th>
@@ -469,7 +613,7 @@ class SearchBar extends React.Component {
 class FilterableProductTable extends React.Component {
 	render() {
 		return (
-			<div style={{ 'textShadow': '3px 3px 5px blue' }}>
+			<div style={{ textShadow: '3px 3px 5px blue' }}>
 				<SearchBar />
 				<ProductTable products={this.props.products} />
 			</div>
