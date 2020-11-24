@@ -553,35 +553,24 @@ class ProductTable extends React.Component {
 	render() {
 		const rows = []
 		let lastCategory = null
-		console.log(this.props.products)
-
 		this.props.products.sort((product1, product2) =>
 			String(product1.category).localeCompare(String(product2.category))
 		)
 		this.props.products.forEach((product) => {
 			if (product.category !== lastCategory) {
-<<<<<<< HEAD
-				rows.push(<ProductCategoryRow category={product.category} key={product.category + " " + product.name} />)
-=======
-				// categories.push(product.category)
 				rows.push(
 					<ProductCategoryRow
 						category={product.category}
 						key={product.category + ' ' + product.name}
 					/>
 				)
->>>>>>> 604f2431e834c5968584ddc99df3b4d269ccd935
 			}
 			rows.push(<ProductRow product={product} key={product._id} />)
 			lastCategory = product.category
 		})
 
 		return (
-<<<<<<< HEAD
 			<table style={{'fontSize':'30px', 'textAlign':'left'}}>
-=======
-			<table style={{ fontSize: '30px' }}>
->>>>>>> 604f2431e834c5968584ddc99df3b4d269ccd935
 				<thead>
 					<tr>
 						<th> Name </th>
