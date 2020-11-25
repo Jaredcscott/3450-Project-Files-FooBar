@@ -161,19 +161,19 @@ function Order({
 					</Grouping>
 				</>
 			) : null}
-			<Button
+			<Button style={{ 'padding-left': '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'FULFILLED')}
 				color="primary">
 				Mark Order Complete
 			</Button>
-			<Button
+			<Button style={{ 'padding-left': '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'CANCELED')}
 				color="primary">
 				Mark Order Cancelled
 			</Button>
-			<Button
+			<Button style={{ 'padding-left': '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'DID_NOT_PICKUP')}
 				color="primary">
