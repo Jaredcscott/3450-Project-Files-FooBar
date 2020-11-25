@@ -54,8 +54,13 @@ export default function Account() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [name, setName] = useState('')
+
+	const [currentPassword, setCurrentPassword] = useState('')
+	const [newPassword, setNewPassword] = useState('')
 	const [verifyPassword, setVerifyPassword] = useState('')
 	const queryCache = useQueryCache()
+
+	
 
 	if (loggedin.data) {
 		return (
@@ -70,6 +75,20 @@ export default function Account() {
 								balance={loggedin.data.balance}
 								role={loggedin.data.roles.join(',')}
 							/>
+							<div>
+								Current Password:<input type="text" value={currentPassword}
+									onChange={(event) => setCurrentPassword(event.target.value)}></input>
+							</div>
+							<div>
+								New Password:<input type="text" value={newPassword}
+									onChange={(event) => setNewPassword(event.target.value)}>
+									
+								</input>
+								Verify New Password:<input type="text" value={verifyPassword}
+									onChange={(event) => setVerifyPassword(event.target.value)}>
+									
+									</input>
+							</div>
 							<div className="flex-container">
 								<Button
 									color="primary"
@@ -94,6 +113,15 @@ export default function Account() {
 										}}>
 										Order History
 									</Button>
+								</div>
+								<div style={{ 'padding-left': '25px' }}>
+								<Button
+										color="primary"
+										onClick={() => {
+											resetPassword(loggedin.data.name, currentPassword, newPassword, verifyPassword)
+										}}>
+										Reset Password
+								</Button>
 								</div>
 							</div>
 						</div>
@@ -231,6 +259,30 @@ function logout() {
 		})
 		.catch((err) => {
 			console.log('failed to logout')
+			console.error(err)
+		})
+}
+
+
+function resetPassword(
+	name: string,
+	currentPassword: string,
+	newPassword: string,
+	verifyNewPassword: string,
+){
+	axios
+		.get('http://localhost:8100/user', { 
+			name,
+			currentPassword,
+			newPassword,
+			verifyNewPassword, 
+		})
+		.then(() => {
+			console.log('successfully Reset Password')
+			window.location.reload(false)
+		})
+		.catch((err) => {
+			console.log('failed to set new password')
 			console.error(err)
 		})
 }

@@ -15,27 +15,29 @@ import Background from '../../general/Background'
 
 const ONE_SECOND = 1 // ms
 
-function getUsers() {
+function getOrders() {
 	return axios
-		.get('http://localhost:8100/user/all')
+		.get('http://localhost:8100/order')
 		.then((res) => {
-			console.log('successful gotten accounts')
+			console.log('successful gotten orders')
 			return res.data.data
 		})
 		.catch(() => null)
 }
 
-export default function Users() {
-	const users = useQuery('users', getUsers, {
+var date = new Date()
+var currentDate = date.toISOString().slice(0, 10)
+var currentTime = date.getHours() + ':' + date.getMinutes()
+
+export default function OrderHistory() {
+	const orders = useQuery('orders', getOrders, {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
 
-	// name, email, balance, roles
-
 	const queryCache = useQueryCache()
-	const PRODUCTS = users.data
-	console.log(users)
+	const PRODUCTS = orders.data
+	console.log(orders)
 
 	if (!PRODUCTS) {
 		return null
@@ -43,7 +45,7 @@ export default function Users() {
 		return (
 			<Screen>
 				<Background>
-					<Header text="Users"></Header>
+					<Header text="Order History"></Header>
 					<Form>
 						<FilterableProductTable products={PRODUCTS} />
 					</Form>
@@ -68,6 +70,51 @@ export default function Users() {
 		)
 }
 
+function getUser(placedBy: string) {
+	axios
+		.post(`http://localhost:8100/user/${placedBy}`)
+		.then(() => {
+			console.log('successful Order')
+		})
+		.catch((err) => {
+			console.log('failed to Order')
+			console.error(err)
+		})
+}
+
+
+function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
+	console.log({})
+	var orderTime = new Date(currentDate + ' ' + currentTime)
+	var pickupAt = orderTime.getTime()
+	console.log(bagelList)
+	axios
+		.post('http://localhost:8100/order', {
+			bagels: bagelList
+				.filter((bagelOrder) => bagelOrder.bagel)
+				.map((bagelOrder) => {
+					return {
+						bagel: bagelOrder.bagel,
+						toppings: [
+							...bagelOrder.toppings.filter((item) => item),
+							...bagelOrder.smears.filter((item) => item),
+						],
+					}
+				}),
+			beverages: beverageList.filter((item) => item),
+			pickupAt: pickupAt,
+			
+		})
+		.then(() => {
+			console.log('successful Order')
+		})
+		.catch((err) => {
+			console.log('failed to Order')
+			console.error(err)
+		})
+}
+
+
 //  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
 class ProductCategoryRow extends React.Component {
 	render() {
@@ -88,42 +135,32 @@ class ProductRow extends React.Component {
 		) : (
 			<span style={{ color: 'red' }}>{product.name}</span>
 		)
+		
+		var currentObjectPickup = Date(product.pickupAt)
+		var placed = Date(product.placed)
+		
+		
 
 		return (
 			<tr>
-				<td>{name}</td>
-				<td>{product.email}</td>
-				<td>${ product.balance / 100}</td>
-				<td>{product.roles.join(',')}</td>
-				<td><button>
-					Promote to Chef
-				</button></td>
-				<td><button>
-					Promote to Cashier
-				</button></td>
-				<td><button>
-					Promote to Manager
-				</button></td>
-				<td><button>
-					Set to Customer
-				</button></td>
+				<td>{product.beverages}</td>
+				<td>{product.bagels}</td>
+				<td>{placed}</td>
+				<td>{currentObjectPickup}</td>
+				<td>{getUser(product.placedBy)}</td>
+				<td>${product.price/100}</td>
+				<td>{product.status}</td>
+				<td><Button
+						width="250px"
+						onClick={() => addOrder(product.bagels, product.beverages)}
+						color="primary">
+						Reorder
+					</Button></td>
 			</tr>
 		)
+
 	}
 }
-
-function promote(){
-	
-	return axios
-		.get('http://localhost:8100/user/all')
-		.then((res) => {
-			console.log('successful gotten accounts')
-			return res.data.data
-		})
-		.catch(() => null)
-
-}
-
 
 class ProductTable extends React.Component {
 	render() {
@@ -142,10 +179,14 @@ class ProductTable extends React.Component {
 			<table>
 				<thead>
 					<tr>
-						<th>Name </th>
-						<th>Email </th>
-						<th>Balance </th>
-						<th>Roles </th>
+						<th>Beverages | </th>
+						<th> Bagels | </th>
+						<th> Placed | </th>
+						<th> Pickup At | </th>
+						<th> Placed By | </th>
+						<th> Price | </th>
+						<th> Status |</th>
+						<th> Order again?</th>
 					</tr>
 				</thead>
 				<tbody>{rows}</tbody>

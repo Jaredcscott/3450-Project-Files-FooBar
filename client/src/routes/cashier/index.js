@@ -25,6 +25,10 @@ function getOrders() {
 		.catch(() => null)
 }
 
+var date = new Date()
+var currentDate = date.toISOString().slice(0, 10)
+var currentTime = date.getHours() + ':' + date.getMinutes()
+
 export default function Cachier() {
 	const orders = useQuery('orders', getOrders, {
 		cacheTime: ONE_SECOND,
@@ -66,82 +70,171 @@ export default function Cachier() {
 		)
 }
 
-//  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
-class ProductCategoryRow extends React.Component {
-	render() {
-		const category = this.props.category
-		return (
-			<tr>
-				<th colSpan="2">{category}</th>
-			</tr>
-		)
+
+const OrderHeader = styled.div`
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+`
+
+const Grouping = styled.div`
+	margin-left: ${({ theme }) => theme.spacing.indent};
+	width: 100%;
+	justify-content: space-between;
+`
+
+function UserName({ userId }: { userId: string }) {
+	const user = useQuery(`user-${userId}`, getUser(userId))
+	if (user.data) {
+		return <div>{user.data.name}</div>
+	}
+	return null
+}
+
+function getUser(userId: string) {
+	return () => {
+		axios
+			.get(`http://localhost:8100/user/${userId}`)
+			.then((res) => {
+				return res.data.data
+			})
+			.catch(() => null)
 	}
 }
 
-class ProductRow extends React.Component {
-	render() {
-		const product = this.props.product
-		const name = product.stocked ? (
-			product.name
-		) : (
-			<span style={{ color: 'red' }}>{product.name}</span>
-		)
+const OrderWrapper = styled.div`
+	width: 80%;
+	font-size: ${({ theme }) => theme.font.size.large};
+	margin: ${({ theme }) => theme.spacing.large};
+	padding: ${({ theme }) => theme.spacing.large};
+	border: 2px solid #75662b;
+	border-radius: 4px;
+`
 
-		return (
-			<tr>
-				<td>{product.beverages}</td>
-				<td>{product.bagels}</td>
-				<td>{product.placed}</td>
-				<td><input type="time" id="time" value={product.pickupAt}></input>
-					<input type="date" id="date" value={product.pickupAt}></input></td>
-				<td>{product.placedBy}</td>
-				<td>{product.price}</td>
-				<td>{product.status}</td>
-				<button>Mark Order Complete</button>
-			</tr>
-			
-		)
-	}
+type OrderItem = { _id: string, name: string }
+
+function Order({
+	order,
+}: {
+	order: {
+		pickupAt: number,
+		status: string,
+		price: number,
+		placedBy: string,
+		beverages: Array<OrderItem>,
+		bagels: Array<{ bagel: OrderItem, toppings: Array<OrderItem> }>,
+	},
+}) {
+	return (
+		<OrderWrapper>
+			<OrderHeader>
+				<div>{order.status}</div>
+				<div>Pickup At: {new Date(order.pickupAt).toISOString()}</div>
+				<div>${order.price / 100}</div>
+				<UserName userId={order.placedBy} />
+			</OrderHeader>
+			{order.beverages.length > 0 ? (
+				<>
+					<h3> Beverages</h3>
+					<Grouping>
+						{order.beverages.map((beverage) => (
+							<div>{beverage.name}</div>
+						))}
+					</Grouping>{' '}
+				</>
+			) : null}
+
+			{order.bagels.length > 0 ? (
+				<>
+					<h3>Bagels</h3>
+					<Grouping>
+						{order.bagels.map((bagelOrder) => (
+							<>
+								<h4>{bagelOrder.bagel.name}</h4>
+								<Grouping>
+									{bagelOrder.toppings.map((topping, index) => (
+										<div key={index}>{topping.name}</div>
+									))}
+								</Grouping>
+							</>
+						))}
+					</Grouping>
+				</>
+			) : null}
+			<Button style={{ 'padding-left': '25px' }}
+				width="250px"
+				onClick={() => markComplete(order._id, 'FULFILLED')}
+				color="primary">
+				Mark Order Complete
+			</Button>
+			<Button style={{ 'padding-left': '25px' }}
+				width="250px"
+				onClick={() => markComplete(order._id, 'CANCELED')}
+				color="primary">
+				Mark Order Cancelled
+			</Button>
+			<Button style={{ 'padding-left': '25px' }}
+				width="250px"
+				onClick={() => markComplete(order._id, 'DID_NOT_PICKUP')}
+				color="primary">
+				Did not pick up
+			</Button>
+		</OrderWrapper>
+	)
 }
 
-class ProductTable extends React.Component {
-	render() {
-		const rows = []
-		let lastCategory = null
 
-		this.props.products.forEach((product) => {
-			if (product.category !== lastCategory) {
-				rows.push(<ProductCategoryRow category={product.category} key={product.category} />)
-			}
-			rows.push(<ProductRow product={product} key={product.name} />)
-			lastCategory = product.category
+function getMenu() {
+	return axios
+		.get('http://localhost:8100/menu')
+		.then((res) => {
+			return res.data.data
 		})
-
-		return (
-			<table>
-				<thead>
-					<tr>
-						<th>Beverages | </th>
-						<th> Bagels | </th>
-						<th> Placed | </th>
-						<th> Pickup At | </th>
-						<th> Placed By | </th>
-						<th> Price | </th>
-						<th> Status</th>
-					</tr>
-				</thead>
-				<tbody>{rows}</tbody>
-			</table>
-		)
-	}
+		.catch(() => null)
 }
+
+
+const OrdersWrapper = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+`
+
+function OrderLayout({ orders }) {
+	return (
+		<OrdersWrapper>
+			{orders.map((order) => (
+				<Order order={order} key={order._id} />
+			))}
+		</OrdersWrapper>
+	)
+}
+
+const ScreenCenter = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+`
 
 class FilterableProductTable extends React.Component {
 	render() {
 		return (
-			<div style={{ 'text-shadow': '3px 3px 5px blue' }}>
-				<ProductTable products={this.props.products} />
-			</div>
+			<ScreenCenter>
+				<OrderLayout orders={this.props.products} />
+			</ScreenCenter>
 		)
 	}
+}
+
+
+function markComplete(orderID: string, status: sting){
+	return axios
+		.post(`http://localhost:8100/order/${orderID}`, {status})
+		.then((res) => {
+			window.location.reload(false);
+		})
+		.catch(() => null)
 }
