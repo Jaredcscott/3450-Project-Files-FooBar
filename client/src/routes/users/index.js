@@ -95,10 +95,35 @@ class ProductRow extends React.Component {
 				<td>{product.email}</td>
 				<td>${ product.balance / 100}</td>
 				<td>{product.roles.join(',')}</td>
+				<td><button>
+					Promote to Chef
+				</button></td>
+				<td><button>
+					Promote to Cashier
+				</button></td>
+				<td><button>
+					Promote to Manager
+				</button></td>
+				<td><button>
+					Set to Customer
+				</button></td>
 			</tr>
 		)
 	}
 }
+
+function promote(){
+	
+	return axios
+		.get('http://localhost:8100/user/all')
+		.then((res) => {
+			console.log('successful gotten accounts')
+			return res.data.data
+		})
+		.catch(() => null)
+
+}
+
 
 class ProductTable extends React.Component {
 	render() {

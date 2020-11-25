@@ -95,6 +95,15 @@ export default function Account() {
 										Order History
 									</Button>
 								</div>
+								<div style={{ 'padding-left': '25px' }}>
+								<Button
+										color="primary"
+										onClick={() => {
+											
+										}}>
+										Reset Password
+								</Button>
+								</div>
 							</div>
 						</div>
 					</Form>
