@@ -171,7 +171,7 @@ function Order({
 				width="250px"
 				onClick={() => markComplete(order._id, 'PREPARED')}
 				color="primary">
-				Mark Order Complete
+				Mark Order Prepared
 			</Button>
 		</OrderWrapper>
 	)
