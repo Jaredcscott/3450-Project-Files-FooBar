@@ -25,6 +25,10 @@ function getOrders() {
 		.catch(() => null)
 }
 
+var date = new Date()
+var currentDate = date.toISOString().slice(0, 10)
+var currentTime = date.getHours() + ':' + date.getMinutes()
+
 export default function Orders() {
 	const orders = useQuery('orders', getOrders, {
 		cacheTime: ONE_SECOND,
@@ -34,6 +38,21 @@ export default function Orders() {
 	const queryCache = useQueryCache()
 	const PRODUCTS = orders.data
 	console.log(orders)
+
+
+
+	const info = useQuery('menu', getMenu)
+
+	if (!info.data) {
+		return <div>Loading</div>
+	}
+	const bagels = info.data.BAGEL
+	const smears = info.data.SMEAR
+	const toppings = info.data.SAMMICHE_TOPPINGS
+	const beverages = info.data.BEVERAGE
+
+	
+
 
 	if (!PRODUCTS) {
 		return null
@@ -167,28 +186,47 @@ function Order({
 }
 
 function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
-	var date = new Date()
-	var currentDate = date.toISOString().slice(0, 10)
-	var currentTime = date.getHours() + ':' + date.getMinutes()
-
+	console.log({})
 	var orderTime = new Date(currentDate + ' ' + currentTime)
 	var pickupAt = orderTime.getTime()
 	console.log(bagelList)
 	axios
-		.post('http://localhost:8100/order', {
-			bagels: bagelList,
-			beverages: beverageList,
-			pickupAt: pickupAt,
-		})
-		.then(() => {
-			console.log('successful Order')
-			window.location.reload(false)
-		})
-		.catch((err) => {
-			console.log('failed to Order')
-			console.error(err)
-		})
+	.post('http://localhost:8100/order', {
+		bagels: bagelList
+			.filter((bagelOrder) => bagelOrder.bagel)
+			.map((bagelOrder) => {
+				return {
+					bagel: bagelOrder.bagel,
+					toppings: [
+						...bagelOrder.toppings.filter((item) => item),
+						...bagelOrder.smears.filter((item) => item),
+					],
+				}
+			}),
+		beverages: beverageList.filter((item) => item),
+		pickupAt: pickupAt,
+		
+	})
+	.then(() => {
+		console.log('successful Order')
+	})
+	.catch((err) => {
+		console.log('failed to Order')
+		console.error(err)
+	})
+	
 }
+
+
+function getMenu() {
+	return axios
+		.get('http://localhost:8100/menu')
+		.then((res) => {
+			return res.data.data
+		})
+		.catch(() => null)
+}
+
 
 const OrdersWrapper = styled.div`
 	width: 100%;
