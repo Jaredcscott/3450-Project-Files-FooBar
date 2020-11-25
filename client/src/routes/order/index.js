@@ -175,7 +175,8 @@ export default function Order() {
 												</select>
 											)
 										})}
-										<div
+										<Button
+											color="primary"
 											onClick={() => {
 												setOrderBagels(
 													produce(orderBagels, (orderBagels) => {
@@ -184,8 +185,9 @@ export default function Order() {
 												)
 											}}>
 											Add Smear
-										</div>
-										<div
+										</Button>
+										<Button
+											color="primary"
 											onClick={() => {
 												setOrderBagels(
 													produce(orderBagels, (orderBagels) => {
@@ -194,7 +196,7 @@ export default function Order() {
 												)
 											}}>
 											Add Topping
-										</div>
+										</Button>
 									</OrderRow>
 								))}
 							</ul>

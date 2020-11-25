@@ -230,7 +230,11 @@ export default function Inventory() {
 							</div>{' '}
 							<br></br>
 							<FilterableProductTable products={PRODUCTS} />
-							<button>Save This inventory</button>
+							<Button
+								color="primary"
+								onClick={(event) => setQty(event.target.value)}>
+								Save This inventory
+							</Button>
 						</div>
 					</Form>
 					<Footer>
@@ -523,6 +527,7 @@ class ProductCategoryRow extends React.Component {
 class ProductRow extends React.Component {
 	render() {
 		const product = this.props.product
+
 		const name = product.stocked ? (
 			<span>product.name</span>
 		) : (
@@ -533,16 +538,23 @@ class ProductRow extends React.Component {
 			<tr>
 				<td>{name}</td>
 				<td>
-					$<input type="number" value={product.price / 100} onChange={none}></input>
+					$<input type="number" value={product.price / 100} onChange={() => {
+						
+					} }></input>
 				</td>
 				<td>
 					<input type="boolean" value={product.onMenu} onChange={none}></input>
 				</td>
 				<td>
-					<input type="number" value={product.quantity} onChange={none}></input>
+					<input id="quan" type="number" value={product.quantity} onChange={(event) =>{
+					}}></input>
 				</td>
 				<td>
-					<input type="number" value={product.targetCount} onChange={none}></input>
+					<input 
+						type="number" 
+						value={product.targetCount} 
+						onChange={none}>
+						</input>
 				</td>
 			</tr>
 		)
