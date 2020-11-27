@@ -25,6 +25,18 @@ function getUsers() {
 		.catch(() => null)
 }
 
+function none() {}
+
+function promote(){
+	return axios
+		.get('http://localhost:8100/user/all')
+		.then((res) => {
+			console.log('successful gotten accounts')
+			return res.data.data
+		})
+		.catch(() => null)
+}
+
 export default function Users() {
 	const users = useQuery('users', getUsers, {
 		cacheTime: ONE_SECOND,
@@ -34,10 +46,10 @@ export default function Users() {
 	// name, email, balance, roles
 
 	const queryCache = useQueryCache()
-	const PRODUCTS = users.data
+	const USERS = users.data
 	console.log(users)
 
-	if (!PRODUCTS) {
+	if (!USERS) {
 		return null
 	} else
 		return (
@@ -45,7 +57,27 @@ export default function Users() {
 				<Background>
 					<Header text="Users"></Header>
 					<Form>
-						<FilterableProductTable products={PRODUCTS} />
+						<UserTable users={USERS} />
+						<td><Button
+						color="primary"
+						onClick={none}>
+						Promote to Chef
+					</Button></td>
+					<td><Button
+						color="primary"
+						onClick={none}>
+						Promote to Cashier
+					</Button></td>
+					<td><Button
+						color="primary"
+						onClick={none}>
+						Promote to Manager
+					</Button></td>
+					<td><Button
+						color="primary"
+						onClick={none}>
+						Set to Customer
+					</Button></td>
 					</Form>
 					<Footer>
 						<ul>
@@ -68,98 +100,44 @@ export default function Users() {
 		)
 }
 
-//  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
-class ProductCategoryRow extends React.Component {
+class UserRow extends React.Component {
 	render() {
-		const category = this.props.category
+		const user = this.props.user
+		const name = <span style={{ color: 'black' }}>{user.name}</span>
+
 		return (
-			<tr>
-				<th colSpan="2">{category}</th>
-			</tr>
+			<div style={{"fontSize":"15px"}}>
+				<tr>
+					<td>{ name }</td>	
+					<td>{ user.email }</td>
+					<td>${ user.balance / 100 }</td>
+					<td>{ user.roles.join(',') }</td>
+				</tr>
+			</div>
 		)
 	}
 }
 
-class ProductRow extends React.Component {
-	render() {
-		const product = this.props.product
-		const name = product.stocked ? (
-			product.name
-		) : (
-			<span style={{ color: 'red' }}>{product.name}</span>
-		)
-
-		return (
-			<tr>
-				<td>{name}</td>
-				<td>{product.email}</td>
-				<td>${ product.balance / 100}</td>
-				<td>{product.roles.join(',')}</td>
-				<td><button>
-					Promote to Chef
-				</button></td>
-				<td><button>
-					Promote to Cashier
-				</button></td>
-				<td><button>
-					Promote to Manager
-				</button></td>
-				<td><button>
-					Set to Customer
-				</button></td>
-			</tr>
-		)
-	}
-}
-
-function promote(){
-	
-	return axios
-		.get('http://localhost:8100/user/all')
-		.then((res) => {
-			console.log('successful gotten accounts')
-			return res.data.data
-		})
-		.catch(() => null)
-
-}
-
-
-class ProductTable extends React.Component {
+class UserTable extends React.Component {
 	render() {
 		const rows = []
-		let lastCategory = null
-
-		this.props.products.forEach((product) => {
-			if (product.category !== lastCategory) {
-				rows.push(<ProductCategoryRow category={product.category} key={product.category} />)
-			}
-			rows.push(<ProductRow product={product} key={product.name} />)
-			lastCategory = product.category
+		console.log(this.props.users)
+		this.props.users.forEach((user) => {
+			rows.push(<UserRow user={user} key={user.name} />)
 		})
 
 		return (
 			<table>
 				<thead>
 					<tr>
-						<th>Name </th>
-						<th>Email </th>
-						<th>Balance </th>
-						<th>Roles </th>
+						<th style={{"fontSize":"25px", "width":"90px"}}>Name </th>
+						<th style={{"fontSize":"25px"}}>Email </th>
+						<th style={{"fontSize":"25px"}}>Balance </th>
+						<th style={{"fontSize":"25px"}}>Roles </th>
 					</tr>
 				</thead>
 				<tbody>{rows}</tbody>
 			</table>
-		)
-	}
-}
-
-class FilterableProductTable extends React.Component {
-	render() {
-		return (
-			<div style={{ 'text-shadow': '3px 3px 5px blue' }}>
-				<ProductTable products={this.props.products} />
-			</div>
 		)
 	}
 }
