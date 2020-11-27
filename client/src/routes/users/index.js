@@ -31,7 +31,7 @@ function promote(){
 	return axios
 		.get('http://localhost:8100/user/all')
 		.then((res) => {
-			console.log('successful gotten accounts')
+			console.log('successfully retrieved accounts')
 			return res.data.data
 		})
 		.catch(() => null)
@@ -43,11 +43,8 @@ export default function Users() {
 		refetchOnWindowFocus: false,
 	})
 
-	// name, email, balance, roles
-
 	const queryCache = useQueryCache()
 	const USERS = users.data
-	console.log(users)
 
 	if (!USERS) {
 		return null
@@ -58,26 +55,6 @@ export default function Users() {
 					<Header text="Users"></Header>
 					<Form>
 						<UserTable users={USERS} />
-						<td><Button
-						color="primary"
-						onClick={none}>
-						Promote to Chef
-					</Button></td>
-					<td><Button
-						color="primary"
-						onClick={none}>
-						Promote to Cashier
-					</Button></td>
-					<td><Button
-						color="primary"
-						onClick={none}>
-						Promote to Manager
-					</Button></td>
-					<td><Button
-						color="primary"
-						onClick={none}>
-						Set to Customer
-					</Button></td>
 					</Form>
 					<Footer>
 						<ul>
@@ -104,16 +81,35 @@ class UserRow extends React.Component {
 	render() {
 		const user = this.props.user
 		const name = <span style={{ color: 'black' }}>{user.name}</span>
-
 		return (
-			<div style={{"fontSize":"15px"}}>
-				<tr>
-					<td>{ name }</td>	
-					<td>{ user.email }</td>
-					<td>${ user.balance / 100 }</td>
-					<td>{ user.roles.join(',') }</td>
-				</tr>
-			</div>
+			<tr style={{"fontSize":"20px", "textAlign":"center"}}>
+				<td>{ name }</td>	
+				<td>{ user.email }</td>
+				<td>${ user.balance / 100 }</td>
+				<td>{ user.roles.join(',') }</td>
+				<td style={{"fontSize":"15px"}}>
+					<Button
+						color="primary"
+						onClick={none}>
+						Promote to Chef
+					</Button>
+					<Button
+						color="primary"
+						onClick={none}>
+						Promote to Cashier
+					</Button>
+					<Button
+						color="primary"
+						onClick={none}>
+						Promote to Manager
+					</Button>
+					<Button
+						color="primary"
+						onClick={none}>
+						Set to Customer
+					</Button>
+				</td>
+			</tr>
 		)
 	}
 }
@@ -121,7 +117,6 @@ class UserRow extends React.Component {
 class UserTable extends React.Component {
 	render() {
 		const rows = []
-		console.log(this.props.users)
 		this.props.users.forEach((user) => {
 			rows.push(<UserRow user={user} key={user.name} />)
 		})
@@ -129,11 +124,12 @@ class UserTable extends React.Component {
 		return (
 			<table>
 				<thead>
-					<tr>
-						<th style={{"fontSize":"25px", "width":"90px"}}>Name </th>
-						<th style={{"fontSize":"25px"}}>Email </th>
-						<th style={{"fontSize":"25px"}}>Balance </th>
-						<th style={{"fontSize":"25px"}}>Roles </th>
+					<tr style={{"fontSize":"30px"}}>
+						<th >Name </th>
+						<th >Email </th>
+						<th >Balance </th>
+						<th >Roles </th>
+						<th >Actions </th>
 					</tr>
 				</thead>
 				<tbody>{rows}</tbody>
