@@ -23,6 +23,8 @@ function getSignedInUser() {
 
 const ONE_SECOND = 1000 // ms
 
+function none() {}
+
 export default function Contact() {
 	const loggedin = useQuery('user', getSignedInUser, {
 		cacheTime: ONE_SECOND,
@@ -32,15 +34,14 @@ export default function Contact() {
 	const history = useHistory()
 
 	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [verify, setVerifyPassword] = useState({})
-	const [name, setName] = useState('')
+	const [subject, setSubject] = useState('')
+	const [message, setMessage] = useState('')
 
 	if (loggedin.data) {
 		return (
 			<Screen>
 				<Background>
-					<Header text="Whats On Your Mind? "></Header>
+					<Header text="What's On Your Mind? "></Header>
 					<Form>
 						<div
 							className="flex-container"
@@ -52,7 +53,7 @@ export default function Contact() {
 							}}>
 							<div className="flex-child">
 								<h2 style={{ 'text-shadow': '3px 3px 5px blue' }}>
-									To Contact Us Fill Out This Form
+									To Contact Us, Fill Out This Form.
 								</h2>
 								<div className="flex-container">
                                 <div className="email">
@@ -65,6 +66,32 @@ export default function Contact() {
 									aria-label="Email"
 									style={{ width: '350px', height: '30px' }}
 								/>
+								<br></br>
+								<input
+									type="text"
+									id="subject"
+									placeholder="Subject"
+									value={subject}
+									autoFocus="1"
+									aria-label="Subject"
+									style={{ width: '350px', height: '30px' }}
+								/>
+								<br></br>
+								<input
+									type="text"
+									id="message"
+									placeholder="Message"
+									value={message}
+									autoFocus="1"
+									aria-label="Message"
+									style={{ width: '350px', height: '30px' }}
+								/>
+								<br></br>
+								<Button
+									color="primary"
+									onClick={none}>
+									Send
+								</Button>
 							</div>
 								</div>
 							</div>
@@ -119,6 +146,32 @@ export default function Contact() {
 									aria-label="Email"
 									style={{ width: '350px', height: '30px' }}
 								/>
+								<br></br>
+								<input
+									type="text"
+									id="subject"
+									placeholder="Subject"
+									value={subject}
+									autoFocus="1"
+									aria-label="Subject"
+									style={{ width: '350px', height: '30px' }}
+								/>
+								<br></br>
+								<input
+									type="text"
+									id="message"
+									placeholder="Message"
+									value={message}
+									autoFocus="1"
+									aria-label="Message"
+									style={{ width: '350px', height: '30px' }}
+								/>
+								<br></br>
+								<Button
+									color="primary"
+									onClick={none}>
+									Send
+								</Button>
 							</div>
 								</div>
 							</div>
@@ -138,18 +191,4 @@ export default function Contact() {
 			</Screen>
         )
     }
-}
-
-function logout() {
-	axios
-		.get(`${config.serverUrl}/auth/logout`, { credentials: 'include' })
-		.then(() => {
-			console.log('successfully logged out')
-			console.log()
-			window.location.reload(false)
-		})
-		.catch((err) => {
-			console.log('failed to logout')
-			console.error(err)
-		})
 }
