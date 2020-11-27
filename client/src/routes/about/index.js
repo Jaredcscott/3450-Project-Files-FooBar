@@ -49,8 +49,7 @@ export default function About() {
                         <div
                             className="flex-container"
                             style={{
-                                'margin-top': '50px',
-                                'font-size': '25px',
+                                'fontSize': '25px',
                             }}>
                             <div className="flex-child">
                                 <div style={{
@@ -59,10 +58,10 @@ export default function About() {
                                     'marginLeft': '5px',
                                     'marginRight': '5px',
                                     'padding': '5px',
-									'border-style': 'ridge',
-									'border-color': 'blue',
-									'border-width': '15px',
-									'text-shadow': '3px 3px 5px blue',
+									'borderStyle': 'ridge',
+									'borderColor': 'blue',
+									'borderWidth': '15px',
+									'textShadow': '3px 3px 5px blue',
 								}}>
                                     <Body
                                         text="Dans Bagel Shop has a long and rich history.  
@@ -141,8 +140,7 @@ export default function About() {
                         <div
                             className="flex-container"
                             style={{
-                                'margin-top': '50px',
-                                'font-size': '25px',
+                                'fontSize': '25px',
                             }}>
                             <div className="flex-child">
                                 <div style={{
@@ -151,10 +149,10 @@ export default function About() {
                                     'marginLeft': '5px',
                                     'marginRight': '5px',
                                     'padding': '5px',
-									'border-style': 'ridge',
-									'border-color': 'blue',
-									'border-width': '15px',
-									'text-shadow': '3px 3px 5px blue',
+									'borderStyle': 'ridge',
+									'borderColor': 'blue',
+									'borderWidth': '15px',
+									'textShadow': '3px 3px 5px blue',
 								}}>
                                     <Body
                                         text="Dans Bagel Shop has a long and rich history.  
