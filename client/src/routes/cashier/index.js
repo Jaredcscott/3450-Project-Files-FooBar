@@ -29,7 +29,7 @@ var date = new Date()
 var currentDate = date.toISOString().slice(0, 10)
 var currentTime = date.getHours() + ':' + date.getMinutes()
 
-export default function Cachier() {
+export default function Cashier() {
 	const orders = useQuery('orders', getOrders, {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
@@ -175,7 +175,7 @@ function Order({
 			</Button>
 			<Button style={{ 'padding-left': '25px' }}
 				width="250px"
-				onClick={() => markComplete(order._id, 'DID_NOT_PICKUP')}
+				onClick={() => markComplete(order._id, 'DID_NOT_PICK_UP')}
 				color="primary">
 				Did not pick up
 			</Button>
@@ -230,7 +230,7 @@ class FilterableProductTable extends React.Component {
 }
 
 
-function markComplete(orderID: string, status: sting){
+function markComplete(orderID: string, status: string){
 	return axios
 		.post(`http://localhost:8100/order/${orderID}`, {status})
 		.then((res) => {

@@ -21,76 +21,22 @@ export default function Navigation() {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
-
+	
 	if (loggedin.data) {
-		if (loggedin.data.roles.includes('MANAGER') || loggedin.data.roles.includes('ADMIN')) {
-			return (
-				<Navbar>
-					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-					<NavElement onClick={() => history.replace('/order')}>
-						Place An Order
-					</NavElement>
-					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
-					<NavElement onClick={() => history.replace('/orders')}>
-						Order History
-					</NavElement>
-					<NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement>
-					<NavElement onClick={() => history.replace('/users')}>Users</NavElement>
-					<NavElement onClick={() => history.replace('/cashier')}>Cashier</NavElement>
-					<NavElement onClick={() => history.replace('/chef')}>Chef</NavElement>
-				</Navbar>
-			)
-		}
-		else if (loggedin.data.roles.includes('CASHIER')) {
-			return (
-				<Navbar>
-					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-					<NavElement onClick={() => history.replace('/order')}>
-						Place An Order
-					</NavElement>
-					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
-					<NavElement onClick={() => history.replace('/orders')}>
-						Order History
-					</NavElement>
-					<NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement>
-					<NavElement onClick={() => history.replace('/users')}>Users</NavElement>
-					<NavElement onClick={() => history.replace('/cashier')}>Cashier</NavElement>
-				</Navbar>
-			)
-		}
-		else if (loggedin.data.roles.includes('Chef')) {
-			return (
-				<Navbar>
-					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-					<NavElement onClick={() => history.replace('/order')}>
-						Place An Order
-					</NavElement>
-					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
-					<NavElement onClick={() => history.replace('/orders')}>
-						Order History
-					</NavElement>
-					<NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement>
-					<NavElement onClick={() => history.replace('/users')}>Users</NavElement>
-					<NavElement onClick={() => history.replace('/chef')}>Chef</NavElement>
-				</Navbar>
-			)
-		}
-		
-		
-		else {
-			return (
-				<Navbar>
-					<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
-					<NavElement onClick={() => history.replace('/order')}>
-						Place An Order
-					</NavElement>
-					<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
-					<NavElement onClick={() => history.replace('/orders')}>
-						Order History
-					</NavElement>
-				</Navbar>
-			)
-		}
+		const set = new Set(loggedin.data.roles)
+		return( 
+			<Navbar>
+				<NavElement onClick={() => history.replace('/home')}>Home</NavElement>
+				<NavElement onClick={() => history.replace('/order')}>Place An Order</NavElement>
+				<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
+				<NavElement onClick={() => history.replace('/orders')}>Order History</NavElement>
+				{ set.has("MANAGER") || set.has("ADMIN") || set.has("CHEF") ? <NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement> : null}
+				{ set.has("MANAGER") || set.has("ADMIN")  ? <NavElement onClick={() => history.replace('/users')}>Users</NavElement> : null}
+				{ set.has("CASHIER") ? <NavElement onClick={() => history.replace('/cashier')}>Cashier</NavElement> : null}
+				{ set.has("CHEF") ? <NavElement onClick={() => history.replace('/chef')}>Chef</NavElement>: null}
+				
+			</Navbar>
+		)
 	} else {
 		return (
 			<Navbar>

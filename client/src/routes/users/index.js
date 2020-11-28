@@ -77,41 +77,82 @@ export default function Users() {
 		)
 }
 
-class UserRow extends React.Component {
-	render() {
-		const user = this.props.user
-		const name = <span style={{ color: 'black' }}>{user.name}</span>
-		return (
-			<tr style={{"fontSize":"20px", "textAlign":"center"}}>
-				<td>{ name }</td>	
-				<td>{ user.email }</td>
-				<td>${ user.balance / 100 }</td>
-				<td>{ user.roles.join(',') }</td>
-				<td style={{"fontSize":"15px"}}>
-					<Button
-						color="primary"
-						onClick={none}>
-						Promote to Chef
-					</Button>
-					<Button
-						color="primary"
-						onClick={none}>
-						Promote to Cashier
-					</Button>
-					<Button
-						color="primary"
-						onClick={none}>
-						Promote to Manager
-					</Button>
-					<Button
-						color="primary"
-						onClick={none}>
-						Set to Customer
-					</Button>
-				</td>
-			</tr>
-		)
-	}
+function UserRow({user}) {
+	const queryCache = useQueryCache()
+	const name = <span style={{ color: 'black' }}>{user.name}</span>
+	return (
+		<tr style={{"fontSize":"20px", "textAlign":"center"}}>
+			<td>{ name }</td>	
+			<td>{ user.email }</td>
+			<td>${ user.balance / 100 }</td>
+			<td>{ user.roles.join(',') }</td>
+			<td style={{"fontSize":"15px"}}>
+				<Button
+					color="primary"
+					onClick={() =>{
+						if (!(user.roles.find((element) => element === 'CHEF'))) {
+							updateRoles(queryCache,user._id,[...user.roles, 'CHEF'])
+						}
+						else {
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CHEF'))
+						}
+					}}>
+					Toggle Chef
+				</Button>
+				<Button
+					color="primary"
+					onClick={() =>{
+						if (!(user.roles.find((element) => element === 'CASHIER'))) {
+							updateRoles(queryCache,user._id,[...user.roles, 'CASHIER'])
+						}
+						else {
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CASHIER'))
+						}
+					}}>
+					toggle Cashier
+				</Button>
+				<Button
+					color="primary"
+					onClick={() =>{
+						if (!(user.roles.find((element) => element === 'MANAGER'))) {
+							updateRoles(queryCache,user._id,[...user.roles, 'MANAGER'])
+						}
+						else {
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'MANAGER'))
+						}
+					}}>
+					Toggle Manager
+				</Button>
+				<Button
+					color="primary"
+					onClick={() =>{
+						if (!(user.roles.find((element) => element === 'CUSTOMER'))) {
+							updateRoles(queryCache,user._id,[...user.roles, 'CUSTOMER'])
+						}
+						else {
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CUSTOMER'))
+						}
+					}}>
+					toggle Customer
+				</Button>
+			</td>
+		</tr>
+	)
+}
+
+function updateRoles(queryCache: any,id: string, roles: Array<string>) {
+	axios
+		.post(`http://localhost:8100/user/${id}`, { 
+			roles
+		})
+		.then(() => {
+			console.log('successfully changes roles')
+			queryCache.invalidateQueries('users')
+		})
+		.catch((err) => {
+			console.log('failed to update roles')
+			console.error(err)
+		})
 }
 
 class UserTable extends React.Component {
