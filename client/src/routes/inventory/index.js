@@ -1,17 +1,15 @@
-import React, { Component, useState, Checkbox } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
 import { useQuery, useQueryCache } from 'react-query'
-import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
-import { getTheme, setTheme } from '../../redux-store/theme'
 import axios from 'axios'
 import Button from '../../general/Button'
-import Body from '../../general/Body'
 import Form from '../../general/Form'
 import Header from '../../general/Header'
 import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
+import produce from 'immer'
+import { isEqual, startCase } from 'lodash'
 
 const ONE_SECOND = 1 // ms
 
@@ -160,7 +158,7 @@ export default function Inventory() {
 										{INVENTORY_ITEM_CATEGORIES.map((category) => {
 											return (
 												<option key={category} value={category}>
-													{category}
+													{startCase(category)}
 												</option>
 											)
 										})}
@@ -209,7 +207,7 @@ export default function Inventory() {
 								<br></br>
 								<Button
 									color="primary"
-									onClick={() =>
+									onClick={() => {
 										addItem(
 											name,
 											category,
@@ -218,8 +216,15 @@ export default function Inventory() {
 											targetCount,
 											isOnMenu,
 											queryCache
-										)
-									}>
+										).then(() => {
+											setName('')
+											setQty('')
+											setPrice('')
+											setTargetCount('')
+											setCategory(INVENTORY_ITEM_CATEGORIES[0])
+											setIsOnMenu(false)
+										})
+									}}>
 									Add Item
 								</Button>
 								<Button
@@ -230,9 +235,7 @@ export default function Inventory() {
 							</div>{' '}
 							<br></br>
 							<FilterableProductTable products={PRODUCTS} />
-							<Button
-								color="primary"
-								onClick={(event) => setQty(event.target.value)}>
+							<Button color="primary" onClick={(event) => setQty(event.target.value)}>
 								Save This inventory
 							</Button>
 						</div>
@@ -258,7 +261,7 @@ export default function Inventory() {
 		)
 }
 
-const INVENTORY_ITEM_CATEGORIES = ['BEVERAGE', 'SAMMICHE TOPPINGS', 'SMEAR', 'BAGEL']
+const INVENTORY_ITEM_CATEGORIES = ['BEVERAGE', 'SAMMICHE_TOPPINGS', 'SMEAR', 'BAGEL']
 
 function addItem(
 	name: string,
@@ -277,7 +280,7 @@ function addItem(
 		onMenu: isOnMenu,
 		targetCount: Number(targetCount),
 	})
-	axios
+	return axios
 		.post('http://localhost:8100/inventory', {
 			category,
 			name,
@@ -288,6 +291,7 @@ function addItem(
 		})
 		.then(() => {
 			console.log('successful added item')
+			queryCache.invalidateQueries('inventory')
 		})
 		.catch((err) => {
 			console.log('failed to add item')
@@ -325,26 +329,12 @@ function populateDatabase(queryCache: any) {
 	}
 }
 
-function updateItem(
-	itemId: string,
-	name: string,
-	category: string,
-	quantity: string | number,
-	price: string | number,
-	onMenu: boolean,
-	targetCount: string | number
-) {
+function updateItem(item: any, queryCache: any) {
 	axios
-		.post(`http://localhost:8100/inventory/${itemId}`, {
-			category,
-			name,
-			quantity: Number(quantity),
-			price: Number(price),
-			onMenu: Boolean(onMenu),
-			targetCount: Number(targetCount),
-		})
+		.post(`http://localhost:8100/inventory/${item._id}`, item)
 		.then(() => {
 			console.log('successful updated item')
+			queryCache.invalidateQueries('inventory')
 		})
 		.catch((err) => {
 			console.log('failed to update item')
@@ -524,100 +514,155 @@ class ProductCategoryRow extends React.Component {
 	}
 }
 
-class ProductRow extends React.Component {
-	render() {
-		const product = this.props.product
+function ProductRow({ product }: { product: any }) {
+	const queryCache = useQueryCache()
 
-		const name = product.stocked ? (
-			<span>product.name</span>
-		) : (
-			<span style={{ color: 'black', fontSize: '25px' }}>{product.name}</span>
-		)
+	const [editableProduct, setEditableProduct] = useState(product)
+	const amountNeeded = editableProduct.targetCount - editableProduct.quantity
 
-		return (
-			<tr>
-				<td>{name}</td>
+	return (
+		<tr>
+			<td>
+				<input
+					value={editableProduct.name}
+					onChange={(event) =>
+						setEditableProduct(
+							produce(editableProduct, (newProduct) => {
+								newProduct.name = event.target.value
+							})
+						)
+					}
+				/>
+			</td>
+			<td>
+				$
+				<input
+					type="number"
+					value={editableProduct.price / 100}
+					onChange={(event) =>
+						setEditableProduct(
+							produce(editableProduct, (newProduct) => {
+								try {
+									newProduct.price = Math.floor(Number(event.target.value) * 100)
+								} catch {}
+							})
+						)
+					}></input>
+			</td>
+			<td>
+				<input
+					type="checkbox"
+					checked={editableProduct.onMenu}
+					onChange={(event) =>
+						setEditableProduct(
+							produce(editableProduct, (newProduct) => {
+								try {
+									newProduct.onMenu = Boolean(event.target.checked)
+								} catch {}
+							})
+						)
+					}></input>
+			</td>
+			<td>
+				<input
+					id="quan"
+					type="number"
+					value={editableProduct.quantity}
+					onChange={(event) =>
+						setEditableProduct(
+							produce(editableProduct, (newProduct) => {
+								try {
+									newProduct.quantity = Math.floor(Number(event.target.value))
+								} catch {}
+							})
+						)
+					}></input>
+			</td>
+			<td>
+				<input
+					type="number"
+					value={editableProduct.targetCount}
+					onChange={(event) =>
+						setEditableProduct(
+							produce(editableProduct, (newProduct) => {
+								try {
+									newProduct.targetCount = Math.floor(Number(event.target.value))
+								} catch {}
+							})
+						)
+					}></input>
+			</td>
+			<td>
+				<Needed>{amountNeeded > 0 ? amountNeeded : null}</Needed>
+			</td>
+			{!isEqual(product, editableProduct) ? (
 				<td>
-					$<input type="number" value={product.price / 100} onChange={() => {
-						
-					} }></input>
+					<Button color="primary" onClick={() => updateItem(editableProduct, queryCache)}>
+						Save
+					</Button>
 				</td>
-				<td>
-					<input type="boolean" value={product.onMenu} onChange={none}></input>
-				</td>
-				<td>
-					<input id="quan" type="number" value={product.quantity} onChange={(event) =>{
-					}}></input>
-				</td>
-				<td>
-					<input 
-						type="number" 
-						value={product.targetCount} 
-						onChange={none}>
-						</input>
-				</td>
-			</tr>
-		)
-	}
+			) : null}
+		</tr>
+	)
 }
 
-class ProductTable extends React.Component {
-	render() {
-		const rows = []
-		let lastCategory = null
-		this.props.products.sort((product1, product2) =>
-			String(product1.category).localeCompare(String(product2.category))
-		)
-		this.props.products.forEach((product) => {
-			if (product.category !== lastCategory) {
-				rows.push(
-					<ProductCategoryRow
-						category={product.category}
-						key={product.category + ' ' + product.name}
-					/>
-				)
-			}
-			rows.push(<ProductRow product={product} key={product._id} />)
-			lastCategory = product.category
-		})
+const Needed = styled.span`
+	color: red;
+`
 
-		return (
-			<table style={{'fontSize':'30px', 'textAlign':'left'}}>
-				<thead>
-					<tr>
-						<th> Name </th>
-						<th> Price </th>
-						<th> On Menu </th>
-						<th> Quantity </th>
-						<th> Target Count </th>
-					</tr>
-				</thead>
-				<tbody>{rows}</tbody>
-			</table>
-		)
-	}
+function ProductTable({ products }: { products: any }) {
+	const rows = []
+	let lastCategory = null
+	products.sort((product1, product2) =>
+		String(product1.category).localeCompare(String(product2.category))
+	)
+	products.forEach((product) => {
+		if (product.category !== lastCategory) {
+			rows.push(
+				<ProductCategoryRow
+					category={product.category}
+					key={product.category + ' ' + product.name}
+				/>
+			)
+		}
+		rows.push(<ProductRow product={product} key={product._id} />)
+		lastCategory = product.category
+	})
+
+	return (
+		<table style={{ fontSize: '30px', textAlign: 'left' }}>
+			<thead>
+				<tr>
+					<th> Name </th>
+					<th> Price </th>
+					<th> On Menu </th>
+					<th> Quantity </th>
+					<th> Target Count </th>
+					<th> Amount Needed </th>
+					<th> Save </th>
+				</tr>
+			</thead>
+			<tbody>{rows}</tbody>
+		</table>
+	)
 }
 
-class SearchBar extends React.Component {
-	render() {
-		return (
-			<form>
-				<input type="text" placeholder="Search..." />
-				<p>
-					<input type="checkbox" /> Only show products in stock
-				</p>
-			</form>
-		)
-	}
+function SearchBar() {
+	return (
+		<form>
+			<input type="text" placeholder="Search..." />
+			<p>
+				<input type="checkbox" /> Only show products in stock
+			</p>
+		</form>
+	)
 }
 
-class FilterableProductTable extends React.Component {
-	render() {
-		return (
-			<div style={{ textShadow: '3px 3px 5px blue' }}>
-				<SearchBar />
-				<ProductTable products={this.props.products} />
-			</div>
-		)
-	}
+function FilterableProductTable({ products }) {
+	return (
+		<div style={{ textShadow: '3px 3px 5px blue' }}>
+			<SearchBar />
+			<ProductTable products={products} />
+		</div>
+	)
 }
