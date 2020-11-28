@@ -404,7 +404,7 @@ var default_inventory = [
 
 	{
 		name: 'Bacon',
-		category: 'SAMMICHE TOPPINGS',
+		category: 'SAMMICHE_TOPPINGS',
 		quantity: 100,
 		price: 100,
 		onMenu: true,
@@ -412,7 +412,7 @@ var default_inventory = [
 	},
 	{
 		name: 'Egg',
-		category: 'SAMMICHETOPPINGS',
+		category: 'SAMMICHE_TOPPINGS',
 		quantity: 100,
 		price: 200,
 		onMenu: true,
@@ -420,7 +420,7 @@ var default_inventory = [
 	},
 	{
 		name: 'Cheese',
-		category: 'SAMMICHE TOPPINGS',
+		category: 'SAMMICHE_TOPPINGS',
 		quantity: 100,
 		price: 100,
 		onMenu: true,
@@ -428,7 +428,7 @@ var default_inventory = [
 	},
 	{
 		name: 'Sausage',
-		category: 'SAMMICHE TOPPINGS',
+		category: 'SAMMICHE_TOPPINGS',
 		quantity: 100,
 		price: 200,
 		onMenu: true,
@@ -436,7 +436,7 @@ var default_inventory = [
 	},
 	{
 		name: 'Avocado',
-		category: 'SAMMICHE TOPPINGS',
+		category: 'SAMMICHE_TOPPINGS',
 		quantity: 100,
 		price: 1000,
 		onMenu: true,
@@ -444,7 +444,7 @@ var default_inventory = [
 	},
 	{
 		name: 'Turkey',
-		category: 'SAMMICHE TOPPINGS',
+		category: 'SAMMICHE_TOPPINGS',
 		quantity: 100,
 		price: 200,
 		onMenu: true,
@@ -460,7 +460,7 @@ var default_inventory = [
 	},
 	{
 		name: 'Spinach',
-		category: 'SAMMICHE TOPPINGS',
+		category: 'SAMMICHE_TOPPINGS',
 		quantity: 100,
 		price: 100,
 		onMenu: true,
@@ -468,7 +468,7 @@ var default_inventory = [
 	},
 	{
 		name: 'Tomato',
-		category: 'SAMMICHE TOPPINGS',
+		category: 'SAMMICHE_TOPPINGS',
 		quantity: 100,
 		price: 100,
 		onMenu: true,
@@ -476,7 +476,7 @@ var default_inventory = [
 	},
 	{
 		name: 'Lox',
-		category: 'SAMMICHE TOPPINGS',
+		category: 'SAMMICHE_TOPPINGS',
 		quantity: 100,
 		price: 1000,
 		onMenu: true,

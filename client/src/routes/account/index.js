@@ -30,7 +30,7 @@ class ProfileInfo extends Component {
 		const balance = this.props.balance
 		const role = this.props.role
 		return (
-			<section style={{ 'text-shadow': '3px 3px 5px blue' }}>
+			<section style={{ 'textShadow': '3px 3px 5px blue' }}>
 				<h4>
 					{' '}
 					<strong>Account Name: {name}</strong>
@@ -68,7 +68,7 @@ export default function Account() {
 				<Background>
 					<Header text="Account Information"></Header>
 					<Form>
-						<div style={{ 'margin-bottom': '25px' }}>
+						<div style={{ 'marginBottom': '25px' }}>
 							<ProfileInfo
 								name={loggedin.data.name}
 								email={loggedin.data.email}
@@ -98,14 +98,14 @@ export default function Account() {
 									}}>
 									Logout
 								</Button>
-								<div style={{ 'padding-left': '25px' }}>
+								<div style={{ 'paddingLeft': '25px' }}>
 									<Button
 										color="primary"
 										onClick={() => history.replace('/order')}>
 										Place An Order
 									</Button>
 								</div>
-								<div style={{ 'padding-left': '25px' }}>
+								<div style={{ 'paddingLeft': '25px' }}>
 									<Button
 										color="primary"
 										onClick={() => {
@@ -114,7 +114,7 @@ export default function Account() {
 										Order History
 									</Button>
 								</div>
-								<div style={{ 'padding-left': '25px' }}>
+								<div style={{ 'paddingLeft': '25px' }}>
 								<Button
 										color="primary"
 										onClick={() => {
@@ -153,7 +153,13 @@ export default function Account() {
 					<Header text="Account Information"></Header>
 					<Form>
 						<h3>Join The Dan's Family</h3>
-						<div>
+						<div style={{
+							'marginBottom':'25px',
+							'borderStyle': 'ridge',
+							'borderColor': 'blue',
+							'borderWidth': '15px',
+							'padding':'15px'
+							}}>
 							<label>
 								Name:{' '}
 								<input
@@ -184,8 +190,7 @@ export default function Account() {
 							<Button
 								color="primary"
 								onClick={() => {
-									register(name, email, password, password, queryCache)
-									history.replace('/home')
+									register(name, email, password, password, queryCache, history)
 								}}>
 								Register
 							</Button>
@@ -218,17 +223,20 @@ function register(
 	email: string,
 	password: string,
 	verifyPassword: string,
-	queryCache: any
+	queryCache: any,
+	history: any
 ) {
 	axios
 		.post('http://localhost:8100/auth/register', { name, email, password, verifyPassword })
 		.then(() => {
 			console.log('successful register')
 			queryCache.invalidateQueries('user')
+			history.replace('/home')
 		})
 		.catch((err) => {
 			console.log('failed to register')
 			console.error(err)
+			alert(err.response.data.reason)
 		})
 }
 
