@@ -100,7 +100,7 @@ export default function Home() {
 									'border-width': '15px',
 									'text-shadow': '3px 3px 5px blue',
 								}}>
-								<Body text="'Dan's Bagel Shop has the best shmears!'-Sheldon Jones">
+								<Body text="'Dan's Bagel Shop has the best smears!'-Sheldon Jones">
 									<img
 										src={man}
 										className="photo"
@@ -128,10 +128,10 @@ export default function Home() {
 								<a href="order">Place An Order</a>
 							</li>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>
@@ -224,10 +224,10 @@ export default function Home() {
 					<Footer>
 						<ul>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>

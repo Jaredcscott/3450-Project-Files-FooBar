@@ -17,7 +17,7 @@ const ONE_SECOND = 1 // ms
 
 function getOrders() {
 	return axios
-		.get('http://localhost:8100/order')
+		.get('http://localhost:8100/order/todo')
 		.then((res) => {
 			console.log('successful gotten orders')
 			return res.data.data
@@ -29,7 +29,7 @@ var date = new Date()
 var currentDate = date.toISOString().slice(0, 10)
 var currentTime = date.getHours() + ':' + date.getMinutes()
 
-export default function Orders() {
+export default function Cashier() {
 	const orders = useQuery('orders', getOrders, {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
@@ -39,28 +39,13 @@ export default function Orders() {
 	const PRODUCTS = orders.data
 	console.log(orders)
 
-
-
-	const info = useQuery('menu', getMenu)
-
-	if (!info.data) {
-		return <div>Loading</div>
-	}
-	const bagels = info.data.BAGEL
-	const smears = info.data.SMEAR
-	const toppings = info.data.SAMMICHE_TOPPINGS
-	const beverages = info.data.BEVERAGE
-
-	
-
-
 	if (!PRODUCTS) {
 		return null
 	} else
 		return (
 			<Screen>
 				<Background>
-					<Header text="Order History"></Header>
+					<Header text="Orders To Distribute"></Header>
 					<Form>
 						<FilterableProductTable products={PRODUCTS} />
 					</Form>
@@ -73,10 +58,10 @@ export default function Orders() {
 								<a href="home">Home Page</a>
 							</li>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>
@@ -128,7 +113,6 @@ const OrderWrapper = styled.div`
 type OrderItem = { _id: string, name: string }
 
 function Order({
-	
 	order,
 }: {
 	order: {
@@ -140,7 +124,6 @@ function Order({
 		bagels: Array<{ bagel: OrderItem, toppings: Array<OrderItem> }>,
 	},
 }) {
-	const queryCache = useQueryCache()
 	return (
 		<OrderWrapper>
 			<OrderHeader>
@@ -178,47 +161,29 @@ function Order({
 				</>
 			) : null}
 			<Button
+				style={{ 'padding-left': '25px' }}
 				width="250px"
-				onClick={() => addOrder(order.bagels, order.beverages, queryCache)}
+				onClick={() => markComplete(order._id, 'FULFILLED')}
 				color="primary">
-				Reorder
+				Mark Order Complete
+			</Button>
+			<Button
+				style={{ 'padding-left': '25px' }}
+				width="250px"
+				onClick={() => markComplete(order._id, 'CANCELED')}
+				color="primary">
+				Mark Order Cancelled
+			</Button>
+			<Button
+				style={{ 'padding-left': '25px' }}
+				width="250px"
+				onClick={() => markComplete(order._id, 'DID_NOT_PICK_UP')}
+				color="primary">
+				Did not pick up
 			</Button>
 		</OrderWrapper>
 	)
 }
-
-function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
-	console.log({})
-	var orderTime = new Date(currentDate + ' ' + currentTime)
-	var pickupAt = orderTime.getTime()
-	console.log(bagelList)
-	axios
-	.post('http://localhost:8100/order', {
-		bagels: bagelList
-			.filter((bagelOrder) => bagelOrder.bagel._id)
-			.map((bagelOrder) => {
-				return {
-					bagel: bagelOrder.bagel._id,
-					toppings: [
-						...bagelOrder.toppings.filter((item) => item).map((item) => item._id)
-					],
-				}
-			}),
-		beverages: beverageList.filter((item) => item).map((item) => item._id),
-		pickupAt: Date.now(),
-		
-	})
-	.then(() => {
-		console.log('successful Order')
-		queryCache.invalidateQueries('orders')
-	})
-	.catch((err) => {
-		console.log('failed to Order')
-		console.error(err)
-	})
-	
-}
-
 
 function getMenu() {
 	return axios
@@ -228,7 +193,6 @@ function getMenu() {
 		})
 		.catch(() => null)
 }
-
 
 const OrdersWrapper = styled.div`
 	width: 100%;
@@ -263,4 +227,13 @@ class FilterableProductTable extends React.Component {
 			</ScreenCenter>
 		)
 	}
+}
+
+function markComplete(orderID: string, status: string) {
+	return axios
+		.post(`http://localhost:8100/order/${orderID}`, { status })
+		.then((res) => {
+			window.location.reload(false)
+		})
+		.catch(() => null)
 }

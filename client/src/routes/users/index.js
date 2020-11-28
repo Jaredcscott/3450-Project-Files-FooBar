@@ -25,19 +25,28 @@ function getUsers() {
 		.catch(() => null)
 }
 
+function none() {}
+
+function promote(){
+	return axios
+		.get('http://localhost:8100/user/all')
+		.then((res) => {
+			console.log('successfully retrieved accounts')
+			return res.data.data
+		})
+		.catch(() => null)
+}
+
 export default function Users() {
 	const users = useQuery('users', getUsers, {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
 
-	// name, email, balance, roles
-
 	const queryCache = useQueryCache()
-	const PRODUCTS = users.data
-	console.log(users)
+	const USERS = users.data
 
-	if (!PRODUCTS) {
+	if (!USERS) {
 		return null
 	} else
 		return (
@@ -45,7 +54,7 @@ export default function Users() {
 				<Background>
 					<Header text="Users"></Header>
 					<Form>
-						<FilterableProductTable products={PRODUCTS} />
+						<UserTable users={USERS} />
 					</Form>
 					<Footer>
 						<ul>
@@ -68,73 +77,104 @@ export default function Users() {
 		)
 }
 
-//  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
-class ProductCategoryRow extends React.Component {
-	render() {
-		const category = this.props.category
-		return (
-			<tr>
-				<th colSpan="2">{category}</th>
-			</tr>
-		)
-	}
+function UserRow({user}) {
+	const queryCache = useQueryCache()
+	const name = <span style={{ color: 'black' }}>{user.name}</span>
+	return (
+		<tr style={{"fontSize":"20px", "textAlign":"center"}}>
+			<td>{ name }</td>	
+			<td>{ user.email }</td>
+			<td>${ user.balance / 100 }</td>
+			<td>{ user.roles.join(',') }</td>
+			<td style={{"fontSize":"15px"}}>
+				<Button
+					color="primary"
+					onClick={() =>{
+						if (!(user.roles.find((element) => element === 'CHEF'))) {
+							updateRoles(queryCache,user._id,[...user.roles, 'CHEF'])
+						}
+						else {
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CHEF'))
+						}
+					}}>
+					Toggle Chef
+				</Button>
+				<Button
+					color="primary"
+					onClick={() =>{
+						if (!(user.roles.find((element) => element === 'CASHIER'))) {
+							updateRoles(queryCache,user._id,[...user.roles, 'CASHIER'])
+						}
+						else {
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CASHIER'))
+						}
+					}}>
+					toggle Cashier
+				</Button>
+				<Button
+					color="primary"
+					onClick={() =>{
+						if (!(user.roles.find((element) => element === 'MANAGER'))) {
+							updateRoles(queryCache,user._id,[...user.roles, 'MANAGER'])
+						}
+						else {
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'MANAGER'))
+						}
+					}}>
+					Toggle Manager
+				</Button>
+				<Button
+					color="primary"
+					onClick={() =>{
+						if (!(user.roles.find((element) => element === 'CUSTOMER'))) {
+							updateRoles(queryCache,user._id,[...user.roles, 'CUSTOMER'])
+						}
+						else {
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CUSTOMER'))
+						}
+					}}>
+					toggle Customer
+				</Button>
+			</td>
+		</tr>
+	)
 }
 
-class ProductRow extends React.Component {
-	render() {
-		const product = this.props.product
-		const name = product.stocked ? (
-			product.name
-		) : (
-			<span style={{ color: 'red' }}>{product.name}</span>
-		)
-
-		return (
-			<tr>
-				<td>{name}</td>
-				<td>{product.email}</td>
-				<td>{product.balance}</td>
-				<td>{product.roles}</td>
-			</tr>
-		)
-	}
+function updateRoles(queryCache: any,id: string, roles: Array<string>) {
+	axios
+		.post(`http://localhost:8100/user/${id}`, { 
+			roles
+		})
+		.then(() => {
+			console.log('successfully changes roles')
+			queryCache.invalidateQueries('users')
+		})
+		.catch((err) => {
+			console.log('failed to update roles')
+			console.error(err)
+		})
 }
 
-class ProductTable extends React.Component {
+class UserTable extends React.Component {
 	render() {
 		const rows = []
-		let lastCategory = null
-
-		this.props.products.forEach((product) => {
-			if (product.category !== lastCategory) {
-				rows.push(<ProductCategoryRow category={product.category} key={product.category} />)
-			}
-			rows.push(<ProductRow product={product} key={product.name} />)
-			lastCategory = product.category
+		this.props.users.forEach((user) => {
+			rows.push(<UserRow user={user} key={user.name} />)
 		})
 
 		return (
 			<table>
 				<thead>
-					<tr>
-						<th>Name </th>
-						<th>Email </th>
-						<th>Balance </th>
-						<th>Roles </th>
+					<tr style={{"fontSize":"30px"}}>
+						<th >Name </th>
+						<th >Email </th>
+						<th >Balance </th>
+						<th >Roles </th>
+						<th >Actions </th>
 					</tr>
 				</thead>
 				<tbody>{rows}</tbody>
 			</table>
-		)
-	}
-}
-
-class FilterableProductTable extends React.Component {
-	render() {
-		return (
-			<div style={{ 'text-shadow': '3px 3px 5px blue' }}>
-				<ProductTable products={this.props.products} />
-			</div>
 		)
 	}
 }

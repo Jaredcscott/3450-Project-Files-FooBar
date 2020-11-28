@@ -23,6 +23,15 @@ export default function Order() {
 		{ bagel: string, toppings: (?string)[], smears: (?string)[] }[]
 	>([])
 	const [orderBeverages, setOrderBeverages] = useState<string[]>([])
+	const [currentDate, setCurrentDate] = useState(() => {
+		const today = new Date()
+		return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+	})
+
+	const [currentTime, setCurrentTime] = useState(() => {
+		const today = new Date()
+		return `${today.getHours()}:${today.getMinutes()}`
+	})
 
 	if (!info.data) {
 		return <div>Loading</div>
@@ -166,7 +175,8 @@ export default function Order() {
 												</select>
 											)
 										})}
-										<div
+										<Button
+											color="primary"
 											onClick={() => {
 												setOrderBagels(
 													produce(orderBagels, (orderBagels) => {
@@ -175,8 +185,9 @@ export default function Order() {
 												)
 											}}>
 											Add Smear
-										</div>
-										<div
+										</Button>
+										<Button
+											color="primary"
 											onClick={() => {
 												setOrderBagels(
 													produce(orderBagels, (orderBagels) => {
@@ -185,7 +196,7 @@ export default function Order() {
 												)
 											}}>
 											Add Topping
-										</div>
+										</Button>
 									</OrderRow>
 								))}
 							</ul>
@@ -224,13 +235,27 @@ export default function Order() {
 							</ul>
 							<p>
 								I would like my order to be ready at
-								<input type="time" id="time"></input>
+								<input
+									type="time"
+									id="time"
+									value={currentTime}
+									onChange={(event) =>
+										setCurrentTime(event.target.value)
+									}></input>
 								on
-								<input type="date" id="date"></input>
+								<input
+									type="date"
+									id="date"
+									value={currentDate}
+									onChange={(event) =>
+										setCurrentDate(event.target.value)
+									}></input>
 							</p>
 							<Button
 								width="250px"
-								onClick={() => addOrder(null, null, null)}
+								onClick={() =>
+									addOrder(orderBagels, orderBeverages, currentDate, currentTime)
+								}
 								color="primary">
 								Place Order
 							</Button>
@@ -271,12 +296,28 @@ function getMenu() {
 		.catch(() => null)
 }
 
-function addOrder(bagelList: list, beverageList: list, pickupAt: string, queryCache: any) {
-	console.log({})
+function addOrder(
+	bagelList: Array,
+	beverageList: Array,
+	date: string,
+	time: string,
+	queryCache: any
+) {
+	var pickupAt = new Date(date + ' ' + time).getTime()
 	axios
 		.post('http://localhost:8100/order', {
-			bagels: bagelList,
-			beverages: beverageList,
+			bagels: bagelList
+				.filter((bagelOrder) => bagelOrder.bagel)
+				.map((bagelOrder) => {
+					return {
+						bagel: bagelOrder.bagel,
+						toppings: [
+							...bagelOrder.toppings.filter((item) => item),
+							...bagelOrder.smears.filter((item) => item),
+						],
+					}
+				}),
+			beverages: beverageList.filter((item) => item),
 			pickupAt: pickupAt,
 		})
 		.then(() => {

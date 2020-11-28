@@ -30,13 +30,13 @@ class ProfileInfo extends Component {
 		const balance = this.props.balance
 		const role = this.props.role
 		return (
-			<section style={{ 'text-shadow': '3px 3px 5px blue' }}>
+			<section style={{ 'textShadow': '3px 3px 5px blue' }}>
 				<h4>
 					{' '}
 					<strong>Account Name: {name}</strong>
 				</h4>
 				<h4>Email Id: {email}</h4>
-				<h4>Account Balance: {balance}</h4>
+				<h4>Account Balance: ${balance / 100}</h4>
 				<h5>Role(s): {role}</h5>
 			</section>
 		)
@@ -54,8 +54,13 @@ export default function Account() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [name, setName] = useState('')
+
+	const [currentPassword, setCurrentPassword] = useState('')
+	const [newPassword, setNewPassword] = useState('')
 	const [verifyPassword, setVerifyPassword] = useState('')
 	const queryCache = useQueryCache()
+
+	
 
 	if (loggedin.data) {
 		return (
@@ -63,13 +68,27 @@ export default function Account() {
 				<Background>
 					<Header text="Account Information"></Header>
 					<Form>
-						<div style={{ 'margin-bottom': '25px' }}>
+						<div style={{ 'marginBottom': '25px' }}>
 							<ProfileInfo
 								name={loggedin.data.name}
 								email={loggedin.data.email}
 								balance={loggedin.data.balance}
-								role={loggedin.data.roles}
+								role={loggedin.data.roles.join(',')}
 							/>
+							<div>
+								Current Password:<input type="text" value={currentPassword}
+									onChange={(event) => setCurrentPassword(event.target.value)}></input>
+							</div>
+							<div>
+								New Password:<input type="text" value={newPassword}
+									onChange={(event) => setNewPassword(event.target.value)}>
+									
+								</input>
+								Verify New Password:<input type="text" value={verifyPassword}
+									onChange={(event) => setVerifyPassword(event.target.value)}>
+									
+									</input>
+							</div>
 							<div className="flex-container">
 								<Button
 									color="primary"
@@ -79,14 +98,14 @@ export default function Account() {
 									}}>
 									Logout
 								</Button>
-								<div style={{ 'padding-left': '25px' }}>
+								<div style={{ 'paddingLeft': '25px' }}>
 									<Button
 										color="primary"
 										onClick={() => history.replace('/order')}>
 										Place An Order
 									</Button>
 								</div>
-								<div style={{ 'padding-left': '25px' }}>
+								<div style={{ 'paddingLeft': '25px' }}>
 									<Button
 										color="primary"
 										onClick={() => {
@@ -94,6 +113,15 @@ export default function Account() {
 										}}>
 										Order History
 									</Button>
+								</div>
+								<div style={{ 'paddingLeft': '25px' }}>
+								<Button
+										color="primary"
+										onClick={() => {
+											resetPassword(loggedin.data.name, currentPassword, newPassword, verifyPassword)
+										}}>
+										Reset Password
+								</Button>
 								</div>
 							</div>
 						</div>
@@ -108,10 +136,10 @@ export default function Account() {
 								<a href="home">Home Page</a>
 							</li>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>
@@ -125,7 +153,13 @@ export default function Account() {
 					<Header text="Account Information"></Header>
 					<Form>
 						<h3>Join The Dan's Family</h3>
-						<div>
+						<div style={{
+							'marginBottom':'25px',
+							'borderStyle': 'ridge',
+							'borderColor': 'blue',
+							'borderWidth': '15px',
+							'padding':'15px'
+							}}>
 							<label>
 								Name:{' '}
 								<input
@@ -156,8 +190,7 @@ export default function Account() {
 							<Button
 								color="primary"
 								onClick={() => {
-									register(name, email, password, password, queryCache)
-									history.replace('/home')
+									register(name, email, password, password, queryCache, history)
 								}}>
 								Register
 							</Button>
@@ -172,10 +205,10 @@ export default function Account() {
 								<a href="home">Home Page</a>
 							</li>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>
@@ -190,17 +223,20 @@ function register(
 	email: string,
 	password: string,
 	verifyPassword: string,
-	queryCache: any
+	queryCache: any,
+	history: any
 ) {
 	axios
 		.post('http://localhost:8100/auth/register', { name, email, password, verifyPassword })
 		.then(() => {
 			console.log('successful register')
 			queryCache.invalidateQueries('user')
+			history.replace('/home')
 		})
 		.catch((err) => {
 			console.log('failed to register')
 			console.error(err)
+			alert(err.response.data.reason)
 		})
 }
 
@@ -231,6 +267,30 @@ function logout() {
 		})
 		.catch((err) => {
 			console.log('failed to logout')
+			console.error(err)
+		})
+}
+
+
+function resetPassword(
+	name: string,
+	currentPassword: string,
+	newPassword: string,
+	verifyNewPassword: string,
+){
+	axios
+		.get('http://localhost:8100/user', { 
+			name,
+			currentPassword,
+			newPassword,
+			verifyNewPassword, 
+		})
+		.then(() => {
+			console.log('successfully Reset Password')
+			window.location.reload(false)
+		})
+		.catch((err) => {
+			console.log('failed to set new password')
 			console.error(err)
 		})
 }
