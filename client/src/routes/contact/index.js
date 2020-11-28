@@ -46,14 +46,16 @@ export default function Contact() {
 						<div
 							className="flex-container"
 							style={{
-								'padding-top': '5px',
-								'margin-top': '50px',
-								margin: 'auto',
-								'font-size': '25px',
+								'margin':'10px',
+								'padding': '10px',
+								'borderStyle': 'ridge',
+								'borderColor': 'blue',
+								'borderWidth': '15px',
+								'font-size': '25px'
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'text-shadow': '3px 3px 5px blue' }}>
-									To Contact Us, Fill Out This Form.
+								<h2 style={{ 'text-shadow': '3px 3px 5px blue', 'marginTop':'5px'}}>
+									To Contact Us Fill Out This Form
 								</h2>
 								<div className="flex-container">
                                 <div className="email">
@@ -126,13 +128,15 @@ export default function Contact() {
 						<div
 							className="flex-container"
 							style={{
-								'padding-top': '5px',
-								'margin-top': '50px',
-								margin: 'auto',
-								'font-size': '25px',
+								'margin':'10px',
+								'padding': '10px',
+								'borderStyle': 'ridge',
+								'borderColor': 'blue',
+								'borderWidth': '15px',
+								'font-size': '25px'
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'text-shadow': '3px 3px 5px blue' }}>
+								<h2 style={{ 'text-shadow': '3px 3px 5px blue', 'marginTop':'5px'}}>
 									To Contact Us Fill Out This Form
 								</h2>
 								<div className="flex-container">
