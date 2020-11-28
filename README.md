@@ -1,4 +1,4 @@
-# Project Milestone 2
+# Project Milestone 3
 ## Group Name: FooBar
 ## Group Members
   * Jared Scott
