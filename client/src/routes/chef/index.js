@@ -41,7 +41,7 @@ export default function Chef() {
 		return (
 			<Screen>
 				<Background>
-					<Header text="Order History"></Header>
+					<Header text="Orders To Prepare"></Header>
 					<Form>
 						<FilterableProductTable products={PRODUCTS} />
 					</Form>

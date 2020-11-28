@@ -45,7 +45,7 @@ export default function Cashier() {
 		return (
 			<Screen>
 				<Background>
-					<Header text="Order History"></Header>
+					<Header text="Orders To Distribute"></Header>
 					<Form>
 						<FilterableProductTable products={PRODUCTS} />
 					</Form>
