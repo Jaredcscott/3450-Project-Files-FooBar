@@ -1,5 +1,7 @@
 # Project Milestone 3
 ## Group Name: FooBar
+
+Sprint documents are located at `docs/sprint`
 ## Group Members
   * Jared Scott
   * Braysen Goodwin
