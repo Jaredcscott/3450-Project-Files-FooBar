@@ -25,7 +25,7 @@ export default function Order() {
 	const [orderBeverages, setOrderBeverages] = useState<string[]>([])
 	const [currentDate, setCurrentDate] = useState(() => {
 		const today = new Date()
-		return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getUTCDate()}`
+		return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
 	})
 
 	const [currentTime, setCurrentTime] = useState(() => {
