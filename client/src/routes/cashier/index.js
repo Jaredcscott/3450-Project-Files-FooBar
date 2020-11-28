@@ -17,7 +17,7 @@ const ONE_SECOND = 1 // ms
 
 function getOrders() {
 	return axios
-		.get('http://localhost:8100/order')
+		.get('http://localhost:8100/order/todo')
 		.then((res) => {
 			console.log('successful gotten orders')
 			return res.data.data
@@ -69,7 +69,6 @@ export default function Cashier() {
 			</Screen>
 		)
 }
-
 
 const OrderHeader = styled.div`
 	display: flex;
@@ -161,19 +160,22 @@ function Order({
 					</Grouping>
 				</>
 			) : null}
-			<Button style={{ 'padding-left': '25px' }}
+			<Button
+				style={{ 'padding-left': '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'FULFILLED')}
 				color="primary">
 				Mark Order Complete
 			</Button>
-			<Button style={{ 'padding-left': '25px' }}
+			<Button
+				style={{ 'padding-left': '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'CANCELED')}
 				color="primary">
 				Mark Order Cancelled
 			</Button>
-			<Button style={{ 'padding-left': '25px' }}
+			<Button
+				style={{ 'padding-left': '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'DID_NOT_PICK_UP')}
 				color="primary">
@@ -183,7 +185,6 @@ function Order({
 	)
 }
 
-
 function getMenu() {
 	return axios
 		.get('http://localhost:8100/menu')
@@ -192,7 +193,6 @@ function getMenu() {
 		})
 		.catch(() => null)
 }
-
 
 const OrdersWrapper = styled.div`
 	width: 100%;
@@ -229,12 +229,11 @@ class FilterableProductTable extends React.Component {
 	}
 }
 
-
-function markComplete(orderID: string, status: string){
+function markComplete(orderID: string, status: string) {
 	return axios
-		.post(`http://localhost:8100/order/${orderID}`, {status})
+		.post(`http://localhost:8100/order/${orderID}`, { status })
 		.then((res) => {
-			window.location.reload(false);
+			window.location.reload(false)
 		})
 		.catch(() => null)
 }

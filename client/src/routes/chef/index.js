@@ -17,7 +17,7 @@ const ONE_SECOND = 1 // ms
 
 function getOrders() {
 	return axios
-		.get('http://localhost:8100/order')
+		.get('http://localhost:8100/order/todo')
 		.then((res) => {
 			console.log('successful gotten orders')
 			return res.data.data
@@ -30,7 +30,7 @@ export default function Chef() {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
-	
+
 	const queryCache = useQueryCache()
 	const PRODUCTS = orders.data
 	console.log(orders)
@@ -71,11 +71,10 @@ function updateOrderStatus(orderID: string, status: sting) {
 		.post(`http://localhost:8100/order/${orderID}`)
 		.send({ status })
 		.then((res) => {
-			window.location.reload(false);
+			window.location.reload(false)
 		})
 		.catch(() => null)
 }
-
 
 const OrderHeader = styled.div`
 	display: flex;
@@ -177,7 +176,6 @@ function Order({
 	)
 }
 
-
 function getMenu() {
 	return axios
 		.get('http://localhost:8100/menu')
@@ -186,7 +184,6 @@ function getMenu() {
 		})
 		.catch(() => null)
 }
-
 
 const OrdersWrapper = styled.div`
 	width: 100%;
@@ -223,12 +220,11 @@ class FilterableProductTable extends React.Component {
 	}
 }
 
-
-function markComplete(orderID: string, status: sting){
+function markComplete(orderID: string, status: sting) {
 	return axios
-		.post(`http://localhost:8100/order/${orderID}`, {status})
+		.post(`http://localhost:8100/order/${orderID}`, { status })
 		.then((res) => {
-			window.location.reload(false);
+			window.location.reload(false)
 		})
 		.catch(() => null)
 }

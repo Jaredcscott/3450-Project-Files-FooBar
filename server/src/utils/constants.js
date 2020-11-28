@@ -25,12 +25,12 @@ export const ORDER_STATUS = {
 	PREPARED: 'PREPARED',
 	FULFILLED: 'FULFILLED',
 	CANCELED: 'CANCELED',
-	DID_NOT_PICK_UP: 'DID_NOT_PICKUP',
+	DID_NOT_PICK_UP: 'DID_NOT_PICK_UP',
 }
 
-export const ORDER_STATUS_ENUM: Array<
-	$Keys<typeof ORDER_STATUS>
-> = Object.keys(ORDER_STATUS)
+export const ORDER_STATUS_ENUM: Array<$Keys<typeof ORDER_STATUS>> = Object.keys(
+	ORDER_STATUS
+)
 
 const ONE_SECOND = 1000 // ms
 const ONE_MINUTE = 60 * ONE_SECOND
