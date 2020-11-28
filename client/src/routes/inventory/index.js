@@ -238,6 +238,9 @@ export default function Inventory() {
 							<Button color="primary" onClick={(event) => setQty(event.target.value)}>
 								Save This inventory
 							</Button>
+							<Button color="primary" onClick={(event) => setQty(event.target.value)}>
+								Print Analytics
+							</Button>
 						</div>
 					</Form>
 					<Footer>
