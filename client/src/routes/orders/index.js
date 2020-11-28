@@ -128,6 +128,7 @@ const OrderWrapper = styled.div`
 type OrderItem = { _id: string, name: string }
 
 function Order({
+	
 	order,
 }: {
 	order: {
@@ -139,6 +140,7 @@ function Order({
 		bagels: Array<{ bagel: OrderItem, toppings: Array<OrderItem> }>,
 	},
 }) {
+	const queryCache = useQueryCache()
 	return (
 		<OrderWrapper>
 			<OrderHeader>
@@ -177,7 +179,7 @@ function Order({
 			) : null}
 			<Button
 				width="250px"
-				onClick={() => addOrder(order.bagels, order.beverages)}
+				onClick={() => addOrder(order.bagels, order.beverages, queryCache)}
 				color="primary">
 				Reorder
 			</Button>
@@ -193,22 +195,22 @@ function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
 	axios
 	.post('http://localhost:8100/order', {
 		bagels: bagelList
-			.filter((bagelOrder) => bagelOrder.bagel)
+			.filter((bagelOrder) => bagelOrder.bagel._id)
 			.map((bagelOrder) => {
 				return {
-					bagel: bagelOrder.bagel,
+					bagel: bagelOrder.bagel._id,
 					toppings: [
-						...bagelOrder.toppings.filter((item) => item),
-						...bagelOrder.smears.filter((item) => item),
+						...bagelOrder.toppings.filter((item) => item).map((item) => item._id)
 					],
 				}
 			}),
-		beverages: beverageList.filter((item) => item),
-		pickupAt: pickupAt,
+		beverages: beverageList.filter((item) => item).map((item) => item._id),
+		pickupAt: Date.now(),
 		
 	})
 	.then(() => {
 		console.log('successful Order')
+		queryCache.invalidateQueries('orders')
 	})
 	.catch((err) => {
 		console.log('failed to Order')
