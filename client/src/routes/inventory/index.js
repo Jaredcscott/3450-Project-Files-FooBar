@@ -234,7 +234,7 @@ export default function Inventory() {
 								</Button>
 							</div>{' '}
 							<br></br>
-							<FilterableProductTable products={PRODUCTS} />
+							<FilterableProductTable products={PRODUCTS}/>
 							<Button color="primary" onClick={(event) => setQty(event.target.value)}>
 								Save This inventory
 							</Button>
@@ -506,7 +506,7 @@ class ProductCategoryRow extends React.Component {
 		const category = this.props.category
 		return (
 			<tr>
-				<th colSpan="2" style={{ fontSize: '30px' }}>
+				<th colSpan="2" style={{ 'fontSize': '20px', 'textAlign':'left'}}>
 					{category}
 				</th>
 			</tr>
@@ -630,7 +630,7 @@ function ProductTable({ products }: { products: any }) {
 	})
 
 	return (
-		<table style={{ fontSize: '30px', textAlign: 'left' }}>
+		<table style={{ fontSize: '25px', textAlign: 'center' }}>
 			<thead>
 				<tr>
 					<th> Name </th>
@@ -638,8 +638,8 @@ function ProductTable({ products }: { products: any }) {
 					<th> On Menu </th>
 					<th> Quantity </th>
 					<th> Target Count </th>
-					<th> Amount Needed </th>
-					<th> Save </th>
+					<th> Needed </th>
+					<th>  </th>
 				</tr>
 			</thead>
 			<tbody>{rows}</tbody>

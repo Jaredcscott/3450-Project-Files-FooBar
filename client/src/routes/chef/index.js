@@ -43,7 +43,7 @@ export default function Chef() {
 				<Background>
 					<Header text="Orders To Prepare"></Header>
 					<Form>
-						<FilterableProductTable products={PRODUCTS} />
+						<FilterableProductTable products={PRODUCTS}/>
 					</Form>
 					<Footer>
 						<ul>
