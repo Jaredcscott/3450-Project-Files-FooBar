@@ -140,5 +140,23 @@ These are not hard rules, but they should be followed whenever possible.
     1. navigate into the server folder and run `yarn dev`
   * start client
     1. navigate into the server folder and run `yarn start`
+
+# Creating first admin or manager
+  * there is no client way to create an Admin or the first manager
+  * You will have to create a customer user and then use the `mongo` command (on the terminal) to update the user role with the following commands
+
+To make manager
+```bash
+>> use accounts
+>> db.users.update({email: <user-email>}, {$push: {roles: "MANAGER"}})
+```
+ 
+ To make admin
+```bash
+>> use accounts
+>> db.users.update({email: <user-email>}, {$push: {roles: "ADMIN"}})
+```
+
+where `<user-email>` is replaced with the email of the user to update the roles on.
  
 
