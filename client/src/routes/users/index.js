@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery, useQueryCache } from 'react-query'
 import axios from 'axios'
 import Button from '../../general/Button'
@@ -7,6 +7,7 @@ import Header from '../../general/Header'
 import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
+import produce from 'immer'
 
 const ONE_SECOND = 1000 // ms
 
@@ -62,11 +63,25 @@ export default function Users() {
 function UserRow({user}) {
 	const queryCache = useQueryCache()
 	const name = <span style={{ color: 'black' }}>{user.name}</span>
+	const [funds, setFunds] = useState(user)
 	return (
 		<tr style={{"fontSize":"20px", "textAlign":"center"}}>
 			<td>{ name }</td>	
 			<td>{ user.email }</td>
-			<td>${ user.balance / 100 }</td>
+			<td>$
+				<input
+					type="number" 
+					value={funds.balance / 100}
+					style={{'width':'75px'}}
+					onChange={(event) =>
+						setFunds(
+							produce(funds, (newFunds) => {
+								newFunds.balance = Math.floor(Number(event.target.value) * 100)
+							})
+						)
+					}
+				/>
+			</td>
 			<td>{ user.roles.join(',') }</td>
 			<td style={{"fontSize":"15px"}}>
 				<Button
@@ -117,10 +132,18 @@ function UserRow({user}) {
 					}}>
 					Toggle Customer
 				</Button>
+				<Button
+					color="primary"
+					onClick={() => 
+						updateFunds(funds, user.name, queryCache)}>
+					Adjust Funds
+				</Button>
 			</td>
 		</tr>
 	)
 }
+
+function none() {}
 
 function updateRoles(queryCache: any,id: string, roles: Array<string>) {
 	axios
@@ -133,6 +156,22 @@ function updateRoles(queryCache: any,id: string, roles: Array<string>) {
 		})
 		.catch((err) => {
 			console.log('failed to update roles')
+			console.error(err)
+		})
+}
+
+function updateFunds(newBalance: Number, name: any, queryCache){
+	axios
+		.post(`http://localhost:8100/user`, { 
+			name,
+			newBalance
+		})
+		.then(() => {
+			console.log('successfully added funds')
+			queryCache.invalidateQueries('user')
+		})
+		.catch((err) => {
+			console.log('failed to add funds')
 			console.error(err)
 		})
 }

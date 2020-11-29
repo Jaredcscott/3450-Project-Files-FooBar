@@ -8,7 +8,6 @@ import Header from '../../general/Header'
 import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
-import { useHistory } from 'react-router-dom'
 
 const ONE_SECOND = 1000 // ms
 
@@ -206,7 +205,6 @@ function markComplete(orderID: string, status: sting) {
 }
 
 function NoOrders() {
-	const history = useHistory()
 	return (
 		<Form>
 			<div style={{ 'textAlign':'center', 'margin':'25px', 'textShadow': '3px 3px 5px blue'}}>

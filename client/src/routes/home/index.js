@@ -50,7 +50,7 @@ export default function Home() {
 								'fontSize': '25px',
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'textShadow': '3px 3px 5px blue' }}>
+								<h2 style={{ 'textShadow': '3px 3px 5px blue', 'textTransform': 'capitalize' }}>
 									Hello {loggedin.data.name}, we missed you! You are now logged
 									in.
 								</h2>

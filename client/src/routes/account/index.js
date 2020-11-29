@@ -28,7 +28,7 @@ class ProfileInfo extends Component {
 			<section style={{ 'textShadow': '3px 3px 5px blue', 'fontSize':'25px' }}>
 				<h4>
 					{' '}
-					<strong>Account Name: {name}</strong>
+					<strong style={{'textTransform': 'capitalize'}}>Account Name: {name}</strong>
 				</h4>
 				<h4>Email Id: {email}</h4>
 				<h4>Account Balance: ${balance / 100}</h4>
@@ -78,7 +78,7 @@ export default function Account() {
 										var newBalance = loggedin.data.balance + (addFunds * 100)
 										addFundsToAccount(newBalance, loggedin.data.name, queryCache)
 									}}>
-									Add funds
+									Add Funds
 								</Button>
 								
 								<input type="number" value={addFunds}
