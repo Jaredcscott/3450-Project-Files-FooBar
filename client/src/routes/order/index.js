@@ -1,7 +1,7 @@
 // @flow
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryCache } from 'react-query'
 import Background from '../../general/Background'
 import Screen from '../../general/Screen'
 import Button from '../../general/Button'
@@ -29,6 +29,14 @@ export default function Order() {
 		return `${today.getHours()}:${today.getMinutes()}`
 	})
 
+	const [price, setPrice] = useState(0)
+
+	useEffect(() => {
+		getOrderPrice(orderBagels, orderBeverages).then((newPrice) => {
+			setPrice(newPrice)
+		})
+	}, [orderBeverages, orderBagels])
+
 	if (!info.data) {
 		return <div>Loading</div>
 	}
@@ -45,11 +53,11 @@ export default function Order() {
 				<Form>
 					<div
 						style={{
-							'margin': 'auto',
-							'marginTop': '25px',
-							'marginBottom': '25px',
-							'textShadow': '3px 3px 5px blue',
-							'width':'1200px'
+							margin: 'auto',
+							marginTop: '25px',
+							marginBottom: '25px',
+							textShadow: '3px 3px 5px blue',
+							width: '1200px',
 						}}>
 						<Body text="">
 							<Button
@@ -254,7 +262,7 @@ export default function Order() {
 									addOrder(orderBagels, orderBeverages, currentDate, currentTime)
 								}
 								color="primary">
-								Place Order
+								Place Order ${price / 100}
 							</Button>
 						</Body>
 					</div>
@@ -293,9 +301,38 @@ function getMenu() {
 		.catch(() => null)
 }
 
+function toServerOrder(bagelList: Array<*>, beverageList: Array<*>) {
+	return {
+		bagels: bagelList
+			.filter((bagelOrder) => bagelOrder.bagel)
+			.map((bagelOrder) => {
+				return {
+					bagel: bagelOrder.bagel,
+					toppings: [
+						...bagelOrder.toppings.filter((item) => item),
+						...bagelOrder.smears.filter((item) => item),
+					],
+				}
+			}),
+		beverages: beverageList.filter((item) => item),
+	}
+}
+
+function getOrderPrice(bagelList: Array<*>, beverageList: Array<*>) {
+	return axios
+		.post('http://localhost:8100/order/price', {
+			...toServerOrder(bagelList, beverageList),
+			pickupAt: Date.now(),
+		})
+		.then((res) => {
+			return res.data.data
+		})
+		.catch(() => null)
+}
+
 function addOrder(
-	bagelList: Array,
-	beverageList: Array,
+	bagelList: Array<*>,
+	beverageList: Array<*>,
 	date: string,
 	time: string,
 	queryCache: any
@@ -303,19 +340,8 @@ function addOrder(
 	var pickupAt = new Date(date + ' ' + time).getTime()
 	axios
 		.post('http://localhost:8100/order', {
-			bagels: bagelList
-				.filter((bagelOrder) => bagelOrder.bagel)
-				.map((bagelOrder) => {
-					return {
-						bagel: bagelOrder.bagel,
-						toppings: [
-							...bagelOrder.toppings.filter((item) => item),
-							...bagelOrder.smears.filter((item) => item),
-						],
-					}
-				}),
-			beverages: beverageList.filter((item) => item),
 			pickupAt: pickupAt,
+			...toServerOrder(bagelList, beverageList),
 		})
 		.then(() => {
 			alert('Order Placed!')
