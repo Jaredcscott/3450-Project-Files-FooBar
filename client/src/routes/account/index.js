@@ -60,7 +60,7 @@ export default function Account() {
 	const [verifyPassword, setVerifyPassword] = useState('')
 	const queryCache = useQueryCache()
 
-	
+	const [addFunds, setFunds] = useState('')
 
 	if (loggedin.data) {
 		return (
@@ -75,6 +75,21 @@ export default function Account() {
 								balance={loggedin.data.balance}
 								role={loggedin.data.roles.join(',')}
 							/>
+							
+
+							<div style={{ 'paddingLeft': '25px' }}>
+								<input type="text" value={addFunds}
+									onChange={(event) => setFunds(event.target.value)}>
+								</input>
+								<Button
+									color="primary"
+									onClick={() => {
+										addFundsToAccount(addFunds)
+									}}>
+									Add funds
+								</Button>
+							</div>
+
 							<div>
 								Current Password:<input type="text" value={currentPassword}
 									onChange={(event) => setCurrentPassword(event.target.value)}></input>
@@ -123,6 +138,7 @@ export default function Account() {
 										Reset Password
 								</Button>
 								</div>
+
 							</div>
 						</div>
 					</Form>
@@ -293,4 +309,8 @@ function resetPassword(
 			console.log('failed to set new password')
 			console.error(err)
 		})
+}
+
+function addFundsToAccount(funds: Number){
+
 }
