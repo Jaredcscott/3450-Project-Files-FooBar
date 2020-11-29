@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useQuery, useQueryCache } from 'react-query'
 import axios from 'axios'
@@ -40,12 +40,15 @@ export default function Orders() {
 		return null
 	} else
 		return (
-
 			<Screen>
 				<Background>
 					<Header text="Order History"></Header>
 					<Form>
-						{PRODUCTS.length === 0 ? <NoOrders/> : <FilterableProductTable products={PRODUCTS} />}
+						{PRODUCTS.length === 0 ? (
+							<NoOrders />
+						) : (
+							<FilterableProductTable products={PRODUCTS} />
+						)}
 					</Form>
 					<Footer>
 						<ul>
@@ -111,7 +114,6 @@ const OrderWrapper = styled.div`
 type OrderItem = { _id: string, name: string }
 
 function Order({
-	
 	order,
 }: {
 	order: {
@@ -124,6 +126,7 @@ function Order({
 	},
 }) {
 	const queryCache = useQueryCache()
+	const [isPlacingOrder, setIsPlacingOrder] = useState(false)
 	return (
 		<OrderWrapper>
 			<OrderHeader>
@@ -159,42 +162,50 @@ function Order({
 					</Grouping>
 				</>
 			) : null}
-			<Button
-				width="250px"
-				onClick={() => addOrder(order.bagels, order.beverages, queryCache)}
-				color="primary">
-				Reorder
-			</Button>
+			{!isPlacingOrder ? (
+				<Button width="250px" onClick={() => setIsPlacingOrder(true)} color="primary">
+					Reorder
+				</Button>
+			) : (
+				<PlaceOrder
+					orderToPlace={order}
+					onPlaced={(promise) => {
+						promise.then(() => {
+							setIsPlacingOrder(false)
+							queryCache.invalidateQueries('orders')
+						})
+					}}
+				/>
+			)}
 		</OrderWrapper>
 	)
 }
 
-function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
-	axios
-	.post('http://localhost:8100/order', {
-		bagels: bagelList
-			.filter((bagelOrder) => bagelOrder.bagel._id)
-			.map((bagelOrder) => {
-				return {
-					bagel: bagelOrder.bagel._id,
-					toppings: [
-						...bagelOrder.toppings.filter((item) => item).map((item) => item._id)
-					],
-				}
-			}),
-		beverages: beverageList.filter((item) => item).map((item) => item._id),
-		pickupAt: Date.now(),
-		
-	})
-	.then(() => {
-		console.log('successfully placed order')
-		queryCache.invalidateQueries('orders')
-	})
-	.catch((err) => {
-		console.log('failed to place order')
-		console.error(err)
-	})
-	
+function addOrder(bagelList: Array, beverageList: Array, time: string, date: string) {
+	return axios
+		.post('http://localhost:8100/order', {
+			bagels: bagelList
+				.filter((bagelOrder) => bagelOrder.bagel._id)
+				.map((bagelOrder) => {
+					return {
+						bagel: bagelOrder.bagel._id,
+						toppings: [
+							...bagelOrder.toppings.filter((item) => item).map((item) => item._id),
+						],
+					}
+				}),
+			beverages: beverageList.filter((item) => item).map((item) => item._id),
+			pickupAt: new Date(date + ' ' + time).getTime(),
+		})
+		.then(() => {
+			console.log('successfully placed order')
+			alert('order placed successfully')
+		})
+		.catch((err) => {
+			console.log('failed to place order')
+			alert(err?.response?.data?.reason || 'Could not connect to server')
+			console.error(err)
+		})
 }
 
 function getMenu() {
@@ -206,7 +217,6 @@ function getMenu() {
 		.catch(() => null)
 }
 
-
 const OrdersWrapper = styled.div`
 	width: 100%;
 	display: flex;
@@ -215,7 +225,8 @@ const OrdersWrapper = styled.div`
 	align-items: center;
 `
 
-function OrderLayout({ orders }) {
+function OrderLayout({ orders }: { orders: Array<*> }) {
+	orders.sort((a, b) => b.placed - a.placed)
 	return (
 		<OrdersWrapper>
 			{orders.map((order) => (
@@ -236,7 +247,7 @@ class FilterableProductTable extends React.Component {
 	render() {
 		return (
 			<ScreenCenter>
-				<OrderLayout orders={this.props.products}/>
+				<OrderLayout orders={this.props.products} />
 			</ScreenCenter>
 		)
 	}
@@ -247,13 +258,66 @@ function NoOrders() {
 	return (
 		<Form>
 			No Order History To Display
-			<div style={{ 'margin':'25px'}}>
-				<Button
-					color="primary"
-					onClick={() => history.replace('/order')}>
+			<div style={{ margin: '25px' }}>
+				<Button color="primary" onClick={() => history.replace('/order')}>
 					Place An Order
 				</Button>
 			</div>
 		</Form>
+	)
+}
+
+const PlaceOrderButton = styled(Button)`
+	margin-left: ${({ theme }) => theme.spacing.large};
+`
+
+function PlaceOrder({
+	orderToPlace,
+	onPlaced,
+}: {
+	orderToPlace: any,
+	onPlaced: (promise: Promise<*>) => void,
+}) {
+	const [currentDate, setCurrentDate] = useState(() => {
+		const today = new Date()
+		return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+	})
+
+	const [currentTime, setCurrentTime] = useState(() => {
+		const today = new Date()
+		return `${today.getHours()}:${today.getMinutes()}`
+	})
+
+	return (
+		<>
+			<p>
+				I would like my order to be ready at
+				<input
+					type="time"
+					id="time"
+					value={currentTime}
+					onChange={(event) => setCurrentTime(event.target.value)}></input>
+				on
+				<input
+					type="date"
+					id="date"
+					value={currentDate}
+					onChange={(event) => setCurrentDate(event.target.value)}></input>
+				<PlaceOrderButton
+					color="primary"
+					onClick={() => {
+						onPlaced(
+							addOrder(
+								orderToPlace.bagels,
+								orderToPlace.beverages,
+								currentTime,
+								currentDate
+							)
+						)
+					}}>
+					Place Order
+				</PlaceOrderButton>
+			</p>
+		</>
 	)
 }

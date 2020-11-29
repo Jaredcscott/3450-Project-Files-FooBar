@@ -1,7 +1,7 @@
 // @flow
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useQuery, useQueryCache } from 'react-query'
+import { useQuery } from 'react-query'
 import Background from '../../general/Background'
 import Screen from '../../general/Screen'
 import Button from '../../general/Button'
