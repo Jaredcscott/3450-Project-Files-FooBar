@@ -55,8 +55,6 @@ export default function Account() {
 	const [verifyPassword, setVerifyPassword] = useState('')
 	const queryCache = useQueryCache()
 
-	const [addFunds, setFunds] = useState('')
-
 	if (loggedin.data) {
 		const roles = new Set(loggedin.data.roles)
 		return (
@@ -71,25 +69,25 @@ export default function Account() {
 								balance={loggedin.data.balance}
 								role={loggedin.data.roles.join(',')}
 							/>
-							<div style={{ fontSize: '30px', textAlign: 'left' }}>
-								<Button
-									color="primary"
-									onClick={() => {
-										var newBalance = loggedin.data.balance + addFunds * 100
-										addFundsToAccount(
-											newBalance,
-											loggedin.data.name,
-											queryCache
-										)
-									}}>
-									Add Funds
-								</Button>
-
-								<input
-									type="number"
-									value={addFunds}
-									onChange={(event) => setFunds(event.target.value)}
-									placeholder="Add Funds"></input>
+							<div style={{ fontSize: '25px' }}>
+								<label>
+									Name:{' '}
+									<input
+										type="text"
+										value={name}
+										placeholder="Name"
+										onChange={(event) => setName(event.target.value)}
+									/>
+								</label>
+								<div style={{ paddingLeft: '25px' }}>
+									<Button
+										color="primary"
+										onClick={() => {
+											changeName(name, queryCache).then(() => setName(''))
+										}}>
+										Change Name
+									</Button>
+								</div>
 							</div>
 							<div style={{ fontSize: '25px' }}>
 								<div>
@@ -153,7 +151,6 @@ export default function Account() {
 										color="primary"
 										onClick={() => {
 											resetPassword(
-												loggedin.data.name,
 												currentPassword,
 												newPassword,
 												verifyPassword
@@ -319,15 +316,9 @@ function logout() {
 		})
 }
 
-function resetPassword(
-	name: string,
-	currentPassword: string,
-	newPassword: string,
-	verifyNewPassword: string
-) {
+function resetPassword(currentPassword: string, newPassword: string, verifyNewPassword: string) {
 	axios
-		.get('http://localhost:8100/user', {
-			name,
+		.post('http://localhost:8100/user', {
 			currentPassword,
 			newPassword,
 			verifyNewPassword,
@@ -342,18 +333,18 @@ function resetPassword(
 		})
 }
 
-function addFundsToAccount(newBalance: Number, name: any, queryCache) {
-	axios
-		.post(`http://localhost:8100/user`, {
+function changeName(name: string, queryCache: any) {
+	return axios
+		.post('http://localhost:8100/user', {
 			name,
-			newBalance,
 		})
 		.then(() => {
-			console.log('successfully added funds')
+			console.log('successfully changed name')
 			queryCache.invalidateQueries('user')
 		})
 		.catch((err) => {
-			console.log('failed to add funds')
+			console.log('failed to change name')
 			console.error(err)
+			alert('failed to change name')
 		})
 }

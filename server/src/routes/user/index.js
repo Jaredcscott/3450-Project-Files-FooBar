@@ -33,7 +33,12 @@ const USER_SELF_UPDATE_VALIDATOR = validate.isObjectWith({
 })
 
 const USER_MANAGER_UPDATE_VALIDATOR = validate.isObjectWith({
-	roles: validate.isArrayOf(validate.isInEnum(ROLES_ENUM)),
+	roles: validate.or(
+		validate.isArrayOf(validate.isInEnum(ROLES_ENUM)),
+		validate.isNull,
+		validate.isUndefined
+	),
+	balance: validate.or(validate.isNumber, validate.isUndefined),
 })
 
 router.get('/', (req: MaybeUserRequest<>, res: express$Response) => {
@@ -52,7 +57,6 @@ router.post(
 			currentPassword?: ?string,
 			newPassword?: ?string,
 			verifyNewPassword?: ?string,
-			newBalance?: ?number
 		}>,
 		res: express$Response
 	) => {
@@ -60,7 +64,7 @@ router.post(
 		if (!USER_SELF_UPDATE_VALIDATOR(updateData)) {
 			return res.status(400).json({ reason: 'malformed request' })
 		}
-		const { name, currentPassword, newPassword, verifyNewPassword, newBalance} = updateData
+		const { name, currentPassword, newPassword, verifyNewPassword } = updateData
 		if (currentPassword) {
 			if (!newPassword || !verifyNewPassword) {
 				return res.status(409).json({
@@ -99,10 +103,6 @@ router.post(
 			req.user.name = name
 			await req.user.save()
 		}
-		if (newBalance) {
-			req.user.balance = newBalance
-			await req.user.save()
-		}
 		res.status(200).end()
 	}
 )
@@ -139,7 +139,10 @@ router.post(
 	'/:id',
 	verifyUserHasRole(([ROLES.ADMIN, ROLES.MANAGER]: any)),
 	async (
-		req: AuthenticatedUserRequest<{ roles: Roles[] }, {| id: string |}>,
+		req: AuthenticatedUserRequest<
+			{ roles: Roles[], balance: number },
+			{| id: string |}
+		>,
 		res: express$Response
 	) => {
 		if (
@@ -152,7 +155,13 @@ router.post(
 		if (!user) {
 			return res.status(404).end()
 		}
-		user.roles = req.body.roles
+		const { roles, balance } = req.body
+		if (roles) {
+			user.roles = roles
+		}
+		if (balance) {
+			user.balance = balance
+		}
 		await user.save()
 		return res.status(200).end()
 	}
