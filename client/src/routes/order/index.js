@@ -318,10 +318,12 @@ function addOrder(
 			pickupAt: pickupAt,
 		})
 		.then(() => {
+			alert('Order Placed!')
 			console.log('successfully placed order')
 		})
 		.catch((err) => {
 			console.log('failed to place order')
 			console.error(err)
+			alert(err.response.data.reason)
 		})
 }
