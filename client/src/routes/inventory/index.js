@@ -235,12 +235,6 @@ export default function Inventory() {
 							</div>{' '}
 							<br></br>
 							<FilterableProductTable products={PRODUCTS}/>
-							<Button color="primary" onClick={(event) => setQty(event.target.value)}>
-								Save This inventory
-							</Button>
-							<Button color="primary" onClick={(event) => setQty(event.target.value)}>
-								Print Analytics
-							</Button>
 						</div>
 					</Form>
 					<Footer>

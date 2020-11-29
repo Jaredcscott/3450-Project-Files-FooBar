@@ -23,6 +23,8 @@ function getSignedInUser() {
 		.catch(() => null)
 }
 
+function none() {}
+
 class ProfileInfo extends Component {
 	render() {
 		const name = this.props.name
@@ -63,6 +65,7 @@ export default function Account() {
 	const [addFunds, setFunds] = useState('')
 
 	if (loggedin.data) {
+		const roles = new Set(loggedin.data.roles)
 		return (
 			<Screen>
 				<Background>
@@ -75,12 +78,7 @@ export default function Account() {
 								balance={loggedin.data.balance}
 								role={loggedin.data.roles.join(',')}
 							/>
-							
-
-							<div style={{ 'paddingLeft': '25px' }}>
-								<input type="text" value={addFunds}
-									onChange={(event) => setFunds(event.target.value)}>
-								</input>
+							<div style={{ 'fontSize':'30px', 'textAlign':'left' }}>
 								<Button
 									color="primary"
 									onClick={() => {
@@ -88,23 +86,26 @@ export default function Account() {
 									}}>
 									Add funds
 								</Button>
-							</div>
-
-							<div>
-								Current Password:<input type="text" value={currentPassword}
-									onChange={(event) => setCurrentPassword(event.target.value)}></input>
-							</div>
-							<div>
-								New Password:<input type="text" value={newPassword}
-									onChange={(event) => setNewPassword(event.target.value)}>
-									
+								<input type="text" value={addFunds}
+									onChange={(event) => setFunds(event.target.value)}>
 								</input>
-								Verify New Password:<input type="text" value={verifyPassword}
-									onChange={(event) => setVerifyPassword(event.target.value)}>
-									
-									</input>
 							</div>
-							<div className="flex-container">
+							<div style={{'fontSize':'25px'}}>
+								<div>
+									Current Password:<input type="text" value={currentPassword}
+										onChange={(event) => setCurrentPassword(event.target.value)}></input>
+								</div>
+								<div>
+									New Password:<input type="text" value={newPassword}
+										onChange={(event) => setNewPassword(event.target.value)}>
+										
+									</input>
+									Verify New Password:<input type="text" value={verifyPassword}
+										onChange={(event) => setVerifyPassword(event.target.value)}>	
+									</input>
+								</div>
+							</div>
+							<div className="flex-container" style={{'fontSize':'30px'}}>
 								<Button
 									color="primary"
 									onClick={() => {
@@ -137,6 +138,9 @@ export default function Account() {
 										}}>
 										Reset Password
 								</Button>
+								</div>
+								<div style={{ 'paddingLeft': '25px'}}>
+								{ roles.has("MANAGER") || roles.has("ADMIN") ? <Button color="primary" onClick={none}>Print Analytics</Button> : null}
 								</div>
 
 							</div>
