@@ -61,7 +61,7 @@ export default function About() {
                                         each night in their small studio apartment. When the lines for the cart started to become unmanageable, Dan bought the first brick and mortar
                                         Dan's Bagel Shop location.<br></br><br></br>
                                         Today there are over 1 locations, and Dan's is moving into the 21st century by incorporating this high-tech web application. 
-                                        We thank you for being a member of the Dan's family and hope you enjoy the worlds greatest bagels!
+                                        We thank you for being a member of the Dan's family and hope you enjoy the world's greatest bagels!
                                         <br></br><br></br>
                                     </Body>
                                     <div className="flex-child" style={{'textAlign':'center'}}>
@@ -152,7 +152,8 @@ export default function About() {
                                         each night in their small studio apartment. When the lines for the cart started to become unmanageable, Dan bought the first brick and mortar
                                         Dan's Bagel Shop location.<br></br><br></br>
                                         Today there are over 1 locations, and Dan's is moving into the 21st century by incorporating this high-tech web application. 
-                                        We thank you for being a member of the Dan's family and hope you enjoy the worlds greatest bagels!
+                                        <br></br><br></br>
+                                        We welcome you, and hope you become a member of the Dan's family. Then you can enjoy the world's greatest bagels too!
                                         <br></br><br></br>
                                     </Body>
                                     <div className="flex-child" style={{'textAlign':'center'}}>

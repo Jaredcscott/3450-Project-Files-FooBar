@@ -8,6 +8,7 @@ import Header from '../../general/Header'
 import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
+import { useHistory } from 'react-router-dom'
 
 const ONE_SECOND = 1000 // ms
 
@@ -37,7 +38,7 @@ export default function Cashier() {
 				<Background>
 					<Header text="Orders To Distribute"></Header>
 					<Form>
-						<FilterableProductTable products={PRODUCTS} />
+						{PRODUCTS.length === 0 ? <NoOrders/> : <FilterableProductTable products={PRODUCTS}/>}
 					</Form>
 					<Footer>
 						<ul>
@@ -151,21 +152,21 @@ function Order({
 				</>
 			) : null}
 			<Button
-				style={{ 'padding-left': '25px' }}
+				style={{ 'paddingLeft': '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'FULFILLED')}
 				color="primary">
 				Mark Order Complete
 			</Button>
 			<Button
-				style={{ 'padding-left': '25px' }}
+				style={{ 'paddingLeft': '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'CANCELED')}
 				color="primary">
 				Mark Order Cancelled
 			</Button>
 			<Button
-				style={{ 'padding-left': '25px' }}
+				style={{ 'paddingLeft': '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'DID_NOT_PICK_UP')}
 				color="primary">
@@ -217,4 +218,15 @@ function markComplete(orderID: string, status: string) {
 			window.location.reload(false)
 		})
 		.catch(() => null)
+}
+
+function NoOrders() {
+	const history = useHistory()
+	return (
+		<Form>
+			<div style={{ 'textAlign':'center', 'margin':'25px', 'textShadow': '3px 3px 5px blue'}}>
+				No Orders To Display<br></br>Enjoy Your Break!
+			</div>
+		</Form>
+	)
 }

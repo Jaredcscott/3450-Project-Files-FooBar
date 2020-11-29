@@ -8,6 +8,7 @@ import Header from '../../general/Header'
 import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
+import { useHistory } from 'react-router-dom'
 
 const ONE_SECOND = 1000 // ms
 
@@ -15,7 +16,7 @@ function getOrders() {
 	return axios
 		.get('http://localhost:8100/order/todo')
 		.then((res) => {
-			console.log('successful gotten orders')
+			console.log('successfully retrieved orders')
 			return res.data.data
 		})
 		.catch(() => null)
@@ -37,7 +38,7 @@ export default function Chef() {
 				<Background>
 					<Header text="Orders To Prepare"></Header>
 					<Form>
-						<FilterableProductTable products={PRODUCTS}/>
+						{PRODUCTS.length === 0 ? <NoOrders/> : <FilterableProductTable products={PRODUCTS}/>}
 					</Form>
 					<Footer>
 						<ul>
@@ -202,4 +203,15 @@ function markComplete(orderID: string, status: sting) {
 			window.location.reload(false)
 		})
 		.catch(() => null)
+}
+
+function NoOrders() {
+	const history = useHistory()
+	return (
+		<Form>
+			<div style={{ 'textAlign':'center', 'margin':'25px', 'textShadow': '3px 3px 5px blue'}}>
+				No Orders To Display<br></br>Enjoy Your Break!
+			</div>
+		</Form>
+	)
 }

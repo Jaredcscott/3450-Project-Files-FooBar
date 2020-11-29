@@ -32,7 +32,6 @@ export default function Routing() {
 					<Route path="/about" component={About} />
 					<Route path="/contact" component={Contact} />
 					<Route path="/analytics" component={Analytics} />
-
 				</Switch>
 			</Screen>
 		</BrowserRouter>

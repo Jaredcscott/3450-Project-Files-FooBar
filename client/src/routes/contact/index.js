@@ -45,10 +45,10 @@ export default function Contact() {
 								'borderStyle': 'ridge',
 								'borderColor': 'blue',
 								'borderWidth': '15px',
-								'font-size': '25px'
+								'fontSize': '25px'
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'text-shadow': '3px 3px 5px blue', 'marginTop':'5px'}}>
+								<h2 style={{ 'textShadow': '3px 3px 5px blue', 'marginTop':'5px'}}>
 									To Contact Us Fill Out This Form
 								</h2>
 								<div className="flex-container">
@@ -61,6 +61,7 @@ export default function Contact() {
 									autoFocus="1"
 									aria-label="Email"
 									style={{ width: '350px', height: '30px' }}
+									onChange={none}
 								/>
 								<br></br>
 								<input
@@ -71,6 +72,7 @@ export default function Contact() {
 									autoFocus="1"
 									aria-label="Subject"
 									style={{ width: '350px', height: '30px' }}
+									onChange={none}
 								/>
 								<br></br>
 								<input
@@ -81,6 +83,7 @@ export default function Contact() {
 									autoFocus="1"
 									aria-label="Message"
 									style={{ width: '350px', height: '30px' }}
+									onChange={none}
 								/>
 								<br></br>
 								<Button
@@ -127,10 +130,10 @@ export default function Contact() {
 								'borderStyle': 'ridge',
 								'borderColor': 'blue',
 								'borderWidth': '15px',
-								'font-size': '25px'
+								'fontSize': '25px'
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'text-shadow': '3px 3px 5px blue', 'marginTop':'5px'}}>
+								<h2 style={{ 'textShadow': '3px 3px 5px blue', 'marginTop':'5px'}}>
 									To Contact Us Fill Out This Form
 								</h2>
 								<div className="flex-container">
@@ -143,6 +146,7 @@ export default function Contact() {
 									autoFocus="1"
 									aria-label="Email"
 									style={{ width: '350px', height: '30px' }}
+									onChange={none}
 								/>
 								<br></br>
 								<input
@@ -153,6 +157,7 @@ export default function Contact() {
 									autoFocus="1"
 									aria-label="Subject"
 									style={{ width: '350px', height: '30px' }}
+									onChange={none}
 								/>
 								<br></br>
 								<input
@@ -163,6 +168,7 @@ export default function Contact() {
 									autoFocus="1"
 									aria-label="Message"
 									style={{ width: '350px', height: '30px' }}
+									onChange={none}
 								/>
 								<br></br>
 								<Button

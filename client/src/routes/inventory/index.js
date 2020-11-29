@@ -38,100 +38,7 @@ export default function Inventory() {
 	const PRODUCTS = inventory.data
 
 	if (!PRODUCTS) {
-		return (
-			<Screen>
-				<Background>
-					<Header text="Inventory"></Header>
-					<Form>
-						<div width="1700px">
-							<label>
-								Name:{' '}
-								<input
-									type="text"
-									value={name}
-									onChange={(event) => setName(event.target.value)}
-								/>
-							</label>{' '}
-							<br></br>
-							<label>
-								Category:{' '}
-								<select
-									value={category}
-									onChange={(event) => setCategory(event.target.value)}>
-									{INVENTORY_ITEM_CATEGORIES.map((category) => {
-										return (
-											<option key={category} value={category}>
-												{category}
-											</option>
-										)
-									})}
-								</select>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								isOnMenu:{' '}
-								<input
-									type="checkbox"
-									checked={isOnMenu}
-									onChange={(event) => setIsOnMenu(event.target.checked)}
-								/>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								Quantity:{' '}
-								<input
-									type="number"
-									value={qty}
-									onChange={(event) => setQty(event.target.value)}
-								/>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								Price:{' '}
-								<input
-									type="number"
-									value={price}
-									onChange={(event) => setPrice(event.target.value)}
-								/>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								Target Count:{' '}
-								<input
-									type="number"
-									value={targetCount}
-									onChange={(event) => setTargetCount(event.target.value)}
-								/>
-							</label>{' '}
-							<br></br>
-							<Button
-								color="primary"
-								onClick={() =>
-									addItem(
-										name,
-										category,
-										qty,
-										price,
-										targetCount,
-										isOnMenu,
-										queryCache
-									)
-								}>
-								Add Item
-							</Button>
-							<Button color="primary" onClick={() => populateDatabase(queryCache)}>
-								Populate Database
-							</Button>
-						</div>{' '}
-						<br></br>
-					</Form>
-				</Background>
-			</Screen>
-		)
+		return null
 	} else
 		return (
 			<Screen>
@@ -245,7 +152,7 @@ export default function Inventory() {
 								<a href="home">Home Page</a>
 							</li>
 							<li>
-								<a href="<about>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
 								<a href="contact">Contact Us</a>
@@ -286,7 +193,7 @@ function addItem(
 			targetCount: Number(targetCount),
 		})
 		.then(() => {
-			console.log('successful added item')
+			console.log('successfully added item')
 			queryCache.invalidateQueries('inventory')
 		})
 		.catch((err) => {
@@ -315,7 +222,7 @@ function populateDatabase(queryCache: any) {
 				targetCount,
 			})
 			.then(() => {
-				console.log('successful added item')
+				console.log('successfully added item')
 				queryCache.invalidateQueries('inventory')
 			})
 			.catch((err) => {
@@ -329,7 +236,7 @@ function updateItem(item: any, queryCache: any) {
 	axios
 		.post(`http://localhost:8100/inventory/${item._id}`, item)
 		.then(() => {
-			console.log('successful updated item')
+			console.log('successfully updated item')
 			queryCache.invalidateQueries('inventory')
 		})
 		.catch((err) => {

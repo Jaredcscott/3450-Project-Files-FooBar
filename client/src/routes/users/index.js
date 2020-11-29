@@ -128,7 +128,7 @@ function updateRoles(queryCache: any,id: string, roles: Array<string>) {
 			roles
 		})
 		.then(() => {
-			console.log('successfully changes roles')
+			console.log('successfully changed roles')
 			queryCache.invalidateQueries('users')
 		})
 		.catch((err) => {

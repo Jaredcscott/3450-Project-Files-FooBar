@@ -45,10 +45,11 @@ export default function Order() {
 				<Form>
 					<div
 						style={{
-							margin: 'auto',
+							'margin': 'auto',
 							'marginTop': '25px',
 							'marginBottom': '25px',
 							'textShadow': '3px 3px 5px blue',
+							'width':'1200px'
 						}}>
 						<Body text="">
 							<Button

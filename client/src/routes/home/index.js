@@ -46,7 +46,7 @@ export default function Home() {
 							style={{
 								'paddingTop': '5px',
 								'marginTop': '50px',
-								margin: 'auto',
+								'margin': 'auto',
 								'fontSize': '25px',
 							}}>
 							<div className="flex-child">
@@ -84,7 +84,7 @@ export default function Home() {
 								className="flex-container"
 								style={{
 									'marginBottom': '10px',
-									padding: '5px',
+									'padding': '5px',
 									'marginTop': '100px',
 									'borderStyle': 'ridge',
 									'borderColor': 'blue',
@@ -186,7 +186,7 @@ export default function Home() {
 								className="flex-container"
 								style={{
 									'marginBottom': '10px',
-									padding: '5px',
+									'padding': '5px',
 									'marginTop': '100px',
 									'borderStyle': 'ridge',
 									'borderColor': 'blue',
@@ -236,7 +236,6 @@ function login(email: string, password: string, queryCache: any) {
 		})
 		.then((res) => {
 			console.log('successfully logged in')
-			console.log(res)
 			queryCache.invalidateQueries('user')
 		})
 		.catch((err) => {
@@ -250,7 +249,6 @@ function logout() {
 		.get(`${config.serverUrl}/auth/logout`, { credentials: 'include' })
 		.then(() => {
 			console.log('successfully logged out')
-			console.log()
 			window.location.reload(false)
 		})
 		.catch((err) => {

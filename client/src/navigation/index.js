@@ -56,7 +56,6 @@ const Navbar = styled.nav`
 	display: flex;
 	flex-direction: row;
 	flex: 0 0 auto;
-
 	background-color: ${({ theme }) => theme.color.base.lighter};
 `
 

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useQuery, useQueryCache } from 'react-query'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 import Button from '../../general/Button'
 import Form from '../../general/Form'
 import Header from '../../general/Header'
@@ -39,11 +40,12 @@ export default function Orders() {
 		return null
 	} else
 		return (
+
 			<Screen>
 				<Background>
 					<Header text="Order History"></Header>
 					<Form>
-						<FilterableProductTable products={PRODUCTS} />
+						{PRODUCTS.length === 0 ? <NoOrders/> : <FilterableProductTable products={PRODUCTS} />}
 					</Form>
 					<Footer>
 						<ul>
@@ -238,4 +240,20 @@ class FilterableProductTable extends React.Component {
 			</ScreenCenter>
 		)
 	}
+}
+
+function NoOrders() {
+	const history = useHistory()
+	return (
+		<Form>
+			No Order History To Display
+			<div style={{ 'margin':'25px'}}>
+				<Button
+					color="primary"
+					onClick={() => history.replace('/order')}>
+					Place An Order
+				</Button>
+			</div>
+		</Form>
+	)
 }

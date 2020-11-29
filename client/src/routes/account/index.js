@@ -32,7 +32,7 @@ class ProfileInfo extends Component {
 				</h4>
 				<h4>Email Id: {email}</h4>
 				<h4>Account Balance: ${balance / 100}</h4>
-				<h5>Role(s): {role}</h5>
+				<h4>Role(s): {role}</h4>
 			</section>
 		)
 	}
@@ -157,10 +157,10 @@ export default function Account() {
 					<Footer>
 						<ul>
 							<li>
-								<a href="account">Take Me To My Account</a>
+								<a href="home">Home Page</a>
 							</li>
 							<li>
-								<a href="home">Home Page</a>
+								<a href="order">Place An Order</a>
 							</li>
 							<li>
 								<a href="about">About Dan's Bagel Shop</a>
@@ -177,21 +177,23 @@ export default function Account() {
 		return (
 			<Screen>
 				<Background>
-					<Header text="Account Information"></Header>
+					<Header text="Registration Form"></Header>
 					<Form>
-						<h3>Join The Dan's Family</h3>
+						<h3 style={{'textShadow': '3px 3px 5px blue'}}>Join The Dan's Family</h3>
 						<div style={{
 							'marginBottom':'25px',
 							'borderStyle': 'ridge',
 							'borderColor': 'blue',
 							'borderWidth': '15px',
-							'padding':'15px'
+							'padding':'15px',
+							'textShadow': '3px 3px 5px blue'
 							}}>
 							<label>
 								Name:{' '}
 								<input
 									type="text"
 									value={name}
+									placeholder="Name"
 									onChange={(event) => setName(event.target.value)}
 								/>
 							</label>
@@ -201,6 +203,7 @@ export default function Account() {
 								<input
 									type="text"
 									value={email}
+									placeholder="Email"
 									onChange={(event) => setEmail(event.target.value)}
 								/>
 							</label>
@@ -210,10 +213,12 @@ export default function Account() {
 								<input
 									type="text"
 									value={password}
+									placeholder="Password"
 									onChange={(event) => setPassword(event.target.value)}
 								/>
 							</label>
 							<br></br>
+							<div style={{'margin':'auto', 'textAlign':'center'}}>
 							<Button
 								color="primary"
 								onClick={() => {
@@ -221,13 +226,16 @@ export default function Account() {
 								}}>
 								Register
 							</Button>
+							</div>
+							<div style={{'fontSize':'20px', 'textShadow': '3px 3px 5px blue'}}>
+								<label>
+									Password must contain: <br></br>-At least on upper case letter<br></br> -One lower case letter<br></br> -One number<br></br> -Must be between 8 and 32 digits long'
+								</label>
+							</div>
 						</div>
 					</Form>
 					<Footer>
 						<ul>
-							<li>
-								<a href="account">Take Me To My Account</a>
-							</li>
 							<li>
 								<a href="home">Home Page</a>
 							</li>
@@ -256,7 +264,7 @@ function register(
 	axios
 		.post('http://localhost:8100/auth/register', { name, email, password, verifyPassword })
 		.then(() => {
-			console.log('Successfully registered')
+			console.log('successfully registered')
 			queryCache.invalidateQueries('user')
 			history.replace('/home')
 		})
