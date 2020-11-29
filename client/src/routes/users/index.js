@@ -1,12 +1,7 @@
-import React, { Component, useState, Checkbox } from 'react'
-import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
 import { useQuery, useQueryCache } from 'react-query'
-import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
-import { getTheme, setTheme } from '../../redux-store/theme'
 import axios from 'axios'
 import Button from '../../general/Button'
-import Body from '../../general/Body'
 import Form from '../../general/Form'
 import Header from '../../general/Header'
 import Footer from '../../general/Footer'
@@ -25,17 +20,6 @@ function getUsers() {
 		.catch(() => null)
 }
 
-function none() {}
-
-function promote(){
-	return axios
-		.get('http://localhost:8100/user/all')
-		.then((res) => {
-			console.log('successfully retrieved accounts')
-			return res.data.data
-		})
-		.catch(() => null)
-}
 
 export default function Users() {
 	const users = useQuery('users', getUsers, {
@@ -43,7 +27,6 @@ export default function Users() {
 		refetchOnWindowFocus: false,
 	})
 
-	const queryCache = useQueryCache()
 	const USERS = users.data
 
 	if (!USERS) {
@@ -94,7 +77,7 @@ function UserRow({user}) {
 							updateRoles(queryCache,user._id,[...user.roles, 'CHEF'])
 						}
 						else {
-							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CHEF'))
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element !== 'CHEF'))
 						}
 					}}>
 					Toggle Chef
@@ -106,7 +89,7 @@ function UserRow({user}) {
 							updateRoles(queryCache,user._id,[...user.roles, 'CASHIER'])
 						}
 						else {
-							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CASHIER'))
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element !== 'CASHIER'))
 						}
 					}}>
 					Toggle Cashier
@@ -118,7 +101,7 @@ function UserRow({user}) {
 							updateRoles(queryCache,user._id,[...user.roles, 'MANAGER'])
 						}
 						else {
-							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'MANAGER'))
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element !== 'MANAGER'))
 						}
 					}}>
 					Toggle Manager
@@ -130,7 +113,7 @@ function UserRow({user}) {
 							updateRoles(queryCache,user._id,[...user.roles, 'CUSTOMER'])
 						}
 						else {
-							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CUSTOMER'))
+							updateRoles(queryCache,user._id,user.roles.filter((element) => element !== 'CUSTOMER'))
 						}
 					}}>
 					Toggle Customer

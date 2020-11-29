@@ -1,7 +1,5 @@
 import React, { Component, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
 import { useQuery, useQueryCache } from 'react-query'
 import Button from '../../general/Button'
 import Background from '../../general/Background'
@@ -9,9 +7,6 @@ import Header from '../../general/Header'
 import Screen from '../../general/Screen'
 import Form from '../../general/Form'
 import Footer from '../../general/Footer'
-import Body from '../../general/Body'
-import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
-import { getTheme, setTheme } from '../../redux-store/theme'
 import axios from 'axios'
 
 function getSignedInUser() {
@@ -22,8 +17,6 @@ function getSignedInUser() {
 		})
 		.catch(() => null)
 }
-
-function none() {}
 
 class ProfileInfo extends Component {
 	render() {
@@ -271,23 +264,6 @@ function register(
 			console.log('failed to register')
 			console.error(err)
 			alert(err.response.data.reason)
-		})
-}
-
-function login(email: string, password: string, queryCache: any) {
-	axios
-		.post('http://localhost:8100/auth/login', {
-			email,
-			password,
-		})
-		.then((res) => {
-			console.log('successfully loged in')
-			console.log(res)
-			queryCache.invalidateQueries('user')
-		})
-		.catch((err) => {
-			console.log('failed to login')
-			console.error(err)
 		})
 }
 

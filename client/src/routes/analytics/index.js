@@ -1,17 +1,11 @@
-import React, { Component, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
-import { useQuery, useQueryCache } from 'react-query'
-import Button from '../../general/Button'
+import React, { Component } from 'react'
+import { useQuery } from 'react-query'
 import Background from '../../general/Background'
 import Header from '../../general/Header'
 import Screen from '../../general/Screen'
 import Form from '../../general/Form'
 import Footer from '../../general/Footer'
 import Body from '../../general/Body'
-import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
-import { getTheme, setTheme } from '../../redux-store/theme'
 import axios from 'axios'
 
 function getSignedInUser() {
@@ -22,8 +16,6 @@ function getSignedInUser() {
 		})
 		.catch(() => null)
 }
-
-function none() {}
 
 class BusinessInfo extends Component {
 	render() {
@@ -40,7 +32,7 @@ class BusinessInfo extends Component {
 					<strong>Business Name: {name}</strong>
 				</h4>
 				<h4>Business Account Balance: ${balance / 100}</h4>
-                <h4>Employee Count: ${empCount}</h4>
+                <h4>Employee Count: {empCount}</h4>
 				<h4>Customer Count: {custCount}</h4>
                 <h4>Active Order Count: {curOrders}</h4>
                 <h4>Historical Order Count: {allOrders}</h4>
@@ -56,8 +48,9 @@ export default function Analytics() {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
-	if (loggedin.data) {
-		const roles = new Set(loggedin.data.roles)
+    const roles = new Set(loggedin.data.roles)
+	if (loggedin.data && (roles.has("MANAGER") || roles.has("ADMIN"))) {
+		
 		return (
 			<Screen>
 				<Background>

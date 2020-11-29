@@ -1,16 +1,12 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import styled from 'styled-components'
-import Button from '../../general/Button'
+import React from 'react'
 import Body from '../../general/Body'
 import Form from '../../general/Form'
 import Header from '../../general/Header'
 import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
-import config from '../../config'
 import axios from 'axios'
-import { useQuery, useQueryCache } from 'react-query'
+import { useQuery } from 'react-query'
 import cart from '../../general/cart.jpg'
 import yumBagel from '../../general/yumBagel.jpg'
 import moreBagels from '../../general/moreBagels.jpg'
@@ -33,13 +29,6 @@ export default function About() {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
-	const queryCache = useQueryCache()
-	const history = useHistory()
-
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [verify, setVerifyPassword] = useState({})
-	const [name, setName] = useState('')
     if (loggedin.data) {
         return (
             <Screen>

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
-import { useQuery, useQueryCache } from 'react-query'
+import { useQuery } from 'react-query'
 import axios from 'axios'
 
 function getSignedInUser() {

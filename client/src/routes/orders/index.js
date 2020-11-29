@@ -1,12 +1,8 @@
-import React, { Component, useState, Checkbox } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
 import { useQuery, useQueryCache } from 'react-query'
-import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
-import { getTheme, setTheme } from '../../redux-store/theme'
 import axios from 'axios'
 import Button from '../../general/Button'
-import Body from '../../general/Body'
 import Form from '../../general/Form'
 import Header from '../../general/Header'
 import Footer from '../../general/Footer'
@@ -25,34 +21,19 @@ function getOrders() {
 		.catch(() => null)
 }
 
-var date = new Date()
-var currentDate = date.toISOString().slice(0, 10)
-var currentTime = date.getHours() + ':' + date.getMinutes()
-
 export default function Orders() {
 	const orders = useQuery('orders', getOrders, {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
 
-	const queryCache = useQueryCache()
 	const PRODUCTS = orders.data
-	console.log(orders)
-
-
 
 	const info = useQuery('menu', getMenu)
 
 	if (!info.data) {
 		return <div>Loading</div>
 	}
-	const bagels = info.data.BAGEL
-	const smears = info.data.SMEAR
-	const toppings = info.data.SAMMICHE_TOPPINGS
-	const beverages = info.data.BEVERAGE
-
-	
-
 
 	if (!PRODUCTS) {
 		return null
@@ -187,10 +168,6 @@ function Order({
 }
 
 function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
-	console.log({})
-	var orderTime = new Date(currentDate + ' ' + currentTime)
-	var pickupAt = orderTime.getTime()
-	console.log(bagelList)
 	axios
 	.post('http://localhost:8100/order', {
 		bagels: bagelList

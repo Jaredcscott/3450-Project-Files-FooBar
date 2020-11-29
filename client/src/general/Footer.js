@@ -6,12 +6,6 @@ type Props = {
 	children: React$Node,
 }
 
-var phantom = {
-	display: 'flex',
-	padding: '20px',
-	height: '60px',
-}
-
 export default function Footer({ children }: Props) {
 	return (
 		<Content>

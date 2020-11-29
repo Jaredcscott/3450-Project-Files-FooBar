@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import styled from 'styled-components'
 import Button from '../../general/Button'
 import Body from '../../general/Body'
 import Form from '../../general/Form'
@@ -41,8 +40,6 @@ export default function Home() {
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
-	const [verify, setVerifyPassword] = useState({})
-	const [name, setName] = useState('')
 
 	if (loggedin.data) {
 		return (
@@ -268,21 +265,3 @@ function logout() {
 		})
 }
 
-function register(
-	name: string,
-	email: string,
-	password: string,
-	verifyPassword: string,
-	queryCache: any
-) {
-	axios
-		.post(`${config.serverUrl}/auth/register`, { name, email, password, verifyPassword })
-		.then(() => {
-			console.log('successful register')
-			queryCache.invalidateQueries('user')
-		})
-		.catch((err) => {
-			console.log('failed to register')
-			console.error(err)
-		})
-}

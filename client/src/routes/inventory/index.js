@@ -339,8 +339,6 @@ function updateItem(item: any, queryCache: any) {
 		})
 }
 
-function none() {}
-
 var default_inventory = [
 	{ name: 'Plain', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
 	{ name: 'Onion', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },

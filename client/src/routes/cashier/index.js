@@ -1,12 +1,8 @@
-import React, { Component, useState, Checkbox } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
-import { useQuery, useQueryCache } from 'react-query'
-import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
-import { getTheme, setTheme } from '../../redux-store/theme'
+import { useQuery } from 'react-query'
 import axios from 'axios'
 import Button from '../../general/Button'
-import Body from '../../general/Body'
 import Form from '../../general/Form'
 import Header from '../../general/Header'
 import Footer from '../../general/Footer'
@@ -25,19 +21,13 @@ function getOrders() {
 		.catch(() => null)
 }
 
-var date = new Date()
-var currentDate = date.toISOString().slice(0, 10)
-var currentTime = date.getHours() + ':' + date.getMinutes()
-
 export default function Cashier() {
 	const orders = useQuery('orders', getOrders, {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
 
-	const queryCache = useQueryCache()
 	const PRODUCTS = orders.data
-	console.log(orders)
 
 	if (!PRODUCTS) {
 		return null
@@ -183,15 +173,6 @@ function Order({
 			</Button>
 		</OrderWrapper>
 	)
-}
-
-function getMenu() {
-	return axios
-		.get('http://localhost:8100/menu')
-		.then((res) => {
-			return res.data.data
-		})
-		.catch(() => null)
 }
 
 const OrdersWrapper = styled.div`
