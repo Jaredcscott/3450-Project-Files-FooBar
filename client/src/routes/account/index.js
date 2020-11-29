@@ -32,7 +32,7 @@ class ProfileInfo extends Component {
 		const balance = this.props.balance
 		const role = this.props.role
 		return (
-			<section style={{ 'textShadow': '3px 3px 5px blue' }}>
+			<section style={{ 'textShadow': '3px 3px 5px blue', 'fontSize':'25px' }}>
 				<h4>
 					{' '}
 					<strong>Account Name: {name}</strong>
@@ -86,21 +86,35 @@ export default function Account() {
 									}}>
 									Add funds
 								</Button>
-								<input type="text" value={addFunds}
-									onChange={(event) => setFunds(event.target.value)}>
+								
+								<input type="number" value={addFunds}
+									onChange={(event) => setFunds(event.target.value)}
+									placeholder="Add Funds"
+									>
 								</input>
+
 							</div>
 							<div style={{'fontSize':'25px'}}>
 								<div>
-									Current Password:<input type="text" value={currentPassword}
+									Current Password:<input 
+										type="text" 
+										value={currentPassword}
+										placeholder="Current Password"
 										onChange={(event) => setCurrentPassword(event.target.value)}></input>
 								</div>
 								<div>
-									New Password:<input type="text" value={newPassword}
+									New Password:<input 
+										type="text" 
+										value={newPassword}
+										placeholder="New Password"
 										onChange={(event) => setNewPassword(event.target.value)}>
-										
 									</input>
-									Verify New Password:<input type="text" value={verifyPassword}
+								</div>
+								<div>
+									Verify New Password:<input 
+										type="text" 
+										value={verifyPassword}
+										placeholder="Verify Password"
 										onChange={(event) => setVerifyPassword(event.target.value)}>	
 									</input>
 								</div>
@@ -131,22 +145,21 @@ export default function Account() {
 									</Button>
 								</div>
 								<div style={{ 'paddingLeft': '25px' }}>
-								<Button
-										color="primary"
-										onClick={() => {
-											resetPassword(loggedin.data.name, currentPassword, newPassword, verifyPassword)
-										}}>
-										Reset Password
-								</Button>
+									<Button
+											color="primary"
+											onClick={() => {
+												resetPassword(loggedin.data.name, currentPassword, newPassword, verifyPassword)
+											}}>
+											Reset Password
+									</Button>
 								</div>
 								<div style={{ 'paddingLeft': '25px'}}>
-								{ roles.has("MANAGER") || roles.has("ADMIN") ? <Button color="primary" onClick={none}>Print Analytics</Button> : null}
+									{ roles.has("MANAGER") || roles.has("ADMIN") ? <Button color="primary" onClick={none}>Print Analytics</Button> : null}
 								</div>
 
 							</div>
 						</div>
 					</Form>
-
 					<Footer>
 						<ul>
 							<li>

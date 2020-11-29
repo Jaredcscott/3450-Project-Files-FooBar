@@ -64,14 +64,14 @@ export default function About() {
 									'textShadow': '3px 3px 5px blue',
 								}}>
                                     <Body
-                                        text="Dans Bagel Shop has a long and rich history.  
-                                        ">What started as a small bagel cart delivering bagels to hungry customers, 
+                                        text="  
+                                        ">Dan's Bagel Shop has a long and rich history. What started as a small bagel cart delivering bagels to hungry customers, 
                                         has now blossomed into the bagel kingdom we know as The Dan's Bagel Shop. Dan's was started by the intrepid entrepreneur Mr. Dan.
-                                        in 1965 Dan sought to be the worlds greatest bagel supplier.<br></br><br></br>
+                                        In 1985 Dan sought to be the worlds greatest bagel supplier.<br></br><br></br>
                                         He bought his first cart for $250, and worked out a deal with the local bakery to supply him with fresh made bagels each morning. Him and his wife, Daniel, would hand make the next day's smears 
                                         each night in their small studio apartment. When the lines for the cart started to become unmanageable, Dan bought the first brick and mortar
                                         Dan's Bagel Shop location.<br></br><br></br>
-                                        Today there are over 1 locations, and Dan's is moving into the 21st century bu incorporating this high-tech web application. 
+                                        Today there are over 1 locations, and Dan's is moving into the 21st century by incorporating this high-tech web application. 
                                         We thank you for being a member of the Dan's family and hope you enjoy the worlds greatest bagels!
                                         <br></br><br></br>
                                     </Body>
@@ -155,15 +155,15 @@ export default function About() {
 									'textShadow': '3px 3px 5px blue',
 								}}>
                                     <Body
-                                        text="Dans Bagel Shop has a long and rich history.  
-                                        ">What started as a small bagel cart delivering bagels to hungry customers, 
+                                        text="  
+                                        ">Dan's Bagel Shop has a long and rich history. What started as a small bagel cart delivering bagels to hungry customers, 
                                         has now blossomed into the bagel kingdom we know as The Dan's Bagel Shop. Dan's was started by the intrepid entrepreneur Mr. Dan.
-                                        in 1965 Dan sought to be the worlds greatest bagel supplier.<br></br><br></br>
+                                        In 1985 Dan sought to be the worlds greatest bagel supplier.<br></br><br></br>
                                         He bought his first cart for $250, and worked out a deal with the local bakery to supply him with fresh made bagels each morning. Him and his wife, Daniel, would hand make the next day's smears 
                                         each night in their small studio apartment. When the lines for the cart started to become unmanageable, Dan bought the first brick and mortar
                                         Dan's Bagel Shop location.<br></br><br></br>
-                                        Today there are over 1 locations, and Dan's is moving into the 21st century bu incorporating this high-tech web application. 
-                                        We welcome you to join the Dan's family and enjoy the worlds greatest bagels!
+                                        Today there are over 1 locations, and Dan's is moving into the 21st century by incorporating this high-tech web application. 
+                                        We thank you for being a member of the Dan's family and hope you enjoy the worlds greatest bagels!
                                         <br></br><br></br>
                                     </Body>
                                     <div className="flex-child" style={{'textAlign':'center'}}>

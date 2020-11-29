@@ -159,7 +159,6 @@ function Order({
 					</Grouping>{' '}
 				</>
 			) : null}
-
 			{order.bagels.length > 0 ? (
 				<>
 					<h3>Bagels</h3>
@@ -259,7 +258,7 @@ class FilterableProductTable extends React.Component {
 	render() {
 		return (
 			<ScreenCenter>
-				<OrderLayout orders={this.props.products} />
+				<OrderLayout orders={this.props.products}/>
 			</ScreenCenter>
 		)
 	}

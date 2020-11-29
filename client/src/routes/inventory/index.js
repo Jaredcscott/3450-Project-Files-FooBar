@@ -513,7 +513,6 @@ class ProductCategoryRow extends React.Component {
 
 function ProductRow({ product }: { product: any }) {
 	const queryCache = useQueryCache()
-
 	const [editableProduct, setEditableProduct] = useState(product)
 	const amountNeeded = editableProduct.targetCount - editableProduct.quantity
 
