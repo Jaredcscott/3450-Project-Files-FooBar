@@ -155,7 +155,7 @@ export default function Account() {
 									</Button>
 								</div>
 								<div style={{ 'paddingLeft': '25px'}}>
-									{ roles.has("MANAGER") || roles.has("ADMIN") ? <Button color="primary" onClick={none}>Print Analytics</Button> : null}
+									{ roles.has("MANAGER") || roles.has("ADMIN") ? <Button color="primary" onClick={() => history.replace('/analytics')}>Analytics</Button> : null}
 								</div>
 
 							</div>

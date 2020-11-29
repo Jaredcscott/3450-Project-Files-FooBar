@@ -139,7 +139,7 @@ export default function Inventory() {
 				<Background>
 					<Header text="Inventory"></Header>
 					<Form>
-						<div style={{ marginTop: '25px', marginBottom: '25px' }}>
+						<div style={{ marginTop: '25px', marginBottom: '25px', 'fontSize':'25px' }}>
 							<div style={{ width: '80%', textShadow: '3px 3px 5px blue' }}>
 								<label>
 									Name:{' '}

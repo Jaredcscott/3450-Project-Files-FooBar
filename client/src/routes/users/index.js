@@ -109,7 +109,7 @@ function UserRow({user}) {
 							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CASHIER'))
 						}
 					}}>
-					toggle Cashier
+					Toggle Cashier
 				</Button>
 				<Button
 					color="primary"
@@ -133,7 +133,7 @@ function UserRow({user}) {
 							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CUSTOMER'))
 						}
 					}}>
-					toggle Customer
+					Toggle Customer
 				</Button>
 			</td>
 		</tr>

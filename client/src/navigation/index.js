@@ -31,6 +31,7 @@ export default function Navigation() {
 				<NavElement onClick={() => history.replace('/account')}>Account</NavElement>
 				<NavElement onClick={() => history.replace('/orders')}>Order History</NavElement>
 				{ roles.has("MANAGER") || roles.has("ADMIN") || roles.has("CHEF") ? <NavElement onClick={() => history.replace('/inventory')}>Inventory</NavElement> : null}
+				{ roles.has("MANAGER") || roles.has("ADMIN")  ? <NavElement onClick={() => history.replace('/analytics')}>Analytics</NavElement> : null}
 				{ roles.has("MANAGER") || roles.has("ADMIN")  ? <NavElement onClick={() => history.replace('/users')}>Users</NavElement> : null}
 				{ roles.has("CASHIER") ? <NavElement onClick={() => history.replace('/cashier')}>Cashier</NavElement> : null}
 				{ roles.has("CHEF") ? <NavElement onClick={() => history.replace('/chef')}>Chef</NavElement>: null}

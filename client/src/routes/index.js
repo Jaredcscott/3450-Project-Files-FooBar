@@ -12,6 +12,7 @@ import Chef from './chef'
 import Cashier from './cashier'
 import About from './about'
 import Contact from './contact'
+import Analytics from './analytics'
 
 export default function Routing() {
 	return (
@@ -30,6 +31,7 @@ export default function Routing() {
 					<Route path="/cashier" component={Cashier} />
 					<Route path="/about" component={About} />
 					<Route path="/contact" component={Contact} />
+					<Route path="/analytics" component={Analytics} />
 
 				</Switch>
 			</Screen>
