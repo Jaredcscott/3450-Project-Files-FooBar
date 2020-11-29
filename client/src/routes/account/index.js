@@ -25,10 +25,10 @@ class ProfileInfo extends Component {
 		const balance = this.props.balance
 		const role = this.props.role
 		return (
-			<section style={{ 'textShadow': '3px 3px 5px blue', 'fontSize':'25px' }}>
+			<section style={{ textShadow: '3px 3px 5px blue', fontSize: '25px' }}>
 				<h4>
 					{' '}
-					<strong style={{'textTransform': 'capitalize'}}>Account Name: {name}</strong>
+					<strong style={{ textTransform: 'capitalize' }}>Account Name: {name}</strong>
 				</h4>
 				<h4>Email Id: {email}</h4>
 				<h4>Account Balance: ${balance / 100}</h4>
@@ -64,56 +64,66 @@ export default function Account() {
 				<Background>
 					<Header text="Account Information"></Header>
 					<Form>
-						<div style={{ 'marginBottom': '25px' }}>
+						<div style={{ marginBottom: '25px' }}>
 							<ProfileInfo
 								name={loggedin.data.name}
 								email={loggedin.data.email}
 								balance={loggedin.data.balance}
 								role={loggedin.data.roles.join(',')}
 							/>
-							<div style={{ 'fontSize':'30px', 'textAlign':'left' }}>
+							<div style={{ fontSize: '30px', textAlign: 'left' }}>
 								<Button
 									color="primary"
 									onClick={() => {
-										var newBalance = loggedin.data.balance + (addFunds * 100)
-										addFundsToAccount(newBalance, loggedin.data.name, queryCache)
+										var newBalance = loggedin.data.balance + addFunds * 100
+										addFundsToAccount(
+											newBalance,
+											loggedin.data.name,
+											queryCache
+										)
 									}}>
 									Add Funds
 								</Button>
-								
-								<input type="number" value={addFunds}
-									onChange={(event) => setFunds(event.target.value)}
-									placeholder="Add Funds"
-									>
-								</input>
 
+								<input
+									type="number"
+									value={addFunds}
+									onChange={(event) => setFunds(event.target.value)}
+									placeholder="Add Funds"></input>
 							</div>
-							<div style={{'fontSize':'25px'}}>
+							<div style={{ fontSize: '25px' }}>
 								<div>
-									Current Password:<input 
-										type="text" 
+									Current Password:
+									<input
+										type="text"
 										value={currentPassword}
 										placeholder="Current Password"
-										onChange={(event) => setCurrentPassword(event.target.value)}></input>
+										onChange={(event) =>
+											setCurrentPassword(event.target.value)
+										}></input>
 								</div>
 								<div>
-									New Password:<input 
-										type="text" 
+									New Password:
+									<input
+										type="text"
 										value={newPassword}
 										placeholder="New Password"
-										onChange={(event) => setNewPassword(event.target.value)}>
-									</input>
+										onChange={(event) =>
+											setNewPassword(event.target.value)
+										}></input>
 								</div>
 								<div>
-									Verify New Password:<input 
-										type="text" 
+									Verify New Password:
+									<input
+										type="text"
 										value={verifyPassword}
 										placeholder="Verify Password"
-										onChange={(event) => setVerifyPassword(event.target.value)}>	
-									</input>
+										onChange={(event) =>
+											setVerifyPassword(event.target.value)
+										}></input>
 								</div>
 							</div>
-							<div className="flex-container" style={{'fontSize':'30px'}}>
+							<div className="flex-container" style={{ fontSize: '30px' }}>
 								<Button
 									color="primary"
 									onClick={() => {
@@ -122,14 +132,14 @@ export default function Account() {
 									}}>
 									Logout
 								</Button>
-								<div style={{ 'paddingLeft': '25px' }}>
+								<div style={{ paddingLeft: '25px' }}>
 									<Button
 										color="primary"
 										onClick={() => history.replace('/order')}>
 										Place An Order
 									</Button>
 								</div>
-								<div style={{ 'paddingLeft': '25px' }}>
+								<div style={{ paddingLeft: '25px' }}>
 									<Button
 										color="primary"
 										onClick={() => {
@@ -138,19 +148,29 @@ export default function Account() {
 										Order History
 									</Button>
 								</div>
-								<div style={{ 'paddingLeft': '25px' }}>
+								<div style={{ paddingLeft: '25px' }}>
 									<Button
-											color="primary"
-											onClick={() => {
-												resetPassword(loggedin.data.name, currentPassword, newPassword, verifyPassword)
-											}}>
-											Reset Password
+										color="primary"
+										onClick={() => {
+											resetPassword(
+												loggedin.data.name,
+												currentPassword,
+												newPassword,
+												verifyPassword
+											)
+										}}>
+										Reset Password
 									</Button>
 								</div>
-								<div style={{ 'paddingLeft': '25px'}}>
-									{ roles.has("MANAGER") || roles.has("ADMIN") ? <Button color="primary" onClick={() => history.replace('/analytics')}>Analytics</Button> : null}
+								<div style={{ paddingLeft: '25px' }}>
+									{roles.has('MANAGER') || roles.has('ADMIN') ? (
+										<Button
+											color="primary"
+											onClick={() => history.replace('/analytics')}>
+											Analytics
+										</Button>
+									) : null}
 								</div>
-
 							</div>
 						</div>
 					</Form>
@@ -179,14 +199,15 @@ export default function Account() {
 				<Background>
 					<Header text="Registration Form"></Header>
 					<Form>
-						<h3 style={{'textShadow': '3px 3px 5px blue'}}>Join The Dan's Family</h3>
-						<div style={{
-							'marginBottom':'25px',
-							'borderStyle': 'ridge',
-							'borderColor': 'blue',
-							'borderWidth': '15px',
-							'padding':'15px',
-							'textShadow': '3px 3px 5px blue'
+						<h3 style={{ textShadow: '3px 3px 5px blue' }}>Join The Dan's Family</h3>
+						<div
+							style={{
+								marginBottom: '25px',
+								borderStyle: 'ridge',
+								borderColor: 'blue',
+								borderWidth: '15px',
+								padding: '15px',
+								textShadow: '3px 3px 5px blue',
 							}}>
 							<label>
 								Name:{' '}
@@ -218,18 +239,27 @@ export default function Account() {
 								/>
 							</label>
 							<br></br>
-							<div style={{'margin':'auto', 'textAlign':'center'}}>
-							<Button
-								color="primary"
-								onClick={() => {
-									register(name, email, password, password, queryCache, history)
-								}}>
-								Register
-							</Button>
+							<div style={{ margin: 'auto', textAlign: 'center' }}>
+								<Button
+									color="primary"
+									onClick={() => {
+										register(
+											name,
+											email,
+											password,
+											password,
+											queryCache,
+											history
+										)
+									}}>
+									Register
+								</Button>
 							</div>
-							<div style={{'fontSize':'20px', 'textShadow': '3px 3px 5px blue'}}>
+							<div style={{ fontSize: '20px', textShadow: '3px 3px 5px blue' }}>
 								<label>
-									Password must contain: <br></br>-At least on upper case letter<br></br> -One lower case letter<br></br> -One number<br></br> -Must be between 8 and 32 digits long'
+									Password must contain: <br></br>-At least on upper case letter
+									<br></br> -One lower case letter<br></br> -One number<br></br>{' '}
+									-Must be between 8 and 32 digits long'
 								</label>
 							</div>
 						</div>
@@ -271,7 +301,7 @@ function register(
 		.catch((err) => {
 			console.log('failed to register')
 			console.error(err)
-			alert(err.response.data.reason)
+			alert(err?.response?.data?.reason || 'Failed to connect to server')
 		})
 }
 
@@ -289,19 +319,18 @@ function logout() {
 		})
 }
 
-
 function resetPassword(
 	name: string,
 	currentPassword: string,
 	newPassword: string,
-	verifyNewPassword: string,
-){
+	verifyNewPassword: string
+) {
 	axios
-		.get('http://localhost:8100/user', { 
+		.get('http://localhost:8100/user', {
 			name,
 			currentPassword,
 			newPassword,
-			verifyNewPassword, 
+			verifyNewPassword,
 		})
 		.then(() => {
 			console.log('successfully reset password')
@@ -313,11 +342,11 @@ function resetPassword(
 		})
 }
 
-function addFundsToAccount(newBalance: Number, name: any, queryCache){
+function addFundsToAccount(newBalance: Number, name: any, queryCache) {
 	axios
-		.post(`http://localhost:8100/user`, { 
+		.post(`http://localhost:8100/user`, {
 			name,
-			newBalance
+			newBalance,
 		})
 		.then(() => {
 			console.log('successfully added funds')
