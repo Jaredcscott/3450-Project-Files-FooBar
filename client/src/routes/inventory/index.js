@@ -282,7 +282,7 @@ function addItem(
 			category,
 			name,
 			quantity: Number(qty),
-			price: Number(price),
+			price: Number(price)*100,
 			onMenu: isOnMenu,
 			targetCount: Number(targetCount),
 		})

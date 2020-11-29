@@ -52,6 +52,7 @@ router.post(
 			currentPassword?: ?string,
 			newPassword?: ?string,
 			verifyNewPassword?: ?string,
+			newBalance?: ?number
 		}>,
 		res: express$Response
 	) => {
@@ -59,7 +60,7 @@ router.post(
 		if (!USER_SELF_UPDATE_VALIDATOR(updateData)) {
 			return res.status(400).json({ reason: 'malformed request' })
 		}
-		const { name, currentPassword, newPassword, verifyNewPassword } = updateData
+		const { name, currentPassword, newPassword, verifyNewPassword, newBalance} = updateData
 		if (currentPassword) {
 			if (!newPassword || !verifyNewPassword) {
 				return res.status(409).json({
@@ -96,6 +97,10 @@ router.post(
 		}
 		if (name) {
 			req.user.name = name
+			await req.user.save()
+		}
+		if (newBalance) {
+			req.user.balance = newBalance
 			await req.user.save()
 		}
 		res.status(200).end()

@@ -82,7 +82,8 @@ export default function Account() {
 								<Button
 									color="primary"
 									onClick={() => {
-										addFundsToAccount(addFunds)
+										var newBalance = loggedin.data.balance + (addFunds * 100)
+										addFundsToAccount(newBalance, loggedin.data.name, queryCache)
 									}}>
 									Add funds
 								</Button>
@@ -328,6 +329,19 @@ function resetPassword(
 		})
 }
 
-function addFundsToAccount(funds: Number){
+function addFundsToAccount(newBalance: Number, name: any, queryCache){
+	axios
+		.post(`http://localhost:8100/user`, { 
+			name,
+			newBalance
+		})
+		.then(() => {
+			console.log('successfully added funds')
+			queryCache.invalidateQueries('user')
+		})
+		.catch((err) => {
+			console.log('failed to add funds')
+			console.error(err)
+		})
 
 }
