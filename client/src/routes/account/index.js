@@ -79,7 +79,7 @@ export default function Account() {
 										onChange={(event) => setName(event.target.value)}
 									/>
 								</label>
-								<div style={{ paddingLeft: '25px' }}>
+								<div style={{}}>
 									<Button
 										color="primary"
 										onClick={() => {
