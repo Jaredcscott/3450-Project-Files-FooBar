@@ -105,7 +105,7 @@ export default function Order() {
 											{bagels.map((bagel) => {
 												return (
 													<option key={bagel._id} value={bagel._id}>
-														{bagel.name}
+														{bagel.name} ${bagel.price / 100}
 													</option>
 												)
 											})}
@@ -150,7 +150,8 @@ export default function Order() {
 																<option
 																	key={smear._id}
 																	value={smear._id}>
-																	{smear.name}
+																	{smear.name} $
+																	{smear.price / 100}
 																</option>
 															)
 														})}
@@ -208,7 +209,8 @@ export default function Order() {
 																<option
 																	key={topping._id}
 																	value={topping._id}>
-																	{topping.name}
+																	{topping.name} $
+																	{topping.price / 100}
 																</option>
 															)
 														})}
@@ -284,7 +286,7 @@ export default function Order() {
 											{beverages.map((beverage) => {
 												return (
 													<option key={beverage._id} value={beverage._id}>
-														{beverage.name}
+														{beverage.name} ${beverage.price / 100}
 													</option>
 												)
 											})}
