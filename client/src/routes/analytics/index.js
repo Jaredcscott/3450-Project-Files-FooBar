@@ -29,7 +29,10 @@ class BusinessInfo extends Component {
 	render() {
 		const name = this.props.name
 		const balance = this.props.balance
-		const customers = this.props.customers
+		const custCount = this.props.custCount
+        const curOrders = this.props.curOrders
+        const empCount = this.props.empCount
+        const allOrders = this.props.allOrders
 		return (
 			<section style={{ 'textShadow': '3px 3px 5px blue', 'fontSize':'25px' }}>
 				<h4>
@@ -37,7 +40,10 @@ class BusinessInfo extends Component {
 					<strong>Business Name: {name}</strong>
 				</h4>
 				<h4>Business Account Balance: ${balance / 100}</h4>
-				<h4>Customer Count: {customers}</h4>
+                <h4>Employee Count: ${empCount}</h4>
+				<h4>Customer Count: {custCount}</h4>
+                <h4>Active Order Count: {curOrders}</h4>
+                <h4>Historical Order Count: {allOrders}</h4>
 			</section>
 		)
 	}
@@ -60,7 +66,10 @@ export default function Analytics() {
                         <BusinessInfo
                                     name={"Dan's Bagel Shop"}
                                     balance={"<Fill In>"}
-                                    customers={"<Fill In>"}
+                                    empCount={"<Fill In>"}
+                                    custCount={"<Fill In>"}
+                                    curOrders={"<Fill In>"}
+                                    allOrders={"<Fill In>"}
                                 />
                     </Form>
 					<Footer>
