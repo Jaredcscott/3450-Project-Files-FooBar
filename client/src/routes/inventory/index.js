@@ -11,7 +11,7 @@ import Background from '../../general/Background'
 import produce from 'immer'
 import { isEqual, startCase } from 'lodash'
 
-const ONE_SECOND = 1 // ms
+const ONE_SECOND = 1000 // ms
 
 function getInventory() {
 	return axios
@@ -34,10 +34,9 @@ export default function Inventory() {
 	const [targetCount, setTargetCount] = useState('')
 	const [category, setCategory] = useState(INVENTORY_ITEM_CATEGORIES[0])
 	const [isOnMenu, setIsOnMenu] = useState(false)
-
 	const queryCache = useQueryCache()
 	const PRODUCTS = inventory.data
-	console.log(inventory)
+
 	if (!PRODUCTS) {
 		return (
 			<Screen>
@@ -360,7 +359,6 @@ var default_inventory = [
 		onMenu: true,
 		targetCount: 50,
 	},
-
 	{ name: 'Plain', category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
 	{
 		name: 'Honey Nut',
@@ -467,7 +465,6 @@ var default_inventory = [
 		onMenu: true,
 		targetCount: 50,
 	},
-
 	{
 		name: 'Coffee',
 		category: 'BEVERAGE',
@@ -495,7 +492,6 @@ var default_inventory = [
 	},
 ]
 
-//  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
 class ProductCategoryRow extends React.Component {
 	render() {
 		const category = this.props.category

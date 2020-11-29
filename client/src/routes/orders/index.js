@@ -9,13 +9,13 @@ import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
 
-const ONE_SECOND = 1 // ms
+const ONE_SECOND = 1000 // ms
 
 function getOrders() {
 	return axios
 		.get('http://localhost:8100/order')
 		.then((res) => {
-			console.log('successful gotten orders')
+			console.log('successfully retrieved orders')
 			return res.data.data
 		})
 		.catch(() => null)
@@ -54,10 +54,10 @@ export default function Orders() {
 								<a href="home">Home Page</a>
 							</li>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>
@@ -185,16 +185,15 @@ function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
 		
 	})
 	.then(() => {
-		console.log('successful Order')
+		console.log('successfully placed order')
 		queryCache.invalidateQueries('orders')
 	})
 	.catch((err) => {
-		console.log('failed to Order')
+		console.log('failed to place order')
 		console.error(err)
 	})
 	
 }
-
 
 function getMenu() {
 	return axios

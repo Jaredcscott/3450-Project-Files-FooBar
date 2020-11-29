@@ -10,10 +10,6 @@ import Body from '../../general/Body'
 import Form from '../../general/Form'
 import Footer from '../../general/Footer'
 import produce from 'immer'
-// import { useSelector, useDispatch } from 'react-redux'
-// import { getTheme } from '../../redux-store/theme'
-// import reactRouterDom from 'react-router-dom'
-
 import axios from 'axios'
 
 export default function Order() {
@@ -50,9 +46,9 @@ export default function Order() {
 					<div
 						style={{
 							margin: 'auto',
-							'margin-top': '25px',
-							'margin-bottom': '25px',
-							'text-shadow': '3px 3px 5px blue',
+							'marginTop': '25px',
+							'marginBottom': '25px',
+							'textShadow': '3px 3px 5px blue',
 						}}>
 						<Body text="">
 							<Button
@@ -271,10 +267,10 @@ export default function Order() {
 							<a href="home">Home Page</a>
 						</li>
 						<li>
-							<a href="<Fill In>">About Dan's Bagel Shop</a>
+							<a href="about">About Dan's Bagel Shop</a>
 						</li>
 						<li>
-							<a href="<Fill In">Contact Us</a>
+							<a href="contact">Contact Us</a>
 						</li>
 					</ul>
 				</Footer>
@@ -321,10 +317,10 @@ function addOrder(
 			pickupAt: pickupAt,
 		})
 		.then(() => {
-			console.log('successful Order')
+			console.log('successfully placed order')
 		})
 		.catch((err) => {
-			console.log('failed to Order')
+			console.log('failed to place order')
 			console.error(err)
 		})
 }

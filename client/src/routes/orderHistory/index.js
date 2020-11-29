@@ -13,7 +13,7 @@ import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
 
-const ONE_SECOND = 1 // ms
+const ONE_SECOND = 1000 // ms
 
 function getOrders() {
 	return axios
@@ -37,7 +37,6 @@ export default function OrderHistory() {
 
 	const queryCache = useQueryCache()
 	const PRODUCTS = orders.data
-	console.log(orders)
 
 	if (!PRODUCTS) {
 		return null
@@ -82,7 +81,6 @@ function getUser(placedBy: string) {
 		})
 }
 
-
 function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
 	console.log({})
 	var orderTime = new Date(currentDate + ' ' + currentTime)
@@ -114,8 +112,6 @@ function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
 		})
 }
 
-
-//  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
 class ProductCategoryRow extends React.Component {
 	render() {
 		const category = this.props.category
@@ -137,9 +133,7 @@ class ProductRow extends React.Component {
 		)
 		
 		var currentObjectPickup = Date(product.pickupAt)
-		var placed = Date(product.placed)
-		
-		
+		var placed = Date(product.placed)	
 
 		return (
 			<tr>
@@ -174,7 +168,6 @@ class ProductTable extends React.Component {
 			rows.push(<ProductRow product={product} key={product.name} />)
 			lastCategory = product.category
 		})
-
 		return (
 			<table>
 				<thead>

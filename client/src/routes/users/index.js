@@ -8,18 +8,17 @@ import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
 
-const ONE_SECOND = 1 // ms
+const ONE_SECOND = 1000 // ms
 
 function getUsers() {
 	return axios
 		.get('http://localhost:8100/user/all')
 		.then((res) => {
-			console.log('successful gotten accounts')
+			console.log('successfully retrieved accounts')
 			return res.data.data
 		})
 		.catch(() => null)
 }
-
 
 export default function Users() {
 	const users = useQuery('users', getUsers, {
@@ -48,10 +47,10 @@ export default function Users() {
 								<a href="home">Home Page</a>
 							</li>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>
@@ -144,7 +143,6 @@ class UserTable extends React.Component {
 		this.props.users.forEach((user) => {
 			rows.push(<UserRow user={user} key={user.name} />)
 		})
-
 		return (
 			<table>
 				<thead>

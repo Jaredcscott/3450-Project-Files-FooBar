@@ -256,7 +256,7 @@ function register(
 	axios
 		.post('http://localhost:8100/auth/register', { name, email, password, verifyPassword })
 		.then(() => {
-			console.log('successful register')
+			console.log('Successfully registered')
 			queryCache.invalidateQueries('user')
 			history.replace('/home')
 		})
@@ -296,7 +296,7 @@ function resetPassword(
 			verifyNewPassword, 
 		})
 		.then(() => {
-			console.log('successfully Reset Password')
+			console.log('successfully reset password')
 			window.location.reload(false)
 		})
 		.catch((err) => {
@@ -319,5 +319,4 @@ function addFundsToAccount(newBalance: Number, name: any, queryCache){
 			console.log('failed to add funds')
 			console.error(err)
 		})
-
 }

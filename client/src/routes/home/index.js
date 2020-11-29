@@ -13,12 +13,6 @@ import config from '../../config'
 import axios from 'axios'
 import { useQuery, useQueryCache } from 'react-query'
 
-// function useState(value) {
-// 	let state = value
-// 	let setState = (newState) => state = value
-// 	return [state, setState]
-// }
-
 function getSignedInUser() {
 	return axios
 		.get('http://localhost:8100/user')
@@ -50,30 +44,30 @@ export default function Home() {
 						<div
 							className="flex-container"
 							style={{
-								'padding-top': '5px',
-								'margin-top': '50px',
+								'paddingTop': '5px',
+								'marginTop': '50px',
 								margin: 'auto',
-								'font-size': '25px',
+								'fontSize': '25px',
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'text-shadow': '3px 3px 5px blue' }}>
+								<h2 style={{ 'textShadow': '3px 3px 5px blue' }}>
 									Hello {loggedin.data.name}, we missed you! You are now logged
 									in.
 								</h2>
 								<div className="flex-container">
-									<div style={{ 'padding-left': '25%' }}>
+									<div style={{ 'paddingLeft': '25%' }}>
 										<Button color="primary" onClick={() => logout()}>
 											Logout
 										</Button>
 									</div>
-									<div style={{ 'padding-left': '25px' }}>
+									<div style={{ 'paddingLeft': '25px' }}>
 										<Button
 											color="primary"
 											onClick={() => history.replace('/order')}>
 											Place An Order
 										</Button>
 									</div>
-									<div style={{ 'padding-left': '25px' }}>
+									<div style={{ 'paddingLeft': '25px' }}>
 										<Button
 											color="primary"
 											onClick={() => history.replace('/account')}>
@@ -89,20 +83,20 @@ export default function Home() {
 							<div
 								className="flex-container"
 								style={{
-									'margin-bottom': '10px',
+									'marginBottom': '10px',
 									padding: '5px',
-									'margin-top': '100px',
-									'border-style': 'ridge',
-									'border-color': 'blue',
-									'border-width': '15px',
-									'text-shadow': '3px 3px 5px blue',
+									'marginTop': '100px',
+									'borderStyle': 'ridge',
+									'borderColor': 'blue',
+									'borderWidth': '15px',
+									'textShadow': '3px 3px 5px blue',
 								}}>
 								<Body text="'Dan's Bagel Shop has the best smears!'-Sheldon Jones">
 									<img
 										src={man}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '120px' }}
+										style={{ 'paddingLeft': '120px' }}
 									/>
 								</Body>
 								<Body text="'I start every day with a Bagel from Dan's.'-Scooby Doo">
@@ -110,7 +104,7 @@ export default function Home() {
 										src={scooby}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '25px', display: 'flex' }}
+										style={{ 'paddingLeft': '25px', display: 'flex' }}
 									/>
 								</Body>
 							</div>
@@ -141,7 +135,7 @@ export default function Home() {
 				<Background>
 					<Header text="Welcome to Dan's Bagel Shop"></Header>
 					<Form>
-						<div style={{ 'margin-top': '50px' }}>
+						<div style={{ 'marginTop': '50px' }}>
 							<div className="email">
 								<input
 									type="text"
@@ -165,7 +159,7 @@ export default function Home() {
 								/>
 							</div>
 						</div>
-						<div className="flex-container" style={{ 'padding-top': '5px' }}>
+						<div className="flex-container" style={{ 'paddingTop': '5px' }}>
 							<div className="flex-child">
 								<Button
 									onClick={() => history.replace('/account')}
@@ -191,20 +185,20 @@ export default function Home() {
 							<div
 								className="flex-container"
 								style={{
-									'margin-bottom': '10px',
+									'marginBottom': '10px',
 									padding: '5px',
-									'margin-top': '100px',
-									'border-style': 'ridge',
-									'border-color': 'blue',
-									'border-width': '15px',
-									'text-shadow': '3px 3px 5px blue',
+									'marginTop': '100px',
+									'borderStyle': 'ridge',
+									'borderColor': 'blue',
+									'borderWidth': '15px',
+									'textShadow': '3px 3px 5px blue',
 								}}>
 								<Body text="'Dan's Bagel Shop has the best shmears!'-Sheldon Jones">
 									<img
 										src={man}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '120px' }}
+										style={{ 'paddingLeft': '120px' }}
 									/>
 								</Body>
 								<Body text="'I start every day with a Bagel from Dan's.'-Scooby Doo">
@@ -212,7 +206,7 @@ export default function Home() {
 										src={scooby}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '25px', display: 'flex' }}
+										style={{ 'paddingLeft': '25px', display: 'flex' }}
 									/>
 								</Body>
 							</div>
@@ -241,7 +235,7 @@ function login(email: string, password: string, queryCache: any) {
 			password,
 		})
 		.then((res) => {
-			console.log('successfully loged in')
+			console.log('successfully logged in')
 			console.log(res)
 			queryCache.invalidateQueries('user')
 		})
@@ -264,4 +258,3 @@ function logout() {
 			console.error(err)
 		})
 }
-

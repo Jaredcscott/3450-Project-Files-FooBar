@@ -50,7 +50,6 @@ export default function Analytics() {
 	})
     const roles = new Set(loggedin.data.roles)
 	if (loggedin.data && (roles.has("MANAGER") || roles.has("ADMIN"))) {
-		
 		return (
 			<Screen>
 				<Background>

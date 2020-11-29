@@ -9,7 +9,7 @@ import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
 
-const ONE_SECOND = 1 // ms
+const ONE_SECOND = 1000 // ms
 
 function getOrders() {
 	return axios

@@ -9,13 +9,13 @@ import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
 
-const ONE_SECOND = 1 // ms
+const ONE_SECOND = 1000 // ms
 
 function getOrders() {
 	return axios
 		.get('http://localhost:8100/order/todo')
 		.then((res) => {
-			console.log('successful gotten orders')
+			console.log('successfully retrieved orders')
 			return res.data.data
 		})
 		.catch(() => null)
