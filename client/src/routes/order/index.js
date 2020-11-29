@@ -110,74 +110,128 @@ export default function Order() {
 												)
 											})}
 										</select>
+										<DeleteButton
+											onDelete={() => {
+												setOrderBagels(
+													produce(orderBagels, (orderBagels) => {
+														orderBagels.splice(index, 1)
+													})
+												)
+											}}
+										/>
 										{bagelOrder.smears.map((smear, smearIndex) => {
 											return (
-												<select
-													selected={smear}
-													key={smearIndex}
-													onChange={(event) => {
-														setOrderBagels(
-															produce(orderBagels, (orderBagels) => {
-																orderBagels[index].smears[
-																	smearIndex
-																] = event.target.value
-															})
-														)
-													}}>
-													{smear === null ? (
-														<option
-															key={'no_item_selected'}
-															value={null}
-															selected
-															disabled>
-															None
-														</option>
-													) : null}
-													{smears.map((smear) => {
-														return (
+												<Wrapper key={smearIndex}>
+													<WrappedSelect
+														selected={smear}
+														onChange={(event) => {
+															setOrderBagels(
+																produce(
+																	orderBagels,
+																	(orderBagels) => {
+																		orderBagels[index].smears[
+																			smearIndex
+																		] = event.target.value
+																	}
+																)
+															)
+														}}>
+														{smear === null ? (
 															<option
-																key={smear._id}
-																value={smear._id}>
-																{smear.name}
+																key={'no_item_selected'}
+																value={null}
+																selected
+																disabled>
+																None
 															</option>
-														)
-													})}
-												</select>
+														) : null}
+														{smears.map((smear) => {
+															return (
+																<option
+																	key={smear._id}
+																	value={smear._id}>
+																	{smear.name}
+																</option>
+															)
+														})}
+													</WrappedSelect>
+													<DeleteButton
+														key={String(smearIndex) + 'delete'}
+														onDelete={() => {
+															setOrderBagels(
+																produce(
+																	orderBagels,
+																	(orderBagels) => {
+																		orderBagels[
+																			index
+																		].smears.splice(
+																			smearIndex,
+																			1
+																		)
+																	}
+																)
+															)
+														}}
+													/>
+												</Wrapper>
 											)
 										})}
 										{bagelOrder.toppings.map((topping, toppingIndex) => {
 											return (
-												<select
-													selected={topping}
-													key={toppingIndex}
-													onChange={(event) => {
-														setOrderBagels(
-															produce(orderBagels, (orderBagels) => {
-																orderBagels[index].toppings[
-																	toppingIndex
-																] = event.target.value
-															})
-														)
-													}}>
-													{topping === null ? (
-														<option
-															key={'no_item_selected'}
-															value={null}
-															selected
-															disabled>
-															None
-														</option>
-													) : null}
-													{toppings.map((topping) => {
-														return (
+												<Wrapper key={toppingIndex}>
+													<WrappedSelect
+														selected={topping}
+														key={toppingIndex}
+														onChange={(event) => {
+															setOrderBagels(
+																produce(
+																	orderBagels,
+																	(orderBagels) => {
+																		orderBagels[index].toppings[
+																			toppingIndex
+																		] = event.target.value
+																	}
+																)
+															)
+														}}>
+														{topping === null ? (
 															<option
-																key={topping._id}
-																value={topping._id}>
-																{topping.name}
+																key={'no_item_selected'}
+																value={null}
+																selected
+																disabled>
+																None
 															</option>
-														)
-													})}
-												</select>
+														) : null}
+														{toppings.map((topping) => {
+															return (
+																<option
+																	key={topping._id}
+																	value={topping._id}>
+																	{topping.name}
+																</option>
+															)
+														})}
+													</WrappedSelect>
+													<DeleteButton
+														key={String(toppingIndex) + 'delete'}
+														onDelete={() => {
+															setOrderBagels(
+																produce(
+																	orderBagels,
+																	(orderBagels) => {
+																		orderBagels[
+																			index
+																		].toppings.splice(
+																			toppingIndex,
+																			1
+																		)
+																	}
+																)
+															)
+														}}
+													/>
+												</Wrapper>
 											)
 										})}
 										<Button
@@ -235,6 +289,15 @@ export default function Order() {
 												)
 											})}
 										</select>
+										<DeleteButton
+											onDelete={() => {
+												setOrderBeverages(
+													produce(orderBeverages, (orderBeverages) => {
+														orderBeverages.splice(index, 1)
+													})
+												)
+											}}
+										/>
 									</OrderRow>
 								))}
 							</ul>
@@ -288,8 +351,17 @@ export default function Order() {
 	)
 }
 
+const Wrapper = styled.div`
+	display: inline-block;
+`
+
+const WrappedSelect = styled.select`
+	height: 100%;
+`
+
 const OrderRow = styled.div`
 	display: flex;
+	align-items: stretch;
 `
 
 function getMenu() {
@@ -299,6 +371,19 @@ function getMenu() {
 			return res.data.data
 		})
 		.catch(() => null)
+}
+
+const RedText = styled.span`
+	color: red;
+
+	&:hover {
+		cursor: pointer;
+		color: darkred;
+	}
+`
+
+function DeleteButton({ onDelete }: { onDelete: () => void }) {
+	return <RedText onClick={onDelete}>X</RedText>
 }
 
 function toServerOrder(bagelList: Array<*>, beverageList: Array<*>) {
