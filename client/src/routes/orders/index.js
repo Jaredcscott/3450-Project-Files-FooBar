@@ -186,7 +186,7 @@ function Order({
 						})
 					}}
 					color="warn">
-					cancelOrder
+					Cancel Order
 				</Button>
 			) : null}
 		</OrderWrapper>
