@@ -119,7 +119,7 @@ export default function Order() {
 												)
 											}}
 										/>
-										
+
 										{bagelOrder.smears.map((smear, smearIndex) => {
 											return (
 												<Wrapper key={smearIndex}>
@@ -380,7 +380,7 @@ const RedText = styled.span`
 	color: red;
 
 	&:hover {
-		text-align:center;
+		text-align: center;
 		cursor: pointer;
 		color: darkred;
 	}

@@ -45,7 +45,7 @@ export default function Inventory() {
 				<Background>
 					<Header text="Inventory"></Header>
 					<Form>
-						<div style={{ marginTop: '25px', marginBottom: '25px', 'fontSize':'25px' }}>
+						<div style={{ marginTop: '25px', marginBottom: '25px', fontSize: '25px' }}>
 							<div style={{ width: '80%', textShadow: '3px 3px 5px blue' }}>
 								<label>
 									Name:{' '}
@@ -140,7 +140,7 @@ export default function Inventory() {
 								</Button>
 							</div>{' '}
 							<br></br>
-							<FilterableProductTable products={PRODUCTS}/>
+							<FilterableProductTable products={PRODUCTS} />
 						</div>
 					</Form>
 					<Footer>
@@ -188,7 +188,7 @@ function addItem(
 			category,
 			name,
 			quantity: Number(qty),
-			price: Number(price)*100,
+			price: Number(price) * 100,
 			onMenu: isOnMenu,
 			targetCount: Number(targetCount),
 		})
@@ -404,7 +404,7 @@ class ProductCategoryRow extends React.Component {
 		const category = this.props.category
 		return (
 			<tr>
-				<th colSpan="2" style={{ 'fontSize': '20px', 'textAlign':'left'}}>
+				<th colSpan="2" style={{ fontSize: '20px', textAlign: 'left' }}>
 					{category}
 				</th>
 			</tr>
@@ -536,7 +536,7 @@ function ProductTable({ products }: { products: any }) {
 					<th> Quantity </th>
 					<th> Target Count </th>
 					<th> Needed </th>
-					<th>  </th>
+					<th> </th>
 				</tr>
 			</thead>
 			<tbody>{rows}</tbody>
@@ -544,21 +544,9 @@ function ProductTable({ products }: { products: any }) {
 	)
 }
 
-function SearchBar() {
-	return (
-		<form>
-			<input type="text" placeholder="Search..." />
-			<p>
-				<input type="checkbox" /> Only show products in stock
-			</p>
-		</form>
-	)
-}
-
 function FilterableProductTable({ products }) {
 	return (
 		<div style={{ textShadow: '3px 3px 5px blue' }}>
-			<SearchBar />
 			<ProductTable products={products} />
 		</div>
 	)

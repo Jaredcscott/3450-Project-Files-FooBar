@@ -44,30 +44,34 @@ export default function Home() {
 						<div
 							className="flex-container"
 							style={{
-								'paddingTop': '5px',
-								'marginTop': '50px',
-								'margin': 'auto',
-								'fontSize': '25px',
+								paddingTop: '5px',
+								marginTop: '50px',
+								margin: 'auto',
+								fontSize: '25px',
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'textShadow': '3px 3px 5px blue', 'textTransform': 'capitalize' }}>
+								<h2
+									style={{
+										textShadow: '3px 3px 5px blue',
+										textTransform: 'capitalize',
+									}}>
 									Hello {loggedin.data.name}, we missed you! You are now logged
 									in.
 								</h2>
 								<div className="flex-container">
-									<div style={{ 'paddingLeft': '25%' }}>
+									<div style={{ paddingLeft: '25%' }}>
 										<Button color="primary" onClick={() => logout()}>
 											Logout
 										</Button>
 									</div>
-									<div style={{ 'paddingLeft': '25px' }}>
+									<div style={{ paddingLeft: '25px' }}>
 										<Button
 											color="primary"
 											onClick={() => history.replace('/order')}>
 											Place An Order
 										</Button>
 									</div>
-									<div style={{ 'paddingLeft': '25px' }}>
+									<div style={{ paddingLeft: '25px' }}>
 										<Button
 											color="primary"
 											onClick={() => history.replace('/account')}>
@@ -83,20 +87,20 @@ export default function Home() {
 							<div
 								className="flex-container"
 								style={{
-									'marginBottom': '10px',
-									'padding': '5px',
-									'marginTop': '100px',
-									'borderStyle': 'ridge',
-									'borderColor': 'blue',
-									'borderWidth': '15px',
-									'textShadow': '3px 3px 5px blue',
+									marginBottom: '10px',
+									padding: '5px',
+									marginTop: '100px',
+									borderStyle: 'ridge',
+									borderColor: 'blue',
+									borderWidth: '15px',
+									textShadow: '3px 3px 5px blue',
 								}}>
 								<Body text="'Dan's Bagel Shop has the best smears!'-Sheldon Jones">
 									<img
 										src={man}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'paddingLeft': '120px' }}
+										style={{ paddingLeft: '120px' }}
 									/>
 								</Body>
 								<Body text="'I start every day with a Bagel from Dan's.'-Scooby Doo">
@@ -104,7 +108,7 @@ export default function Home() {
 										src={scooby}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'paddingLeft': '25px', display: 'flex' }}
+										style={{ paddingLeft: '25px', display: 'flex' }}
 									/>
 								</Body>
 							</div>
@@ -135,7 +139,7 @@ export default function Home() {
 				<Background>
 					<Header text="Welcome to Dan's Bagel Shop"></Header>
 					<Form>
-						<div style={{ 'marginTop': '50px' }}>
+						<div style={{ marginTop: '50px' }}>
 							<div className="email">
 								<input
 									type="text"
@@ -159,7 +163,7 @@ export default function Home() {
 								/>
 							</div>
 						</div>
-						<div className="flex-container" style={{ 'paddingTop': '5px' }}>
+						<div className="flex-container" style={{ paddingTop: '5px' }}>
 							<div className="flex-child">
 								<Button
 									onClick={() => history.replace('/account')}
@@ -185,20 +189,20 @@ export default function Home() {
 							<div
 								className="flex-container"
 								style={{
-									'marginBottom': '10px',
-									'padding': '5px',
-									'marginTop': '100px',
-									'borderStyle': 'ridge',
-									'borderColor': 'blue',
-									'borderWidth': '15px',
-									'textShadow': '3px 3px 5px blue',
+									marginBottom: '10px',
+									padding: '5px',
+									marginTop: '100px',
+									borderStyle: 'ridge',
+									borderColor: 'blue',
+									borderWidth: '15px',
+									textShadow: '3px 3px 5px blue',
 								}}>
 								<Body text="'Dan's Bagel Shop has the best shmears!'-Sheldon Jones">
 									<img
 										src={man}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'paddingLeft': '120px' }}
+										style={{ paddingLeft: '120px' }}
 									/>
 								</Body>
 								<Body text="'I start every day with a Bagel from Dan's.'-Scooby Doo">
@@ -206,7 +210,7 @@ export default function Home() {
 										src={scooby}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'paddingLeft': '25px', display: 'flex' }}
+										style={{ paddingLeft: '25px', display: 'flex' }}
 									/>
 								</Body>
 							</div>

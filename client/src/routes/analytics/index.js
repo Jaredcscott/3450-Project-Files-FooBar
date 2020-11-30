@@ -1,4 +1,4 @@
-import React, { Component, useState }  from 'react'
+import React, { Component, useState } from 'react'
 import { useQuery, useQueryCache } from 'react-query'
 import Background from '../../general/Background'
 import Header from '../../general/Header'
@@ -11,10 +11,9 @@ import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import Button from '../../general/Button'
 
-
 const ONE_SECOND = 1000 // ms
 
-function getAnalytics(){
+function getAnalytics() {
 	return axios
 		.get(`http://localhost:8100/analytics`)
 		.then((res) => {
@@ -23,7 +22,6 @@ function getAnalytics(){
 		})
 		.catch((err) => null)
 }
-
 
 function getUsers() {
 	return axios
@@ -40,7 +38,7 @@ export default function Analytics() {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
-	
+
 	const users = useQuery('users', getUsers, {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
@@ -52,14 +50,12 @@ export default function Analytics() {
 	console.log(analytics)
 	console.log(USERS)
 
-	if (!analytics || !USERS){
+	if (!analytics || !USERS) {
 		return (
 			<Screen>
 				<Background>
 					<Header text="Buisiness Analytics"></Header>
-					<Body text="">
-						Loading Data
-					</Body>
+					<Body text="">Loading Data</Body>
 					<Footer>
 						<ul>
 							<li>
@@ -79,30 +75,34 @@ export default function Analytics() {
 				</Background>
 			</Screen>
 		)
-	}else{
+	} else {
 		return (
 			<Screen>
 				<Background>
 					<Header text="Buisiness Analytics"></Header>
 					<Form>
 						<BusinessInfo
-									name={"Dan's Bagel Shop"}
-									balance={analytics.totalPrice}
-									custCount={USERS.length}
-									allOrders={analytics.orders.length}
-								/>
+							name={"Dan's Bagel Shop"}
+							balance={analytics.totalPrice}
+							custCount={USERS.length}
+							allOrders={analytics.orders.length}
+						/>
 					</Form>
 					<Form>
 						ORDERS
-						{analytics.orders.length === 0 ? <NoOrders/> : <FilterableProductTable products={analytics.orders} />}
+						{analytics.orders.length === 0 ? (
+							<NoOrders />
+						) : (
+							<FilterableProductTable products={analytics.orders} />
+						)}
 					</Form>
 					<Form>
-						<div style={{'marginBottom':'25px'}}>
+						<div style={{ marginBottom: '25px' }}>
 							USERS
 							<UserTable users={USERS} />
 						</div>
 					</Form>
-					
+
 					<Footer>
 						<ul>
 							<li>
@@ -130,23 +130,22 @@ class BusinessInfo extends Component {
 		const name = this.props.name
 		const balance = this.props.balance
 		const custCount = this.props.custCount
-        const curOrders = this.props.curOrders
-        const empCount = this.props.empCount
-        const allOrders = this.props.allOrders
+		const curOrders = this.props.curOrders
+		const empCount = this.props.empCount
+		const allOrders = this.props.allOrders
 		return (
-			<section style={{ 'textShadow': '3px 3px 5px blue', 'fontSize':'25px' }}>
+			<section style={{ textShadow: '3px 3px 5px blue', fontSize: '25px' }}>
 				<h4>
 					{' '}
 					<strong>Business Name: {name}</strong>
 				</h4>
 				<h4>Business Account Balance: ${balance / 100}</h4>
 				<h4>User Count: {custCount}</h4>
-                <h4>Historical Order Count: {allOrders}</h4>
+				<h4>Historical Order Count: {allOrders}</h4>
 			</section>
 		)
 	}
 }
-
 
 const OrderWrapper = styled.div`
 	width: 80%;
@@ -190,8 +189,6 @@ function getUser(userId: string) {
 	}
 }
 
-
-
 function Order({
 	order,
 }: {
@@ -219,30 +216,28 @@ function Order({
 
 function addOrder(bagelList: Array, beverageList: Array, queryCache: any) {
 	axios
-	.post('http://localhost:8100/order', {
-		bagels: bagelList
-			.filter((bagelOrder) => bagelOrder.bagel._id)
-			.map((bagelOrder) => {
-				return {
-					bagel: bagelOrder.bagel._id,
-					toppings: [
-						...bagelOrder.toppings.filter((item) => item).map((item) => item._id)
-					],
-				}
-			}),
-		beverages: beverageList.filter((item) => item).map((item) => item._id),
-		pickupAt: Date.now(),
-		
-	})
-	.then(() => {
-		console.log('successfully placed order')
-		queryCache.invalidateQueries('orders')
-	})
-	.catch((err) => {
-		console.log('failed to place order')
-		console.error(err)
-	})
-	
+		.post('http://localhost:8100/order', {
+			bagels: bagelList
+				.filter((bagelOrder) => bagelOrder.bagel._id)
+				.map((bagelOrder) => {
+					return {
+						bagel: bagelOrder.bagel._id,
+						toppings: [
+							...bagelOrder.toppings.filter((item) => item).map((item) => item._id),
+						],
+					}
+				}),
+			beverages: beverageList.filter((item) => item).map((item) => item._id),
+			pickupAt: Date.now(),
+		})
+		.then(() => {
+			console.log('successfully placed order')
+			queryCache.invalidateQueries('orders')
+		})
+		.catch((err) => {
+			console.log('failed to place order')
+			console.error(err)
+		})
 }
 
 function getMenu() {
@@ -253,7 +248,6 @@ function getMenu() {
 		})
 		.catch(() => null)
 }
-
 
 const OrdersWrapper = styled.div`
 	width: 100%;
@@ -284,7 +278,7 @@ class FilterableProductTable extends React.Component {
 	render() {
 		return (
 			<ScreenCenter>
-				<OrderLayout orders={this.props.products}/>
+				<OrderLayout orders={this.props.products} />
 			</ScreenCenter>
 		)
 	}
@@ -292,13 +286,8 @@ class FilterableProductTable extends React.Component {
 
 function NoOrders() {
 	const history = useHistory()
-	return (
-		<Form>
-			No Order History To Display
-		</Form>
-	)
+	return <Form>No Order History To Display</Form>
 }
-
 
 function UserRow({ user }) {
 	const queryCache = useQueryCache()

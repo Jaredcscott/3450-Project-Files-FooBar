@@ -37,7 +37,11 @@ export default function Cashier() {
 				<Background>
 					<Header text="Orders To Distribute"></Header>
 					<Form>
-						{PRODUCTS.length === 0 ? <NoOrders/> : <FilterableProductTable products={PRODUCTS}/>}
+						{PRODUCTS.length === 0 ? (
+							<NoOrders />
+						) : (
+							<FilterableProductTable products={PRODUCTS} />
+						)}
 					</Form>
 					<Footer>
 						<ul>
@@ -151,21 +155,21 @@ function Order({
 				</>
 			) : null}
 			<Button
-				style={{ 'paddingLeft': '25px' }}
+				style={{ paddingLeft: '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'FULFILLED')}
 				color="primary">
 				Mark Order Complete
 			</Button>
 			<Button
-				style={{ 'paddingLeft': '25px' }}
+				style={{ paddingLeft: '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'CANCELED')}
 				color="primary">
 				Mark Order Cancelled
 			</Button>
 			<Button
-				style={{ 'paddingLeft': '25px' }}
+				style={{ paddingLeft: '25px' }}
 				width="250px"
 				onClick={() => markComplete(order._id, 'DID_NOT_PICK_UP')}
 				color="primary">
@@ -222,7 +226,7 @@ function markComplete(orderID: string, status: string) {
 function NoOrders() {
 	return (
 		<Form>
-			<div style={{ 'textAlign':'center', 'margin':'25px', 'textShadow': '3px 3px 5px blue'}}>
+			<div style={{ textAlign: 'center', margin: '25px', textShadow: '3px 3px 5px blue' }}>
 				No Orders To Display<br></br>Enjoy Your Break!
 			</div>
 		</Form>

@@ -10,9 +10,9 @@ export default function Screen({ children }: Props) {
 		<Content>
 			<div
 				style={{
-					'minWidth': '100%',
-					'minHeight': '100vh',
-					'backgroundColor': '#000000',
+					minWidth: '100%',
+					minHeight: '100vh',
+					backgroundColor: '#000000',
 				}}>
 				{children}
 			</div>

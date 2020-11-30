@@ -10,9 +10,9 @@ export default function Header({ text }: Props) {
 	return (
 		<Paragraph>
 			<header className="App-header">
-				<div className="flex-container" style={{ 'paddingTop': '5px' }}>
+				<div className="flex-container" style={{ paddingTop: '5px' }}>
 					<div className="flex-child">
-						<p style={{ 'paddingRight': '100px' }}>{text}</p>
+						<p style={{ paddingRight: '100px' }}>{text}</p>
 					</div>
 					<div>
 						<img

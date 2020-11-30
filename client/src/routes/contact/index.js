@@ -40,58 +40,56 @@ export default function Contact() {
 						<div
 							className="flex-container"
 							style={{
-								'margin':'10px',
-								'padding': '10px',
-								'borderStyle': 'ridge',
-								'borderColor': 'blue',
-								'borderWidth': '15px',
-								'fontSize': '25px'
+								margin: '10px',
+								padding: '10px',
+								borderStyle: 'ridge',
+								borderColor: 'blue',
+								borderWidth: '15px',
+								fontSize: '25px',
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'textShadow': '3px 3px 5px blue', 'marginTop':'5px'}}>
+								<h2 style={{ textShadow: '3px 3px 5px blue', marginTop: '5px' }}>
 									To Contact Us Fill Out This Form
 								</h2>
 								<div className="flex-container">
-                                <div className="email">
-								<input
-									type="text"
-									id="email"
-									placeholder="Email"
-									value={loggedin.data.email}
-									autoFocus="1"
-									aria-label="Email"
-									style={{ width: '350px', height: '30px' }}
-									onChange={none}
-								/>
-								<br></br>
-								<input
-									type="text"
-									id="subject"
-									placeholder="Subject"
-									value={subject}
-									autoFocus="1"
-									aria-label="Subject"
-									style={{ width: '350px', height: '30px' }}
-									onChange={none}
-								/>
-								<br></br>
-								<input
-									type="text"
-									id="message"
-									placeholder="Message"
-									value={message}
-									autoFocus="1"
-									aria-label="Message"
-									style={{ width: '350px', height: '30px' }}
-									onChange={none}
-								/>
-								<br></br>
-								<Button
-									color="primary"
-									onClick={none}>
-									Send
-								</Button>
-							</div>
+									<div className="email">
+										<input
+											type="text"
+											id="email"
+											placeholder="Email"
+											value={loggedin.data.email}
+											autoFocus="1"
+											aria-label="Email"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<input
+											type="text"
+											id="subject"
+											placeholder="Subject"
+											value={subject}
+											autoFocus="1"
+											aria-label="Subject"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<input
+											type="text"
+											id="message"
+											placeholder="Message"
+											value={message}
+											autoFocus="1"
+											aria-label="Message"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<Button color="primary" onClick={none}>
+											Send
+										</Button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -114,10 +112,9 @@ export default function Contact() {
 					</Footer>
 				</Background>
 			</Screen>
-        )
-	}
-    else {
-        return (
+		)
+	} else {
+		return (
 			<Screen>
 				<Background>
 					<Header text="Whats On Your Mind? "></Header>
@@ -125,58 +122,56 @@ export default function Contact() {
 						<div
 							className="flex-container"
 							style={{
-								'margin':'10px',
-								'padding': '10px',
-								'borderStyle': 'ridge',
-								'borderColor': 'blue',
-								'borderWidth': '15px',
-								'fontSize': '25px'
+								margin: '10px',
+								padding: '10px',
+								borderStyle: 'ridge',
+								borderColor: 'blue',
+								borderWidth: '15px',
+								fontSize: '25px',
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'textShadow': '3px 3px 5px blue', 'marginTop':'5px'}}>
+								<h2 style={{ textShadow: '3px 3px 5px blue', marginTop: '5px' }}>
 									To Contact Us Fill Out This Form
 								</h2>
 								<div className="flex-container">
-                                <div className="email">
-								<input
-									type="text"
-									id="email"
-									placeholder="Email"
-									value={email}
-									autoFocus="1"
-									aria-label="Email"
-									style={{ width: '350px', height: '30px' }}
-									onChange={none}
-								/>
-								<br></br>
-								<input
-									type="text"
-									id="subject"
-									placeholder="Subject"
-									value={subject}
-									autoFocus="1"
-									aria-label="Subject"
-									style={{ width: '350px', height: '30px' }}
-									onChange={none}
-								/>
-								<br></br>
-								<input
-									type="text"
-									id="message"
-									placeholder="Message"
-									value={message}
-									autoFocus="1"
-									aria-label="Message"
-									style={{ width: '350px', height: '30px' }}
-									onChange={none}
-								/>
-								<br></br>
-								<Button
-									color="primary"
-									onClick={none}>
-									Send
-								</Button>
-							</div>
+									<div className="email">
+										<input
+											type="text"
+											id="email"
+											placeholder="Email"
+											value={email}
+											autoFocus="1"
+											aria-label="Email"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<input
+											type="text"
+											id="subject"
+											placeholder="Subject"
+											value={subject}
+											autoFocus="1"
+											aria-label="Subject"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<input
+											type="text"
+											id="message"
+											placeholder="Message"
+											value={message}
+											autoFocus="1"
+											aria-label="Message"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<Button color="primary" onClick={none}>
+											Send
+										</Button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -193,6 +188,6 @@ export default function Contact() {
 					</Footer>
 				</Background>
 			</Screen>
-        )
-    }
+		)
+	}
 }
