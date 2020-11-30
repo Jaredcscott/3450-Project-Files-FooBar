@@ -1,4 +1,6 @@
-# Project Milestone 3
+# Project Milestone 4
+#Presentation file is located in docs/FinalPresentation.pdf
+#Use Case videos are located in docs/use case videos/
 ## Group Name: FooBar
 ## Group Members
   * Jared Scott
