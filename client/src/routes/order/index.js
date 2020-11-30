@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useQuery } from 'react-query'
 import Background from '../../general/Background'
@@ -10,10 +10,6 @@ import Body from '../../general/Body'
 import Form from '../../general/Form'
 import Footer from '../../general/Footer'
 import produce from 'immer'
-// import { useSelector, useDispatch } from 'react-redux'
-// import { getTheme } from '../../redux-store/theme'
-// import reactRouterDom from 'react-router-dom'
-
 import axios from 'axios'
 
 export default function Order() {
@@ -33,6 +29,14 @@ export default function Order() {
 		return `${today.getHours()}:${today.getMinutes()}`
 	})
 
+	const [price, setPrice] = useState(0)
+
+	useEffect(() => {
+		getOrderPrice(orderBagels, orderBeverages).then((newPrice) => {
+			setPrice(newPrice)
+		})
+	}, [orderBeverages, orderBagels])
+
 	if (!info.data) {
 		return <div>Loading</div>
 	}
@@ -50,9 +54,10 @@ export default function Order() {
 					<div
 						style={{
 							margin: 'auto',
-							'margin-top': '25px',
-							'margin-bottom': '25px',
-							'text-shadow': '3px 3px 5px blue',
+							marginTop: '25px',
+							marginBottom: '25px',
+							textShadow: '3px 3px 5px blue',
+							width: '1200px',
 						}}>
 						<Body text="">
 							<Button
@@ -100,79 +105,136 @@ export default function Order() {
 											{bagels.map((bagel) => {
 												return (
 													<option key={bagel._id} value={bagel._id}>
-														{bagel.name}
+														{bagel.name} ${bagel.price / 100}
 													</option>
 												)
 											})}
 										</select>
+										<DeleteButton
+											onDelete={() => {
+												setOrderBagels(
+													produce(orderBagels, (orderBagels) => {
+														orderBagels.splice(index, 1)
+													})
+												)
+											}}
+										/>
+
 										{bagelOrder.smears.map((smear, smearIndex) => {
 											return (
-												<select
-													selected={smear}
-													key={smearIndex}
-													onChange={(event) => {
-														setOrderBagels(
-															produce(orderBagels, (orderBagels) => {
-																orderBagels[index].smears[
-																	smearIndex
-																] = event.target.value
-															})
-														)
-													}}>
-													{smear === null ? (
-														<option
-															key={'no_item_selected'}
-															value={null}
-															selected
-															disabled>
-															None
-														</option>
-													) : null}
-													{smears.map((smear) => {
-														return (
+												<Wrapper key={smearIndex}>
+													<WrappedSelect
+														selected={smear}
+														onChange={(event) => {
+															setOrderBagels(
+																produce(
+																	orderBagels,
+																	(orderBagels) => {
+																		orderBagels[index].smears[
+																			smearIndex
+																		] = event.target.value
+																	}
+																)
+															)
+														}}>
+														{smear === null ? (
 															<option
-																key={smear._id}
-																value={smear._id}>
-																{smear.name}
+																key={'no_item_selected'}
+																value={null}
+																selected
+																disabled>
+																None
 															</option>
-														)
-													})}
-												</select>
+														) : null}
+														{smears.map((smear) => {
+															return (
+																<option
+																	key={smear._id}
+																	value={smear._id}>
+																	{smear.name} $
+																	{smear.price / 100}
+																</option>
+															)
+														})}
+													</WrappedSelect>
+													<DeleteButton
+														key={String(smearIndex) + 'delete'}
+														onDelete={() => {
+															setOrderBagels(
+																produce(
+																	orderBagels,
+																	(orderBagels) => {
+																		orderBagels[
+																			index
+																		].smears.splice(
+																			smearIndex,
+																			1
+																		)
+																	}
+																)
+															)
+														}}
+													/>
+												</Wrapper>
 											)
 										})}
 										{bagelOrder.toppings.map((topping, toppingIndex) => {
 											return (
-												<select
-													selected={topping}
-													key={toppingIndex}
-													onChange={(event) => {
-														setOrderBagels(
-															produce(orderBagels, (orderBagels) => {
-																orderBagels[index].toppings[
-																	toppingIndex
-																] = event.target.value
-															})
-														)
-													}}>
-													{topping === null ? (
-														<option
-															key={'no_item_selected'}
-															value={null}
-															selected
-															disabled>
-															None
-														</option>
-													) : null}
-													{toppings.map((topping) => {
-														return (
+												<Wrapper key={toppingIndex}>
+													<WrappedSelect
+														selected={topping}
+														key={toppingIndex}
+														onChange={(event) => {
+															setOrderBagels(
+																produce(
+																	orderBagels,
+																	(orderBagels) => {
+																		orderBagels[index].toppings[
+																			toppingIndex
+																		] = event.target.value
+																	}
+																)
+															)
+														}}>
+														{topping === null ? (
 															<option
-																key={topping._id}
-																value={topping._id}>
-																{topping.name}
+																key={'no_item_selected'}
+																value={null}
+																selected
+																disabled>
+																None
 															</option>
-														)
-													})}
-												</select>
+														) : null}
+														{toppings.map((topping) => {
+															return (
+																<option
+																	key={topping._id}
+																	value={topping._id}>
+																	{topping.name} $
+																	{topping.price / 100}
+																</option>
+															)
+														})}
+													</WrappedSelect>
+													<DeleteButton
+														key={String(toppingIndex) + 'delete'}
+														onDelete={() => {
+															setOrderBagels(
+																produce(
+																	orderBagels,
+																	(orderBagels) => {
+																		orderBagels[
+																			index
+																		].toppings.splice(
+																			toppingIndex,
+																			1
+																		)
+																	}
+																)
+															)
+														}}
+													/>
+												</Wrapper>
 											)
 										})}
 										<Button
@@ -225,11 +287,20 @@ export default function Order() {
 											{beverages.map((beverage) => {
 												return (
 													<option key={beverage._id} value={beverage._id}>
-														{beverage.name}
+														{beverage.name} ${beverage.price / 100}
 													</option>
 												)
 											})}
 										</select>
+										<DeleteButton
+											onDelete={() => {
+												setOrderBeverages(
+													produce(orderBeverages, (orderBeverages) => {
+														orderBeverages.splice(index, 1)
+													})
+												)
+											}}
+										/>
 									</OrderRow>
 								))}
 							</ul>
@@ -257,7 +328,7 @@ export default function Order() {
 									addOrder(orderBagels, orderBeverages, currentDate, currentTime)
 								}
 								color="primary">
-								Place Order
+								Place Order ${price / 100}
 							</Button>
 						</Body>
 					</div>
@@ -271,10 +342,10 @@ export default function Order() {
 							<a href="home">Home Page</a>
 						</li>
 						<li>
-							<a href="<Fill In>">About Dan's Bagel Shop</a>
+							<a href="about">About Dan's Bagel Shop</a>
 						</li>
 						<li>
-							<a href="<Fill In">Contact Us</a>
+							<a href="contact">Contact Us</a>
 						</li>
 					</ul>
 				</Footer>
@@ -283,8 +354,17 @@ export default function Order() {
 	)
 }
 
+const Wrapper = styled.div`
+	display: inline-block;
+`
+
+const WrappedSelect = styled.select`
+	height: 100%;
+`
+
 const OrderRow = styled.div`
 	display: flex;
+	align-items: center;
 `
 
 function getMenu() {
@@ -296,9 +376,52 @@ function getMenu() {
 		.catch(() => null)
 }
 
+const RedText = styled.span`
+	color: red;
+
+	&:hover {
+		text-align: center;
+		cursor: pointer;
+		color: darkred;
+	}
+`
+
+function DeleteButton({ onDelete }: { onDelete: () => void }) {
+	return <RedText onClick={onDelete}>X</RedText>
+}
+
+function toServerOrder(bagelList: Array<*>, beverageList: Array<*>) {
+	return {
+		bagels: bagelList
+			.filter((bagelOrder) => bagelOrder.bagel)
+			.map((bagelOrder) => {
+				return {
+					bagel: bagelOrder.bagel,
+					toppings: [
+						...bagelOrder.toppings.filter((item) => item),
+						...bagelOrder.smears.filter((item) => item),
+					],
+				}
+			}),
+		beverages: beverageList.filter((item) => item),
+	}
+}
+
+function getOrderPrice(bagelList: Array<*>, beverageList: Array<*>) {
+	return axios
+		.post('http://localhost:8100/order/price', {
+			...toServerOrder(bagelList, beverageList),
+			pickupAt: Date.now(),
+		})
+		.then((res) => {
+			return res.data.data
+		})
+		.catch(() => null)
+}
+
 function addOrder(
-	bagelList: Array,
-	beverageList: Array,
+	bagelList: Array<*>,
+	beverageList: Array<*>,
 	date: string,
 	time: string,
 	queryCache: any
@@ -306,25 +429,16 @@ function addOrder(
 	var pickupAt = new Date(date + ' ' + time).getTime()
 	axios
 		.post('http://localhost:8100/order', {
-			bagels: bagelList
-				.filter((bagelOrder) => bagelOrder.bagel)
-				.map((bagelOrder) => {
-					return {
-						bagel: bagelOrder.bagel,
-						toppings: [
-							...bagelOrder.toppings.filter((item) => item),
-							...bagelOrder.smears.filter((item) => item),
-						],
-					}
-				}),
-			beverages: beverageList.filter((item) => item),
 			pickupAt: pickupAt,
+			...toServerOrder(bagelList, beverageList),
 		})
 		.then(() => {
-			console.log('successful Order')
+			alert('Order Placed!')
+			console.log('successfully placed order')
 		})
 		.catch((err) => {
-			console.log('failed to Order')
+			console.log('failed to place order')
 			console.error(err)
+			alert(err.response.data.reason)
 		})
 }

@@ -1,16 +1,12 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import styled from 'styled-components'
 import Button from '../../general/Button'
-import Body from '../../general/Body'
 import Form from '../../general/Form'
 import Header from '../../general/Header'
 import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
-import config from '../../config'
 import axios from 'axios'
-import { useQuery, useQueryCache } from 'react-query'
+import { useQuery } from 'react-query'
 
 function getSignedInUser() {
 	return axios
@@ -30,12 +26,10 @@ export default function Contact() {
 		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
 	})
-	const queryCache = useQueryCache()
-	const history = useHistory()
 
-	const [email, setEmail] = useState('')
-	const [subject, setSubject] = useState('')
-	const [message, setMessage] = useState('')
+	const [email] = useState('')
+	const [subject] = useState('')
+	const [message] = useState('')
 
 	if (loggedin.data) {
 		return (
@@ -46,55 +40,56 @@ export default function Contact() {
 						<div
 							className="flex-container"
 							style={{
-								'margin':'10px',
-								'padding': '10px',
-								'borderStyle': 'ridge',
-								'borderColor': 'blue',
-								'borderWidth': '15px',
-								'font-size': '25px'
+								margin: '10px',
+								padding: '10px',
+								borderStyle: 'ridge',
+								borderColor: 'blue',
+								borderWidth: '15px',
+								fontSize: '25px',
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'text-shadow': '3px 3px 5px blue', 'marginTop':'5px'}}>
+								<h2 style={{ textShadow: '3px 3px 5px blue', marginTop: '5px' }}>
 									To Contact Us Fill Out This Form
 								</h2>
 								<div className="flex-container">
-                                <div className="email">
-								<input
-									type="text"
-									id="email"
-									placeholder="Email"
-									value={loggedin.data.email}
-									autoFocus="1"
-									aria-label="Email"
-									style={{ width: '350px', height: '30px' }}
-								/>
-								<br></br>
-								<input
-									type="text"
-									id="subject"
-									placeholder="Subject"
-									value={subject}
-									autoFocus="1"
-									aria-label="Subject"
-									style={{ width: '350px', height: '30px' }}
-								/>
-								<br></br>
-								<input
-									type="text"
-									id="message"
-									placeholder="Message"
-									value={message}
-									autoFocus="1"
-									aria-label="Message"
-									style={{ width: '350px', height: '30px' }}
-								/>
-								<br></br>
-								<Button
-									color="primary"
-									onClick={none}>
-									Send
-								</Button>
-							</div>
+									<div className="email">
+										<input
+											type="text"
+											id="email"
+											placeholder="Email"
+											value={loggedin.data.email}
+											autoFocus="1"
+											aria-label="Email"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<input
+											type="text"
+											id="subject"
+											placeholder="Subject"
+											value={subject}
+											autoFocus="1"
+											aria-label="Subject"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<input
+											type="text"
+											id="message"
+											placeholder="Message"
+											value={message}
+											autoFocus="1"
+											aria-label="Message"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<Button color="primary" onClick={none}>
+											Send
+										</Button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -117,10 +112,9 @@ export default function Contact() {
 					</Footer>
 				</Background>
 			</Screen>
-        )
-	}
-    else {
-        return (
+		)
+	} else {
+		return (
 			<Screen>
 				<Background>
 					<Header text="Whats On Your Mind? "></Header>
@@ -128,55 +122,56 @@ export default function Contact() {
 						<div
 							className="flex-container"
 							style={{
-								'margin':'10px',
-								'padding': '10px',
-								'borderStyle': 'ridge',
-								'borderColor': 'blue',
-								'borderWidth': '15px',
-								'font-size': '25px'
+								margin: '10px',
+								padding: '10px',
+								borderStyle: 'ridge',
+								borderColor: 'blue',
+								borderWidth: '15px',
+								fontSize: '25px',
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'text-shadow': '3px 3px 5px blue', 'marginTop':'5px'}}>
+								<h2 style={{ textShadow: '3px 3px 5px blue', marginTop: '5px' }}>
 									To Contact Us Fill Out This Form
 								</h2>
 								<div className="flex-container">
-                                <div className="email">
-								<input
-									type="text"
-									id="email"
-									placeholder="Email"
-									value={email}
-									autoFocus="1"
-									aria-label="Email"
-									style={{ width: '350px', height: '30px' }}
-								/>
-								<br></br>
-								<input
-									type="text"
-									id="subject"
-									placeholder="Subject"
-									value={subject}
-									autoFocus="1"
-									aria-label="Subject"
-									style={{ width: '350px', height: '30px' }}
-								/>
-								<br></br>
-								<input
-									type="text"
-									id="message"
-									placeholder="Message"
-									value={message}
-									autoFocus="1"
-									aria-label="Message"
-									style={{ width: '350px', height: '30px' }}
-								/>
-								<br></br>
-								<Button
-									color="primary"
-									onClick={none}>
-									Send
-								</Button>
-							</div>
+									<div className="email">
+										<input
+											type="text"
+											id="email"
+											placeholder="Email"
+											value={email}
+											autoFocus="1"
+											aria-label="Email"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<input
+											type="text"
+											id="subject"
+											placeholder="Subject"
+											value={subject}
+											autoFocus="1"
+											aria-label="Subject"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<input
+											type="text"
+											id="message"
+											placeholder="Message"
+											value={message}
+											autoFocus="1"
+											aria-label="Message"
+											style={{ width: '350px', height: '30px' }}
+											onChange={none}
+										/>
+										<br></br>
+										<Button color="primary" onClick={none}>
+											Send
+										</Button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -193,6 +188,6 @@ export default function Contact() {
 					</Footer>
 				</Background>
 			</Screen>
-        )
-    }
+		)
+	}
 }

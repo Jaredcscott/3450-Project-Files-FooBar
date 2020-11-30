@@ -1,33 +1,17 @@
-import React, { Component, useState, Checkbox } from 'react'
-import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState } from 'react'
 import { useQuery, useQueryCache } from 'react-query'
-import { AVAILABLE_THEMES } from '../../redux-store/theme/constants'
-import { getTheme, setTheme } from '../../redux-store/theme'
 import axios from 'axios'
 import Button from '../../general/Button'
-import Body from '../../general/Body'
 import Form from '../../general/Form'
 import Header from '../../general/Header'
 import Footer from '../../general/Footer'
 import Screen from '../../general/Screen'
 import Background from '../../general/Background'
+import produce from 'immer'
 
-const ONE_SECOND = 1 // ms
+const ONE_SECOND = 1000 // ms
 
 function getUsers() {
-	return axios
-		.get('http://localhost:8100/user/all')
-		.then((res) => {
-			console.log('successful gotten accounts')
-			return res.data.data
-		})
-		.catch(() => null)
-}
-
-function none() {}
-
-function promote(){
 	return axios
 		.get('http://localhost:8100/user/all')
 		.then((res) => {
@@ -43,7 +27,6 @@ export default function Users() {
 		refetchOnWindowFocus: false,
 	})
 
-	const queryCache = useQueryCache()
 	const USERS = users.data
 
 	if (!USERS) {
@@ -65,10 +48,10 @@ export default function Users() {
 								<a href="home">Home Page</a>
 							</li>
 							<li>
-								<a href="<Fill In>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
-								<a href="<Fill In">Contact Us</a>
+								<a href="contact">Contact Us</a>
 							</li>
 						</ul>
 					</Footer>
@@ -77,76 +60,106 @@ export default function Users() {
 		)
 }
 
-function UserRow({user}) {
+function UserRow({ user }) {
 	const queryCache = useQueryCache()
 	const name = <span style={{ color: 'black' }}>{user.name}</span>
+	const [funds, setFunds] = useState(user.balance)
 	return (
-		<tr style={{"fontSize":"20px", "textAlign":"center"}}>
-			<td>{ name }</td>	
-			<td>{ user.email }</td>
-			<td>${ user.balance / 100 }</td>
-			<td>{ user.roles.join(',') }</td>
-			<td style={{"fontSize":"15px"}}>
+		<tr style={{ fontSize: '20px', textAlign: 'center' }}>
+			<td>{name}</td>
+			<td>{user.email}</td>
+			<td>
+				$
+				<input
+					type="number"
+					value={funds / 100}
+					style={{ width: '75px' }}
+					onChange={(event) => {
+						try {
+							setFunds(Math.floor(Number(event.target.value) * 100))
+						} catch {}
+					}}
+				/>
+			</td>
+			<td>{user.roles.join(',')}</td>
+			<td style={{ fontSize: '15px' }}>
 				<Button
 					color="primary"
-					onClick={() =>{
-						if (!(user.roles.find((element) => element === 'CHEF'))) {
-							updateRoles(queryCache,user._id,[...user.roles, 'CHEF'])
-						}
-						else {
-							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CHEF'))
+					onClick={() => {
+						if (!user.roles.find((element) => element === 'CHEF')) {
+							updateRoles(queryCache, user._id, [...user.roles, 'CHEF'])
+						} else {
+							updateRoles(
+								queryCache,
+								user._id,
+								user.roles.filter((element) => element !== 'CHEF')
+							)
 						}
 					}}>
 					Toggle Chef
 				</Button>
 				<Button
 					color="primary"
-					onClick={() =>{
-						if (!(user.roles.find((element) => element === 'CASHIER'))) {
-							updateRoles(queryCache,user._id,[...user.roles, 'CASHIER'])
-						}
-						else {
-							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CASHIER'))
+					onClick={() => {
+						if (!user.roles.find((element) => element === 'CASHIER')) {
+							updateRoles(queryCache, user._id, [...user.roles, 'CASHIER'])
+						} else {
+							updateRoles(
+								queryCache,
+								user._id,
+								user.roles.filter((element) => element !== 'CASHIER')
+							)
 						}
 					}}>
-					toggle Cashier
+					Toggle Cashier
 				</Button>
 				<Button
 					color="primary"
-					onClick={() =>{
-						if (!(user.roles.find((element) => element === 'MANAGER'))) {
-							updateRoles(queryCache,user._id,[...user.roles, 'MANAGER'])
-						}
-						else {
-							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'MANAGER'))
+					onClick={() => {
+						if (!user.roles.find((element) => element === 'MANAGER')) {
+							updateRoles(queryCache, user._id, [...user.roles, 'MANAGER'])
+						} else {
+							updateRoles(
+								queryCache,
+								user._id,
+								user.roles.filter((element) => element !== 'MANAGER')
+							)
 						}
 					}}>
 					Toggle Manager
 				</Button>
 				<Button
 					color="primary"
-					onClick={() =>{
-						if (!(user.roles.find((element) => element === 'CUSTOMER'))) {
-							updateRoles(queryCache,user._id,[...user.roles, 'CUSTOMER'])
-						}
-						else {
-							updateRoles(queryCache,user._id,user.roles.filter((element) => element != 'CUSTOMER'))
+					onClick={() => {
+						if (!user.roles.find((element) => element === 'CUSTOMER')) {
+							updateRoles(queryCache, user._id, [...user.roles, 'CUSTOMER'])
+						} else {
+							updateRoles(
+								queryCache,
+								user._id,
+								user.roles.filter((element) => element !== 'CUSTOMER')
+							)
 						}
 					}}>
-					toggle Customer
+					Toggle Customer
+				</Button>
+				<Button color="primary" onClick={() => updateFunds(funds, user._id, queryCache)}>
+					Adjust Funds
 				</Button>
 			</td>
 		</tr>
 	)
 }
 
-function updateRoles(queryCache: any,id: string, roles: Array<string>) {
+function none() {}
+
+function updateRoles(queryCache: any, id: string, roles: Array<string>) {
 	axios
-		.post(`http://localhost:8100/user/${id}`, { 
-			roles
+		.post(`http://localhost:8100/user/${id}`, {
+			roles,
 		})
 		.then(() => {
-			console.log('successfully changes roles')
+			console.log('successfully changed roles')
 			queryCache.invalidateQueries('users')
 		})
 		.catch((err) => {
@@ -155,22 +168,36 @@ function updateRoles(queryCache: any,id: string, roles: Array<string>) {
 		})
 }
 
+function updateFunds(balance: Number, id: string, queryCache: any) {
+	axios
+		.post(`http://localhost:8100/user/${id}`, {
+			balance,
+		})
+		.then(() => {
+			console.log('successfully added funds')
+			queryCache.invalidateQueries('users')
+		})
+		.catch((err) => {
+			console.log('failed to add funds')
+			console.error(err)
+		})
+}
+
 class UserTable extends React.Component {
 	render() {
 		const rows = []
 		this.props.users.forEach((user) => {
-			rows.push(<UserRow user={user} key={user.name} />)
+			rows.push(<UserRow user={user} key={user._id} />)
 		})
-
 		return (
 			<table>
 				<thead>
-					<tr style={{"fontSize":"30px"}}>
-						<th >Name </th>
-						<th >Email </th>
-						<th >Balance </th>
-						<th >Roles </th>
-						<th >Actions </th>
+					<tr style={{ fontSize: '30px' }}>
+						<th>Name </th>
+						<th>Email </th>
+						<th>Balance </th>
+						<th>Roles </th>
+						<th>Actions </th>
 					</tr>
 				</thead>
 				<tbody>{rows}</tbody>

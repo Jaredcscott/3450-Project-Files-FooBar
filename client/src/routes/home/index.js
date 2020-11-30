@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import styled from 'styled-components'
 import Button from '../../general/Button'
 import Body from '../../general/Body'
 import Form from '../../general/Form'
@@ -13,12 +12,6 @@ import scooby from '../../general/scooby.png'
 import config from '../../config'
 import axios from 'axios'
 import { useQuery, useQueryCache } from 'react-query'
-
-// function useState(value) {
-// 	let state = value
-// 	let setState = (newState) => state = value
-// 	return [state, setState]
-// }
 
 function getSignedInUser() {
 	return axios
@@ -41,8 +34,6 @@ export default function Home() {
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
-	const [verify, setVerifyPassword] = useState({})
-	const [name, setName] = useState('')
 
 	if (loggedin.data) {
 		return (
@@ -53,30 +44,34 @@ export default function Home() {
 						<div
 							className="flex-container"
 							style={{
-								'padding-top': '5px',
-								'margin-top': '50px',
+								paddingTop: '5px',
+								marginTop: '50px',
 								margin: 'auto',
-								'font-size': '25px',
+								fontSize: '25px',
 							}}>
 							<div className="flex-child">
-								<h2 style={{ 'text-shadow': '3px 3px 5px blue' }}>
+								<h2
+									style={{
+										textShadow: '3px 3px 5px blue',
+										textTransform: 'capitalize',
+									}}>
 									Hello {loggedin.data.name}, we missed you! You are now logged
 									in.
 								</h2>
 								<div className="flex-container">
-									<div style={{ 'padding-left': '25%' }}>
+									<div style={{ paddingLeft: '25%' }}>
 										<Button color="primary" onClick={() => logout()}>
 											Logout
 										</Button>
 									</div>
-									<div style={{ 'padding-left': '25px' }}>
+									<div style={{ paddingLeft: '25px' }}>
 										<Button
 											color="primary"
 											onClick={() => history.replace('/order')}>
 											Place An Order
 										</Button>
 									</div>
-									<div style={{ 'padding-left': '25px' }}>
+									<div style={{ paddingLeft: '25px' }}>
 										<Button
 											color="primary"
 											onClick={() => history.replace('/account')}>
@@ -92,20 +87,20 @@ export default function Home() {
 							<div
 								className="flex-container"
 								style={{
-									'margin-bottom': '10px',
+									marginBottom: '10px',
 									padding: '5px',
-									'margin-top': '100px',
-									'border-style': 'ridge',
-									'border-color': 'blue',
-									'border-width': '15px',
-									'text-shadow': '3px 3px 5px blue',
+									marginTop: '100px',
+									borderStyle: 'ridge',
+									borderColor: 'blue',
+									borderWidth: '15px',
+									textShadow: '3px 3px 5px blue',
 								}}>
 								<Body text="'Dan's Bagel Shop has the best smears!'-Sheldon Jones">
 									<img
 										src={man}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '120px' }}
+										style={{ paddingLeft: '120px' }}
 									/>
 								</Body>
 								<Body text="'I start every day with a Bagel from Dan's.'-Scooby Doo">
@@ -113,7 +108,7 @@ export default function Home() {
 										src={scooby}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '25px', display: 'flex' }}
+										style={{ paddingLeft: '25px', display: 'flex' }}
 									/>
 								</Body>
 							</div>
@@ -144,7 +139,7 @@ export default function Home() {
 				<Background>
 					<Header text="Welcome to Dan's Bagel Shop"></Header>
 					<Form>
-						<div style={{ 'margin-top': '50px' }}>
+						<div style={{ marginTop: '50px' }}>
 							<div className="email">
 								<input
 									type="text"
@@ -168,7 +163,7 @@ export default function Home() {
 								/>
 							</div>
 						</div>
-						<div className="flex-container" style={{ 'padding-top': '5px' }}>
+						<div className="flex-container" style={{ paddingTop: '5px' }}>
 							<div className="flex-child">
 								<Button
 									onClick={() => history.replace('/account')}
@@ -194,20 +189,20 @@ export default function Home() {
 							<div
 								className="flex-container"
 								style={{
-									'margin-bottom': '10px',
+									marginBottom: '10px',
 									padding: '5px',
-									'margin-top': '100px',
-									'border-style': 'ridge',
-									'border-color': 'blue',
-									'border-width': '15px',
-									'text-shadow': '3px 3px 5px blue',
+									marginTop: '100px',
+									borderStyle: 'ridge',
+									borderColor: 'blue',
+									borderWidth: '15px',
+									textShadow: '3px 3px 5px blue',
 								}}>
 								<Body text="'Dan's Bagel Shop has the best shmears!'-Sheldon Jones">
 									<img
 										src={man}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '120px' }}
+										style={{ paddingLeft: '120px' }}
 									/>
 								</Body>
 								<Body text="'I start every day with a Bagel from Dan's.'-Scooby Doo">
@@ -215,7 +210,7 @@ export default function Home() {
 										src={scooby}
 										className="photo"
 										alt="Dans Bagel Shop"
-										style={{ 'padding-left': '25px', display: 'flex' }}
+										style={{ paddingLeft: '25px', display: 'flex' }}
 									/>
 								</Body>
 							</div>
@@ -244,8 +239,7 @@ function login(email: string, password: string, queryCache: any) {
 			password,
 		})
 		.then((res) => {
-			console.log('successfully loged in')
-			console.log(res)
+			console.log('successfully logged in')
 			queryCache.invalidateQueries('user')
 		})
 		.catch((err) => {
@@ -259,30 +253,10 @@ function logout() {
 		.get(`${config.serverUrl}/auth/logout`, { credentials: 'include' })
 		.then(() => {
 			console.log('successfully logged out')
-			console.log()
 			window.location.reload(false)
 		})
 		.catch((err) => {
 			console.log('failed to logout')
-			console.error(err)
-		})
-}
-
-function register(
-	name: string,
-	email: string,
-	password: string,
-	verifyPassword: string,
-	queryCache: any
-) {
-	axios
-		.post(`${config.serverUrl}/auth/register`, { name, email, password, verifyPassword })
-		.then(() => {
-			console.log('successful register')
-			queryCache.invalidateQueries('user')
-		})
-		.catch((err) => {
-			console.log('failed to register')
 			console.error(err)
 		})
 }

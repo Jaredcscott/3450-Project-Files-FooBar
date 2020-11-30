@@ -1,12 +1,14 @@
-# Project Milestone 3
+# Project Milestone 4
+#Presentation file is located in docs/FinalPresentation.pdf
+#Use Case videos are located in docs/use case videos/
 ## Group Name: FooBar
 
 Sprint documents are located at `docs/sprint`
 ## Group Members
-  * Jared Scott
+  * Peter Allen (Gone)
   * Braysen Goodwin
-  * Peter Allen
   * Nathan Johnson
+  * Jared Scott
 
 ---
   

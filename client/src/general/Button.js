@@ -5,11 +5,12 @@ type Props = {
 	onClick: () => void,
 	color: string,
 	children: React$Node,
+	className?: ?string,
 }
 
-export default function Button({ onClick, color, children }: Props) {
+export default function Button({ onClick, color, children, className }: Props) {
 	return (
-		<ButtonBackground onClick={onClick} color={color}>
+		<ButtonBackground onClick={onClick} color={color} className={className}>
 			{children}
 		</ButtonBackground>
 	)

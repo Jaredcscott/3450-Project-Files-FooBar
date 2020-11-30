@@ -33,7 +33,12 @@ const USER_SELF_UPDATE_VALIDATOR = validate.isObjectWith({
 })
 
 const USER_MANAGER_UPDATE_VALIDATOR = validate.isObjectWith({
-	roles: validate.isArrayOf(validate.isInEnum(ROLES_ENUM)),
+	roles: validate.or(
+		validate.isArrayOf(validate.isInEnum(ROLES_ENUM)),
+		validate.isNull,
+		validate.isUndefined
+	),
+	balance: validate.or(validate.isNumber, validate.isUndefined),
 })
 
 router.get('/', (req: MaybeUserRequest<>, res: express$Response) => {
@@ -134,7 +139,10 @@ router.post(
 	'/:id',
 	verifyUserHasRole(([ROLES.ADMIN, ROLES.MANAGER]: any)),
 	async (
-		req: AuthenticatedUserRequest<{ roles: Roles[] }, {| id: string |}>,
+		req: AuthenticatedUserRequest<
+			{ roles: Roles[], balance: number },
+			{| id: string |}
+		>,
 		res: express$Response
 	) => {
 		if (
@@ -147,7 +155,13 @@ router.post(
 		if (!user) {
 			return res.status(404).end()
 		}
-		user.roles = req.body.roles
+		const { roles, balance } = req.body
+		if (roles) {
+			user.roles = roles
+		}
+		if (balance) {
+			user.balance = balance
+		}
 		await user.save()
 		return res.status(200).end()
 	}

@@ -175,11 +175,9 @@ router.get(
 		const needed: {
 			[key: $Keys<typeof Item[]>]: typeof Number,
 		} = {}
-		Object.keys(Item).forEach(
-			(Item) => (needed[Item] = [])
-		)
+		Object.keys(Item).forEach((Item) => (needed[Item] = []))
 		items.forEach((item) => {
-			if (item.quantity > 10){
+			if (item.quantity > 10) {
 				needed[Item] = []
 			}
 			needed[item.name].push(item)

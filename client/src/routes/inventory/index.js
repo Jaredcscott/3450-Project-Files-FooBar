@@ -11,7 +11,7 @@ import Background from '../../general/Background'
 import produce from 'immer'
 import { isEqual, startCase } from 'lodash'
 
-const ONE_SECOND = 1 // ms
+const ONE_SECOND = 1000 // ms
 
 function getInventory() {
 	return axios
@@ -34,112 +34,18 @@ export default function Inventory() {
 	const [targetCount, setTargetCount] = useState('')
 	const [category, setCategory] = useState(INVENTORY_ITEM_CATEGORIES[0])
 	const [isOnMenu, setIsOnMenu] = useState(false)
-
 	const queryCache = useQueryCache()
 	const PRODUCTS = inventory.data
-	console.log(inventory)
+
 	if (!PRODUCTS) {
-		return (
-			<Screen>
-				<Background>
-					<Header text="Inventory"></Header>
-					<Form>
-						<div width="1700px">
-							<label>
-								Name:{' '}
-								<input
-									type="text"
-									value={name}
-									onChange={(event) => setName(event.target.value)}
-								/>
-							</label>{' '}
-							<br></br>
-							<label>
-								Category:{' '}
-								<select
-									value={category}
-									onChange={(event) => setCategory(event.target.value)}>
-									{INVENTORY_ITEM_CATEGORIES.map((category) => {
-										return (
-											<option key={category} value={category}>
-												{category}
-											</option>
-										)
-									})}
-								</select>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								isOnMenu:{' '}
-								<input
-									type="checkbox"
-									checked={isOnMenu}
-									onChange={(event) => setIsOnMenu(event.target.checked)}
-								/>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								Quantity:{' '}
-								<input
-									type="number"
-									value={qty}
-									onChange={(event) => setQty(event.target.value)}
-								/>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								Price:{' '}
-								<input
-									type="number"
-									value={price}
-									onChange={(event) => setPrice(event.target.value)}
-								/>
-							</label>
-							<label>
-								{' '}
-								<br></br>
-								Target Count:{' '}
-								<input
-									type="number"
-									value={targetCount}
-									onChange={(event) => setTargetCount(event.target.value)}
-								/>
-							</label>{' '}
-							<br></br>
-							<Button
-								color="primary"
-								onClick={() =>
-									addItem(
-										name,
-										category,
-										qty,
-										price,
-										targetCount,
-										isOnMenu,
-										queryCache
-									)
-								}>
-								Add Item
-							</Button>
-							<Button color="primary" onClick={() => populateDatabase(queryCache)}>
-								Populate Database
-							</Button>
-						</div>{' '}
-						<br></br>
-					</Form>
-				</Background>
-			</Screen>
-		)
+		return null
 	} else
 		return (
 			<Screen>
 				<Background>
 					<Header text="Inventory"></Header>
 					<Form>
-						<div style={{ marginTop: '25px', marginBottom: '25px' }}>
+						<div style={{ marginTop: '25px', marginBottom: '25px', fontSize: '25px' }}>
 							<div style={{ width: '80%', textShadow: '3px 3px 5px blue' }}>
 								<label>
 									Name:{' '}
@@ -235,9 +141,6 @@ export default function Inventory() {
 							</div>{' '}
 							<br></br>
 							<FilterableProductTable products={PRODUCTS} />
-							<Button color="primary" onClick={(event) => setQty(event.target.value)}>
-								Save This inventory
-							</Button>
 						</div>
 					</Form>
 					<Footer>
@@ -249,7 +152,7 @@ export default function Inventory() {
 								<a href="home">Home Page</a>
 							</li>
 							<li>
-								<a href="<about>">About Dan's Bagel Shop</a>
+								<a href="about">About Dan's Bagel Shop</a>
 							</li>
 							<li>
 								<a href="contact">Contact Us</a>
@@ -285,12 +188,12 @@ function addItem(
 			category,
 			name,
 			quantity: Number(qty),
-			price: Number(price),
+			price: Number(price) * 100,
 			onMenu: isOnMenu,
 			targetCount: Number(targetCount),
 		})
 		.then(() => {
-			console.log('successful added item')
+			console.log('successfully added item')
 			queryCache.invalidateQueries('inventory')
 		})
 		.catch((err) => {
@@ -319,7 +222,7 @@ function populateDatabase(queryCache: any) {
 				targetCount,
 			})
 			.then(() => {
-				console.log('successful added item')
+				console.log('successfully added item')
 				queryCache.invalidateQueries('inventory')
 			})
 			.catch((err) => {
@@ -333,7 +236,7 @@ function updateItem(item: any, queryCache: any) {
 	axios
 		.post(`http://localhost:8100/inventory/${item._id}`, item)
 		.then(() => {
-			console.log('successful updated item')
+			console.log('successfully updated item')
 			queryCache.invalidateQueries('inventory')
 		})
 		.catch((err) => {
@@ -341,8 +244,6 @@ function updateItem(item: any, queryCache: any) {
 			console.error(err)
 		})
 }
-
-function none() {}
 
 var default_inventory = [
 	{ name: 'Plain', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
@@ -365,7 +266,6 @@ var default_inventory = [
 		onMenu: true,
 		targetCount: 50,
 	},
-
 	{ name: 'Plain', category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
 	{
 		name: 'Honey Nut',
@@ -472,7 +372,6 @@ var default_inventory = [
 		onMenu: true,
 		targetCount: 50,
 	},
-
 	{
 		name: 'Coffee',
 		category: 'BEVERAGE',
@@ -500,13 +399,12 @@ var default_inventory = [
 	},
 ]
 
-//  https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy
 class ProductCategoryRow extends React.Component {
 	render() {
 		const category = this.props.category
 		return (
 			<tr>
-				<th colSpan="2" style={{ fontSize: '30px' }}>
+				<th colSpan="2" style={{ fontSize: '20px', textAlign: 'left' }}>
 					{category}
 				</th>
 			</tr>
@@ -516,7 +414,6 @@ class ProductCategoryRow extends React.Component {
 
 function ProductRow({ product }: { product: any }) {
 	const queryCache = useQueryCache()
-
 	const [editableProduct, setEditableProduct] = useState(product)
 	const amountNeeded = editableProduct.targetCount - editableProduct.quantity
 
@@ -630,7 +527,7 @@ function ProductTable({ products }: { products: any }) {
 	})
 
 	return (
-		<table style={{ fontSize: '30px', textAlign: 'left' }}>
+		<table style={{ fontSize: '25px', textAlign: 'center' }}>
 			<thead>
 				<tr>
 					<th> Name </th>
@@ -638,8 +535,8 @@ function ProductTable({ products }: { products: any }) {
 					<th> On Menu </th>
 					<th> Quantity </th>
 					<th> Target Count </th>
-					<th> Amount Needed </th>
-					<th> Save </th>
+					<th> Needed </th>
+					<th> </th>
 				</tr>
 			</thead>
 			<tbody>{rows}</tbody>
@@ -647,21 +544,9 @@ function ProductTable({ products }: { products: any }) {
 	)
 }
 
-function SearchBar() {
-	return (
-		<form>
-			<input type="text" placeholder="Search..." />
-			<p>
-				<input type="checkbox" /> Only show products in stock
-			</p>
-		</form>
-	)
-}
-
 function FilterableProductTable({ products }) {
 	return (
 		<div style={{ textShadow: '3px 3px 5px blue' }}>
-			<SearchBar />
 			<ProductTable products={products} />
 		</div>
 	)

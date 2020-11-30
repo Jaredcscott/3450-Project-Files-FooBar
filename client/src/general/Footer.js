@@ -6,17 +6,11 @@ type Props = {
 	children: React$Node,
 }
 
-var phantom = {
-	display: 'flex',
-	padding: '20px',
-	height: '60px',
-}
-
 export default function Footer({ children }: Props) {
 	return (
 		<Content>
-			<div className="flex-container" style={{ 'paddingTop': '5px' }}>
-				<div className="flex-child" style={{ 'paddingTop': '15px' }}>
+			<div className="flex-container" style={{ paddingTop: '5px' }}>
+				<div className="flex-child" style={{ paddingTop: '15px' }}>
 					{children}
 				</div>
 				<div style={{ margin: '20px' }}>
