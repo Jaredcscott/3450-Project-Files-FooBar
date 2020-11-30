@@ -3,10 +3,10 @@
 #Use Case videos are located in docs/use case videos/
 ## Group Name: FooBar
 ## Group Members
-  * Jared Scott
+  * Peter Allen (Gone)
   * Braysen Goodwin
-  * Peter Allen
   * Nathan Johnson
+  * Jared Scott
 
 ---
   
