@@ -177,11 +177,23 @@ function Order({
 					}}
 				/>
 			)}
+			{order.status === 'PLACED' ? (
+				<Button
+					width="250px"
+					onClick={() => {
+						cancelOrder(order._id).then(() => {
+							queryCache.invalidateQueries('orders')
+						})
+					}}
+					color="warn">
+					cancelOrder
+				</Button>
+			) : null}
 		</OrderWrapper>
 	)
 }
 
-function addOrder(bagelList: Array, beverageList: Array, time: string, date: string) {
+function addOrder(bagelList: Array<*>, beverageList: Array<*>, time: string, date: string) {
 	return axios
 		.post('http://localhost:8100/order', {
 			bagels: bagelList
@@ -203,6 +215,18 @@ function addOrder(bagelList: Array, beverageList: Array, time: string, date: str
 		})
 		.catch((err) => {
 			console.log('failed to place order')
+			alert(err?.response?.data?.reason || 'Could not connect to server')
+			console.error(err)
+		})
+}
+
+function cancelOrder(id: string) {
+	return axios
+		.post(`http://localhost:8100/order/${id}`, {
+			status: 'CANCELED',
+		})
+		.catch((err) => {
+			console.log('failed to update order')
 			alert(err?.response?.data?.reason || 'Could not connect to server')
 			console.error(err)
 		})

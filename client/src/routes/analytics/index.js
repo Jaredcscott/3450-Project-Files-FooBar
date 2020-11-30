@@ -97,9 +97,12 @@ export default function Analytics() {
 						{analytics.orders.length === 0 ? <NoOrders/> : <FilterableProductTable products={analytics.orders} />}
 					</Form>
 					<Form>
-						USERS
-						<UserTable users={USERS} />
+						<div style={{'marginBottom':'25px'}}>
+							USERS
+							<UserTable users={USERS} />
+						</div>
 					</Form>
+					
 					<Footer>
 						<ul>
 							<li>

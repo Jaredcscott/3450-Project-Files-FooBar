@@ -298,7 +298,8 @@ router.post(
 		}
 		const { status } = req.body
 		if (
-			order.placedBy === String(req.user._id) &&
+			String(order.placedBy) === String(req.user._id) &&
+			order.status === ORDER_STATUS.PLACED &&
 			status === ORDER_STATUS.CANCELED
 		) {
 			order.status = ORDER_STATUS.CANCELED

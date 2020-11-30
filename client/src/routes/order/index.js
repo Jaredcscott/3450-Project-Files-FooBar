@@ -119,6 +119,7 @@ export default function Order() {
 												)
 											}}
 										/>
+										
 										{bagelOrder.smears.map((smear, smearIndex) => {
 											return (
 												<Wrapper key={smearIndex}>
@@ -363,7 +364,7 @@ const WrappedSelect = styled.select`
 
 const OrderRow = styled.div`
 	display: flex;
-	align-items: stretch;
+	align-items: center;
 `
 
 function getMenu() {
@@ -379,6 +380,7 @@ const RedText = styled.span`
 	color: red;
 
 	&:hover {
+		text-align:center;
 		cursor: pointer;
 		color: darkred;
 	}
