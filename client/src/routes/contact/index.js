@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Form, Header, Footer, Screen, Background } from '../../general'
+import { Button, Form, Header, Footer, Screen, Background, Link } from '../../general'
 import { useQuery } from 'react-query'
 import { getSignedInUser } from '../../queries'
-import { useHistory } from 'react-router-dom'
 
 export default function Contact() {
 	const user = useQuery('user', getSignedInUser, {
 		refetchOnWindowFocus: false,
 	}).data
-
-	const history = useHistory()
 
 	const [email, setEmail] = useState('')
 	const [subject, setSubject] = useState('')
@@ -94,20 +91,18 @@ export default function Contact() {
 						{user ? (
 							<>
 								<li>
-									<a onClick={() => history.replace('/account')}>
-										Take Me To My Account
-									</a>
+									<Link href={'/account'}>Take Me To My Account</Link>
 								</li>
 								<li>
-									<a onClick={() => history.replace('/order')}>Place An Order</a>
+									<Link href={'/order'}>Place An Order</Link>
 								</li>
 							</>
 						) : null}
 						<li>
-							<a onClick={() => history.replace('/about')}>About Dan's Bagel Shop</a>
+							<Link href={'/about'}>About Dan's Bagel Shop</Link>
 						</li>
 						<li>
-							<a onClick={() => history.replace('/home')}>Home</a>
+							<Link href={'/home'}>Home</Link>
 						</li>
 					</ul>
 				</Footer>

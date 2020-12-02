@@ -97,7 +97,7 @@ export const DEFAULT_INVENTORY: InventoryItemSentToServer[] = [
 	},
 	{
 		name: 'Ham',
-		category: 'SAMMICHE TOPPINGS',
+		category: 'SAMMICHE_TOPPINGS',
 		quantity: 100,
 		price: 200,
 		onMenu: true,

@@ -6,12 +6,13 @@ import {
 	Form,
 	Button,
 	Body,
-	Footer,
 	manImage,
 	scoobyImage,
+	BasicCustomerFooter,
 } from '../../general'
 import { useHistory } from 'react-router-dom'
 import type { User } from '../../types'
+import { logout } from '../../queries'
 
 export default function UserHome({ user }: { user: User }) {
 	const history = useHistory()
@@ -93,22 +94,7 @@ export default function UserHome({ user }: { user: User }) {
 						</div>
 					</div>
 				</Body>
-				<Footer>
-					<ul>
-						<li>
-							<a href="account">Take Me To My Account</a>
-						</li>
-						<li>
-							<a href="order">Place An Order</a>
-						</li>
-						<li>
-							<a href="about">About Dan's Bagel Shop</a>
-						</li>
-						<li>
-							<a href="contact">Contact Us</a>
-						</li>
-					</ul>
-				</Footer>
+				<BasicCustomerFooter />
 			</Background>
 		</Screen>
 	)

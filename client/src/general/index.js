@@ -1,10 +1,13 @@
 // components
 export { default as Background } from './Background'
+export { default as BasicCustomerFooter } from './BasicCustomerFooter'
+export { default as BasicFooter } from './BasicFooter'
 export { default as Body } from './Body'
 export { default as Button } from './Button'
 export { default as Footer } from './Footer'
 export { default as Form } from './Form'
 export { default as Header } from './Header'
+export { default as Link } from './Link'
 export { default as Screen } from './Screen'
 export { default as OrderTable } from './OrderTable'
 export { default as Order } from './Order'

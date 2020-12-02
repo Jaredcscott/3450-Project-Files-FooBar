@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useQuery, useQueryCache } from 'react-query'
-import { Button, Form, Header, Footer, Screen, Background } from '../../general'
+import { Button, Form, Header, Screen, Background, BasicFooter } from '../../general'
 import produce from 'immer'
 import { isEqual, startCase } from 'lodash'
 import { getInventory, addInventoryItem, updateInventoryItem } from '../../queries'
@@ -127,22 +127,7 @@ export default function Inventory() {
 							<InventoryTable inventory={inventory} />
 						</div>
 					</Form>
-					<Footer>
-						<ul>
-							<li>
-								<a href="account">Take Me To My Account</a>
-							</li>
-							<li>
-								<a href="home">Home Page</a>
-							</li>
-							<li>
-								<a href="about">About Dan's Bagel Shop</a>
-							</li>
-							<li>
-								<a href="contact">Contact Us</a>
-							</li>
-						</ul>
-					</Footer>
+					<BasicFooter />
 				</Background>
 			</Screen>
 		)
@@ -160,7 +145,7 @@ function InventoryTable({ inventory }: { inventory: InventoryItem[] }) {
 	items.forEach((item: InventoryItem) => {
 		if (item.category !== lastCategory) {
 			rows.push(
-				<tr>
+				<tr key={item.category}>
 					<th colSpan="2" style={{ fontSize: '20px', textAlign: 'left' }}>
 						{item.category}
 					</th>

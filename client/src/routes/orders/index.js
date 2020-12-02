@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useQuery, useQueryCache } from 'react-query'
 import { useHistory } from 'react-router-dom'
-import { getOrders, getMenu, addOrder, setOrderStatus } from '../../queries'
-import { Button, Form, Header, Footer, Screen, Background, Order } from '../../general'
-import { ORDER_STATUS, type PopulatedOrder } from '../../types'
-import { parseTime } from '../../utils/time'
+import { getOrders, addOrder, setOrderStatus } from '../../queries'
+import { Button, Form, Header, Screen, Background, Order, BasicFooter } from '../../general'
+import { ORDER_STATUS, type PopulatedOrder, type OrderToSendToServer } from '../../types'
+import { parseTime, normalizeTime, normalizeDate } from '../../utils/time'
 
 export default function Orders() {
 	const orders = useQuery('orders', getOrders, {
@@ -14,14 +14,8 @@ export default function Orders() {
 
 	const history = useHistory()
 
-	const info = useQuery('menu', getMenu)
-
-	if (!info.data) {
-		return <div>Loading</div>
-	}
-
 	if (!orders) {
-		return null
+		return <div>Loading</div>
 	} else
 		return (
 			<Screen>
@@ -41,26 +35,11 @@ export default function Orders() {
 							</Form>
 						) : (
 							orders.map((order) => (
-								<OrderInteractive order={orders} key={order._id} />
+								<OrderInteractive order={order} key={order._id} />
 							))
 						)}
 					</Form>
-					<Footer>
-						<ul>
-							<li>
-								<a href="account">Take Me To My Account</a>
-							</li>
-							<li>
-								<a href="home">Home Page</a>
-							</li>
-							<li>
-								<a href="about">About Dan's Bagel Shop</a>
-							</li>
-							<li>
-								<a href="contact">Contact Us</a>
-							</li>
-						</ul>
-					</Footer>
+					<BasicFooter />
 				</Background>
 			</Screen>
 		)
@@ -111,44 +90,59 @@ function PlaceOrder({
 }) {
 	const [currentDate, setCurrentDate] = useState(() => {
 		const today = new Date()
-		return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+		return normalizeDate(`${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`)
 	})
 
 	const [currentTime, setCurrentTime] = useState(() => {
 		const today = new Date()
-		return `${today.getHours()}:${today.getMinutes()}`
+		return normalizeTime(`${today.getHours()}:${today.getMinutes()}`)
 	})
 
 	return (
 		<>
-			<p>
+			<div>
 				I would like my order to be ready at
 				<input
 					type="time"
 					id="time"
 					value={currentTime}
-					onChange={(event) => setCurrentTime(event.target.value)}></input>
+					onChange={(event) => setCurrentTime(normalizeTime(event.target.value))}></input>
 				on
 				<input
 					type="date"
 					id="date"
 					value={currentDate}
-					onChange={(event) => setCurrentDate(event.target.value)}></input>
+					onChange={(event) => setCurrentDate(normalizeDate(event.target.value))}></input>
 				<PlaceOrderButton
 					color="primary"
 					onClick={() => {
 						onPlaced(
-							addOrder({
-								...orderToPlace,
-								pickupAt: parseTime(currentDate, currentTime),
-							})
+							addOrder(
+								normalizeOrder({
+									...orderToPlace,
+									pickupAt: parseTime(currentDate, currentTime),
+								})
+							)
 						)
 					}}>
 					Place Order
 				</PlaceOrderButton>
-			</p>
+			</div>
 		</>
 	)
+}
+
+function normalizeOrder(order: PopulatedOrder): OrderToSendToServer {
+	return {
+		bagels: order.bagels.map((bagel) => {
+			return {
+				bagel: bagel.bagel._id,
+				toppings: bagel.toppings.map((topping) => topping._id),
+			}
+		}),
+		beverages: order.beverages.map((beverage) => beverage._id),
+		pickupAt: order.pickupAt,
+	}
 }
 
 const PlaceOrderButton = styled(Button)`

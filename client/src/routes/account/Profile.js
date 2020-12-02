@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Header, Footer, Screen, Background, Button } from '../../general'
+import { Form, Header, Screen, Background, Button, BasicCustomerFooter } from '../../general'
 import type { User } from '../../types'
 import { useHistory } from 'react-router-dom'
 import { useQueryCache } from 'react-query'
@@ -119,22 +119,7 @@ export default function Profile({ user }: { user: User }) {
 						</div>
 					</div>
 				</Form>
-				<Footer>
-					<ul>
-						<li>
-							<a onClick={() => history.replace('/home')}>Home Page</a>
-						</li>
-						<li>
-							<a onClick={() => history.replace('/order')}>Place An Order</a>
-						</li>
-						<li>
-							<a onClick={() => history.replace('/about')}>About Dan's Bagel Shop</a>
-						</li>
-						<li>
-							<a onClick={() => history.replace('/contact')}>Contact Us</a>
-						</li>
-					</ul>
-				</Footer>
+				<BasicCustomerFooter />
 			</Background>
 		</Screen>
 	)

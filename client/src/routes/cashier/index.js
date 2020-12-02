@@ -1,13 +1,15 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryCache } from 'react-query'
 import { ORDER_STATUS } from '../../types'
-import { Button, Form, Header, Footer, Screen, Background, Order } from '../../general'
+import { Button, Form, Header, Screen, Background, Order, BasicFooter } from '../../general'
 import { getOrdersTodo, setOrderStatus } from '../../queries'
 
 export default function Cashier() {
 	const orders = useQuery('orders', getOrdersTodo, {
 		refetchOnWindowFocus: false,
 	}).data
+
+	const queryCache = useQueryCache()
 
 	if (!orders) {
 		return null
@@ -35,7 +37,10 @@ export default function Cashier() {
 										style={{ paddingLeft: '25px' }}
 										width="250px"
 										onClick={() =>
-											setOrderStatus(order._id, ORDER_STATUS.FULFILLED)
+											setOrderStatus(
+												order._id,
+												ORDER_STATUS.FULFILLED
+											).then(() => queryCache.invalidateQueries('orders'))
 										}
 										color="primary">
 										Mark Order Complete
@@ -44,16 +49,10 @@ export default function Cashier() {
 										style={{ paddingLeft: '25px' }}
 										width="250px"
 										onClick={() =>
-											setOrderStatus(order._id, ORDER_STATUS.CANCELED)
-										}
-										color="primary">
-										Mark Order Cancelled
-									</Button>
-									<Button
-										style={{ paddingLeft: '25px' }}
-										width="250px"
-										onClick={() =>
-											setOrderStatus(order._id, ORDER_STATUS.DID_NOT_PICK_UP)
+											setOrderStatus(
+												order._id,
+												ORDER_STATUS.DID_NOT_PICK_UP
+											).then(() => queryCache.invalidateQueries('orders'))
 										}
 										color="primary">
 										Did not pick up
@@ -62,22 +61,7 @@ export default function Cashier() {
 							))
 						)}
 					</Form>
-					<Footer>
-						<ul>
-							<li>
-								<a href="account">Take Me To My Account</a>
-							</li>
-							<li>
-								<a href="home">Home Page</a>
-							</li>
-							<li>
-								<a href="about">About Dan's Bagel Shop</a>
-							</li>
-							<li>
-								<a href="contact">Contact Us</a>
-							</li>
-						</ul>
-					</Footer>
+					<BasicFooter />
 				</Background>
 			</Screen>
 		)

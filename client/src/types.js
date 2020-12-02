@@ -58,13 +58,13 @@ export type CreationBagel = {| bagel: ?string, toppings: (?string)[], smears: (?
 export type CreationOrder = {|
 	bagels: Array<CreationBagel>,
 	beverages: Array<?string>,
-	pickUpAt: number,
+	pickupAt: number,
 |}
 
 export type OrderToSendToServer = {|
 	bagels: Array<{| bagel: string, toppings: string[] |}>,
 	beverages: Array<string>,
-	pickUpAt: number,
+	pickupAt: number,
 |}
 
 type TrimmedInventoryItem = {|

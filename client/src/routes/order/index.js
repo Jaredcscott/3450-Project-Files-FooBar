@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useQuery } from 'react-query'
-import { Background, Screen, Button, Header, Body, Form, Footer } from '../../general'
+import { Background, Screen, Button, Header, Body, Form, BasicFooter } from '../../general'
 import { getMenu, getOrderPrice, addOrder } from '../../queries'
 import type { CreationOrder, OrderToSendToServer, CreationBagel } from '../../types'
-import { parseTime } from '../../utils/time'
+import { parseTime, normalizeTime, normalizeDate } from '../../utils/time'
 import produce from 'immer'
 
 export default function Order() {
@@ -15,19 +15,19 @@ export default function Order() {
 	const [orderBeverages, setOrderBeverages] = useState<(?string)[]>([])
 	const [currentDate, setCurrentDate] = useState(() => {
 		const today = new Date()
-		return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+		return normalizeDate(`${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`)
 	})
 
 	const [currentTime, setCurrentTime] = useState(() => {
 		const today = new Date()
-		return `${today.getHours()}:${today.getMinutes()}`
+		return normalizeTime(`${today.getHours()}:${today.getMinutes()}`)
 	})
 
 	const [price, setPrice] = useState(0)
 
 	useEffect(() => {
 		getOrderPrice(
-			toServerOrder({ bagels: orderBagels, beverages: orderBeverages, pickUpAt: Date.now() })
+			toServerOrder({ bagels: orderBagels, beverages: orderBeverages, pickupAt: Date.now() })
 		).then((newPrice) => {
 			setPrice(newPrice)
 		})
@@ -307,7 +307,7 @@ export default function Order() {
 									id="time"
 									value={currentTime}
 									onChange={(event) =>
-										setCurrentTime(event.target.value)
+										setCurrentTime(normalizeTime(event.target.value))
 									}></input>
 								on
 								<input
@@ -315,7 +315,7 @@ export default function Order() {
 									id="date"
 									value={currentDate}
 									onChange={(event) =>
-										setCurrentDate(event.target.value)
+										setCurrentDate(normalizeDate(event.target.value))
 									}></input>
 							</p>
 							<Button
@@ -325,7 +325,7 @@ export default function Order() {
 										toServerOrder({
 											bagels: orderBagels,
 											beverages: orderBeverages,
-											pickUpAt: parseTime(currentDate, currentTime),
+											pickupAt: parseTime(currentDate, currentTime),
 										})
 									)
 								}}
@@ -335,22 +335,7 @@ export default function Order() {
 						</Body>
 					</div>
 				</Form>
-				<Footer>
-					<ul>
-						<li>
-							<a href="account">Take Me To My Account</a>
-						</li>
-						<li>
-							<a href="home">Home Page</a>
-						</li>
-						<li>
-							<a href="about">About Dan's Bagel Shop</a>
-						</li>
-						<li>
-							<a href="contact">Contact Us</a>
-						</li>
-					</ul>
-				</Footer>
+				<BasicFooter />
 			</Background>
 		</Screen>
 	)
@@ -397,6 +382,6 @@ function toServerOrder(order: CreationOrder): OrderToSendToServer {
 				}
 			}),
 		beverages: ((order.beverages.filter((item) => item): any): string[]),
-		pickUpAt: order.pickUpAt,
+		pickupAt: order.pickupAt,
 	}
 }

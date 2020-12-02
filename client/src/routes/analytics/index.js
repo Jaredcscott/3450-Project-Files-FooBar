@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
-import { useQuery, useQueryCache } from 'react-query'
-import { Form, Body, Header, Footer, Screen, Background, OrderTable } from '../../general'
-import { useHistory } from 'react-router-dom'
+import React from 'react'
+import { useQuery } from 'react-query'
+import { Form, Body, Header, Screen, Background, OrderTable, BasicFooter } from '../../general'
 import type { Analytics as AnalyticsType, User } from '../../types'
 import { getAnalytics, getUsers } from '../../queries'
 
 export default function Analytics() {
-	const history = useHistory()
-
 	const analytics: ?AnalyticsType = useQuery('analytics', getAnalytics, {
 		refetchOnWindowFocus: false,
 	}).data
@@ -48,25 +45,7 @@ export default function Analytics() {
 					<Body text="">Loading Data</Body>
 				)}
 
-				<Footer>
-					<ul>
-						<li>
-							<a onClick={() => history.replace('/account')}>
-								{' '}
-								Take Me To My Account
-							</a>
-						</li>
-						<li>
-							<a onClick={() => history.replace('/home')}>Home Page</a>
-						</li>
-						<li>
-							<a onClick={() => history.replace('/about')}>About Dan's Bagel Shop</a>
-						</li>
-						<li>
-							<a onClick={() => history.replace('/contact')}>Contact Us</a>
-						</li>
-					</ul>
-				</Footer>
+				<BasicFooter />
 			</Background>
 		</Screen>
 	)

@@ -1,13 +1,15 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryCache } from 'react-query'
 import { ORDER_STATUS } from '../../types'
-import { Button, Form, Header, Footer, Screen, Background, Order } from '../../general'
+import { Button, Form, Header, Screen, Background, Order, BasicFooter } from '../../general'
 import { getOrdersTodo, setOrderStatus } from '../../queries'
 
 export default function Chef() {
 	const orders = useQuery('orders', getOrdersTodo, {
 		refetchOnWindowFocus: false,
 	}).data
+
+	const queryCache = useQueryCache()
 
 	if (!orders) {
 		return null
@@ -33,9 +35,12 @@ export default function Chef() {
 								<Order key={order._id} order={order} showItems={true}>
 									<Button
 										width="250px"
-										onClick={() =>
-											setOrderStatus(order._id, ORDER_STATUS.PREPARED)
-										}
+										onClick={() => {
+											setOrderStatus(
+												order._id,
+												ORDER_STATUS.PREPARED
+											).then(() => queryCache.invalidateQueries('orders'))
+										}}
 										color="primary">
 										Mark Order Prepared
 									</Button>
@@ -43,22 +48,7 @@ export default function Chef() {
 							))
 						)}
 					</Form>
-					<Footer>
-						<ul>
-							<li>
-								<a href="account">Take Me To My Account</a>
-							</li>
-							<li>
-								<a href="home">Home Page</a>
-							</li>
-							<li>
-								<a href="about">About Dan's Bagel Shop</a>
-							</li>
-							<li>
-								<a href="contact">Contact Us</a>
-							</li>
-						</ul>
-					</Footer>
+					<BasicFooter />
 				</Background>
 			</Screen>
 		)

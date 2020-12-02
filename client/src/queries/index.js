@@ -170,7 +170,8 @@ export function addInventoryItem(item: InventoryItemSentToServer): Promise<*> {
 			console.log('successfully added item')
 		})
 		.catch((err) => {
-			console.log('failed to add item')
+			console.log('failed to add the following item')
+			console.log(item)
 			console.error(err)
 		})
 }

@@ -9,6 +9,7 @@ import {
 	Footer,
 	manImage,
 	scoobyImage,
+	Link,
 } from '../../general'
 import { useQueryCache } from 'react-query'
 import { useHistory } from 'react-router-dom'
@@ -107,10 +108,10 @@ export default function UserHome() {
 				<Footer>
 					<ul>
 						<li>
-							<a href="about">About Dan's Bagel Shop</a>
+							<Link href={'/about'}>About Dan's Bagel Shop</Link>
 						</li>
 						<li>
-							<a href="contact">Contact Us</a>
+							<Link href={'/contact'}>Contact Us</Link>
 						</li>
 					</ul>
 				</Footer>

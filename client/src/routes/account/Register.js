@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Header, Footer, Screen, Background, Button } from '../../general'
+import { Form, Header, Footer, Screen, Background, Button, Link } from '../../general'
 import { useHistory } from 'react-router-dom'
 import { useQueryCache } from 'react-query'
 import { register } from '../../queries'
@@ -79,13 +79,13 @@ export default function Register() {
 				<Footer>
 					<ul>
 						<li>
-							<a onClick={() => history.replace('home')}>Home Page</a>
+							<Link href={'home'}>Home Page</Link>
 						</li>
 						<li>
-							<a onClick={() => history.replace('about')}>About Dan's Bagel Shop</a>
+							<Link href={'about'}>About Dan's Bagel Shop</Link>
 						</li>
 						<li>
-							<a onClick={() => history.replace('contact')}>Contact Us</a>
+							<Link href={'contact'}>Contact Us</Link>
 						</li>
 					</ul>
 				</Footer>

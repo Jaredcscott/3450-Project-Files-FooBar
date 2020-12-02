@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useQuery, useQueryCache } from 'react-query'
-import { Button, Form, Header, Footer, Screen, Background } from '../../general'
+import { Button, Form, Header, Screen, Background, BasicFooter } from '../../general'
 import { getUsers, updateFunds, updateRoles } from '../../queries'
 import { ROLES, type User } from '../../types'
-import produce from 'immer'
 
 export default function Users() {
 	const users = useQuery('users', getUsers, {
@@ -35,22 +34,7 @@ export default function Users() {
 							</tbody>
 						</table>
 					</Form>
-					<Footer>
-						<ul>
-							<li>
-								<a href="account">Take Me To My Account</a>
-							</li>
-							<li>
-								<a href="home">Home Page</a>
-							</li>
-							<li>
-								<a href="about">About Dan's Bagel Shop</a>
-							</li>
-							<li>
-								<a href="contact">Contact Us</a>
-							</li>
-						</ul>
-					</Footer>
+					<BasicFooter />
 				</Background>
 			</Screen>
 		)

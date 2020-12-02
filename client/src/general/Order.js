@@ -39,15 +39,15 @@ export default function Order({
 				<>
 					<h3>Bagels</h3>
 					<Grouping>
-						{order.bagels.map((bagelOrder) => (
-							<>
+						{order.bagels.map((bagelOrder, index) => (
+							<div key={index}>
 								<h4>{bagelOrder.bagel.name}</h4>
 								<Grouping>
 									{bagelOrder.toppings.map((topping, index) => (
 										<div key={index}>{topping.name}</div>
 									))}
 								</Grouping>
-							</>
+							</div>
 						))}
 					</Grouping>
 				</>

@@ -12,13 +12,11 @@ import {
 	moreBagelsImage,
 	bagelWithSmearImage,
 	bagelShopImage,
+	Link,
 } from '../../general'
 import { getSignedInUser } from '../../queries'
-import { useHistory } from 'react-router-dom'
 
 export default function About() {
-	const history = useHistory()
-
 	const user = useQuery('user', getSignedInUser, {
 		refetchOnWindowFocus: false,
 	}).data
@@ -122,20 +120,18 @@ export default function About() {
 						{user ? (
 							<>
 								<li>
-									<a onClick={() => history.replace('/account')}>
-										Take Me To My Account
-									</a>
+									<Link href={'/account'}>Take Me To My Account</Link>
 								</li>
 								<li>
-									<a onClick={() => history.replace('/order')}>Place An Order</a>
+									<Link href={'/order'}>Place An Order</Link>
 								</li>
 							</>
 						) : null}
 						<li>
-							<a onClick={() => history.replace('/home')}>Home</a>
+							<Link href={'/home'}>Home</Link>
 						</li>
 						<li>
-							<a onClick={() => history.replace('/contact')}>Contact Us</a>
+							<Link href={'/contact'}>Contact Us</Link>
 						</li>
 					</ul>
 				</Footer>
