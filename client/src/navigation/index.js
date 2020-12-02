@@ -2,28 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import axios from 'axios'
-
-function getSignedInUser() {
-	return axios
-		.get('http://localhost:8100/user')
-		.then((res) => {
-			return res.data.data
-		})
-		.catch(() => null)
-}
-
-const ONE_SECOND = 1000 // ms
+import { getSignedInUser } from '../queries'
 
 export default function Navigation() {
 	const history = useHistory()
-	const loggedin = useQuery('user', getSignedInUser, {
-		cacheTime: ONE_SECOND,
+	const user = useQuery('user', getSignedInUser, {
 		refetchOnWindowFocus: false,
-	})
+	}).data
 
-	if (loggedin.data) {
-		const roles = new Set(loggedin.data.roles)
+	if (user) {
+		const roles = new Set(user.roles)
 		return (
 			<Navbar>
 				<NavElement onClick={() => history.replace('/home')}>Home</NavElement>

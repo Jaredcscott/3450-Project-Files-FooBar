@@ -1,35 +1,17 @@
 import React from 'react'
-import styled from 'styled-components'
-import { useQuery } from 'react-query'
-import axios from 'axios'
-import Button from '../../general/Button'
-import Form from '../../general/Form'
-import Header from '../../general/Header'
-import Footer from '../../general/Footer'
-import Screen from '../../general/Screen'
-import Background from '../../general/Background'
-
-const ONE_SECOND = 1000 // ms
-
-function getOrders() {
-	return axios
-		.get('http://localhost:8100/order/todo')
-		.then((res) => {
-			console.log('successfully retrieved orders')
-			return res.data.data
-		})
-		.catch(() => null)
-}
+import { useQuery, useQueryCache } from 'react-query'
+import { ORDER_STATUS } from '../../types'
+import { Button, Form, Header, Screen, Background, Order, BasicFooter } from '../../general'
+import { getOrdersTodo, setOrderStatus } from '../../queries'
 
 export default function Cashier() {
-	const orders = useQuery('orders', getOrders, {
-		cacheTime: ONE_SECOND,
+	const orders = useQuery('orders', getOrdersTodo, {
 		refetchOnWindowFocus: false,
-	})
+	}).data
 
-	const PRODUCTS = orders.data
+	const queryCache = useQueryCache()
 
-	if (!PRODUCTS) {
+	if (!orders) {
 		return null
 	} else
 		return (
@@ -37,198 +19,50 @@ export default function Cashier() {
 				<Background>
 					<Header text="Orders To Distribute"></Header>
 					<Form>
-						{PRODUCTS.length === 0 ? (
-							<NoOrders />
+						{orders.length === 0 ? (
+							<Form>
+								<div
+									style={{
+										textAlign: 'center',
+										margin: '25px',
+										textShadow: '3px 3px 5px blue',
+									}}>
+									No Orders To Display<br></br>Enjoy Your Break!
+								</div>
+							</Form>
 						) : (
-							<FilterableProductTable products={PRODUCTS} />
+							orders.map((order) => (
+								<Order key={order._id} order={order} showItems={true}>
+									<Button
+										style={{ paddingLeft: '25px' }}
+										width="250px"
+										onClick={() =>
+											setOrderStatus(
+												order._id,
+												ORDER_STATUS.FULFILLED
+											).then(() => queryCache.invalidateQueries('orders'))
+										}
+										color="primary">
+										Mark Order Complete
+									</Button>
+									<Button
+										style={{ paddingLeft: '25px' }}
+										width="250px"
+										onClick={() =>
+											setOrderStatus(
+												order._id,
+												ORDER_STATUS.DID_NOT_PICK_UP
+											).then(() => queryCache.invalidateQueries('orders'))
+										}
+										color="primary">
+										Did not pick up
+									</Button>
+								</Order>
+							))
 						)}
 					</Form>
-					<Footer>
-						<ul>
-							<li>
-								<a href="account">Take Me To My Account</a>
-							</li>
-							<li>
-								<a href="home">Home Page</a>
-							</li>
-							<li>
-								<a href="about">About Dan's Bagel Shop</a>
-							</li>
-							<li>
-								<a href="contact">Contact Us</a>
-							</li>
-						</ul>
-					</Footer>
+					<BasicFooter />
 				</Background>
 			</Screen>
 		)
-}
-
-const OrderHeader = styled.div`
-	display: flex;
-	width: 100%;
-	justify-content: space-between;
-`
-
-const Grouping = styled.div`
-	margin-left: ${({ theme }) => theme.spacing.indent};
-	width: 100%;
-	justify-content: space-between;
-`
-
-function UserName({ userId }: { userId: string }) {
-	const user = useQuery(`user-${userId}`, getUser(userId))
-	if (user.data) {
-		return <div>{user.data.name}</div>
-	}
-	return null
-}
-
-function getUser(userId: string) {
-	return () => {
-		axios
-			.get(`http://localhost:8100/user/${userId}`)
-			.then((res) => {
-				return res.data.data
-			})
-			.catch(() => null)
-	}
-}
-
-const OrderWrapper = styled.div`
-	width: 80%;
-	font-size: ${({ theme }) => theme.font.size.large};
-	margin: ${({ theme }) => theme.spacing.large};
-	padding: ${({ theme }) => theme.spacing.large};
-	border: 2px solid #75662b;
-	border-radius: 4px;
-`
-
-type OrderItem = { _id: string, name: string }
-
-function Order({
-	order,
-}: {
-	order: {
-		pickupAt: number,
-		status: string,
-		price: number,
-		placedBy: string,
-		beverages: Array<OrderItem>,
-		bagels: Array<{ bagel: OrderItem, toppings: Array<OrderItem> }>,
-	},
-}) {
-	return (
-		<OrderWrapper>
-			<OrderHeader>
-				<div>{order.status}</div>
-				<div>Pickup At: {new Date(order.pickupAt).toISOString()}</div>
-				<div>${order.price / 100}</div>
-				<UserName userId={order.placedBy} />
-			</OrderHeader>
-			{order.beverages.length > 0 ? (
-				<>
-					<h3> Beverages</h3>
-					<Grouping>
-						{order.beverages.map((beverage) => (
-							<div>{beverage.name}</div>
-						))}
-					</Grouping>{' '}
-				</>
-			) : null}
-
-			{order.bagels.length > 0 ? (
-				<>
-					<h3>Bagels</h3>
-					<Grouping>
-						{order.bagels.map((bagelOrder) => (
-							<>
-								<h4>{bagelOrder.bagel.name}</h4>
-								<Grouping>
-									{bagelOrder.toppings.map((topping, index) => (
-										<div key={index}>{topping.name}</div>
-									))}
-								</Grouping>
-							</>
-						))}
-					</Grouping>
-				</>
-			) : null}
-			<Button
-				style={{ paddingLeft: '25px' }}
-				width="250px"
-				onClick={() => markComplete(order._id, 'FULFILLED')}
-				color="primary">
-				Mark Order Complete
-			</Button>
-			<Button
-				style={{ paddingLeft: '25px' }}
-				width="250px"
-				onClick={() => markComplete(order._id, 'CANCELED')}
-				color="primary">
-				Mark Order Cancelled
-			</Button>
-			<Button
-				style={{ paddingLeft: '25px' }}
-				width="250px"
-				onClick={() => markComplete(order._id, 'DID_NOT_PICK_UP')}
-				color="primary">
-				Did not pick up
-			</Button>
-		</OrderWrapper>
-	)
-}
-
-const OrdersWrapper = styled.div`
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-`
-
-function OrderLayout({ orders }) {
-	return (
-		<OrdersWrapper>
-			{orders.map((order) => (
-				<Order order={order} key={order._id} />
-			))}
-		</OrdersWrapper>
-	)
-}
-
-const ScreenCenter = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	width: 100%;
-`
-
-class FilterableProductTable extends React.Component {
-	render() {
-		return (
-			<ScreenCenter>
-				<OrderLayout orders={this.props.products} />
-			</ScreenCenter>
-		)
-	}
-}
-
-function markComplete(orderID: string, status: string) {
-	return axios
-		.post(`http://localhost:8100/order/${orderID}`, { status })
-		.then((res) => {
-			window.location.reload(false)
-		})
-		.catch(() => null)
-}
-
-function NoOrders() {
-	return (
-		<Form>
-			<div style={{ textAlign: 'center', margin: '25px', textShadow: '3px 3px 5px blue' }}>
-				No Orders To Display<br></br>Enjoy Your Break!
-			</div>
-		</Form>
-	)
 }

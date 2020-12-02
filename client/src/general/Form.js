@@ -6,9 +6,6 @@ type Props = {
 }
 
 export default function Form({ children }: Props) {
-	// const [email, setEmail] = useState('')
-	// const [password, setPassword] = useState('')
-	// const [name, setName] = useState('')
 	return <FormBackground>{children}</FormBackground>
 }
 
