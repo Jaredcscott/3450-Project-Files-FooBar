@@ -1,46 +1,46 @@
 import React from 'react'
-import styled from 'styled-components'
 import { useQuery } from 'react-query'
-import axios from 'axios'
-import Button from '../../general/Button'
-import Form from '../../general/Form'
-import Header from '../../general/Header'
-import Footer from '../../general/Footer'
-import Screen from '../../general/Screen'
-import Background from '../../general/Background'
-
-const ONE_SECOND = 1000 // ms
-
-function getOrders() {
-	return axios
-		.get('http://localhost:8100/order/todo')
-		.then((res) => {
-			console.log('successfully retrieved orders')
-			return res.data.data
-		})
-		.catch(() => null)
-}
+import { ORDER_STATUS } from '../../types'
+import { Button, Form, Header, Footer, Screen, Background, Order } from '../../general'
+import { getOrdersTodo, setOrderStatus } from '../../queries'
 
 export default function Chef() {
-	const orders = useQuery('orders', getOrders, {
-		cacheTime: ONE_SECOND,
+	const orders = useQuery('orders', getOrdersTodo, {
 		refetchOnWindowFocus: false,
-	})
+	}).data
 
-	const PRODUCTS = orders.data
-
-	if (!PRODUCTS) {
+	if (!orders) {
 		return null
 	} else
 		return (
 			<Screen>
 				<Background>
-					<Header text="Orders To Prepare"></Header>
+					<Header text="Orders To Distribute"></Header>
 					<Form>
-						{PRODUCTS.length === 0 ? (
-							<NoOrders />
+						{orders.length === 0 ? (
+							<Form>
+								<div
+									style={{
+										textAlign: 'center',
+										margin: '25px',
+										textShadow: '3px 3px 5px blue',
+									}}>
+									No Orders To Display<br></br>Enjoy Your Break!
+								</div>
+							</Form>
 						) : (
-							<FilterableProductTable products={PRODUCTS} />
+							orders.map((order) => (
+								<Order key={order._id} order={order} showItems={true}>
+									<Button
+										width="250px"
+										onClick={() =>
+											setOrderStatus(order._id, ORDER_STATUS.PREPARED)
+										}
+										color="primary">
+										Mark Order Prepared
+									</Button>
+								</Order>
+							))
 						)}
 					</Form>
 					<Footer>
@@ -62,158 +62,4 @@ export default function Chef() {
 				</Background>
 			</Screen>
 		)
-}
-
-const OrderHeader = styled.div`
-	display: flex;
-	width: 100%;
-	justify-content: space-between;
-`
-
-const Grouping = styled.div`
-	margin-left: ${({ theme }) => theme.spacing.indent};
-	width: 100%;
-	justify-content: space-between;
-`
-
-function UserName({ userId }: { userId: string }) {
-	const user = useQuery(`user-${userId}`, getUser(userId))
-	if (user.data) {
-		return <div>{user.data.name}</div>
-	}
-	return null
-}
-
-function getUser(userId: string) {
-	return () => {
-		axios
-			.get(`http://localhost:8100/user/${userId}`)
-			.then((res) => {
-				return res.data.data
-			})
-			.catch(() => null)
-	}
-}
-
-const OrderWrapper = styled.div`
-	width: 80%;
-	font-size: ${({ theme }) => theme.font.size.large};
-	margin: ${({ theme }) => theme.spacing.large};
-	padding: ${({ theme }) => theme.spacing.large};
-	border: 2px solid #75662b;
-	border-radius: 4px;
-`
-
-type OrderItem = { _id: string, name: string }
-
-function Order({
-	order,
-}: {
-	order: {
-		pickupAt: number,
-		status: string,
-		price: number,
-		placedBy: string,
-		beverages: Array<OrderItem>,
-		bagels: Array<{ bagel: OrderItem, toppings: Array<OrderItem> }>,
-	},
-}) {
-	return (
-		<OrderWrapper>
-			<OrderHeader>
-				<div>{order.status}</div>
-				<div>Pickup At: {new Date(order.pickupAt).toISOString()}</div>
-				<div>${order.price / 100}</div>
-				<UserName userId={order.placedBy} />
-			</OrderHeader>
-			{order.beverages.length > 0 ? (
-				<>
-					<h3> Beverages</h3>
-					<Grouping>
-						{order.beverages.map((beverage) => (
-							<div>{beverage.name}</div>
-						))}
-					</Grouping>{' '}
-				</>
-			) : null}
-
-			{order.bagels.length > 0 ? (
-				<>
-					<h3>Bagels</h3>
-					<Grouping>
-						{order.bagels.map((bagelOrder) => (
-							<>
-								<h4>{bagelOrder.bagel.name}</h4>
-								<Grouping>
-									{bagelOrder.toppings.map((topping, index) => (
-										<div key={index}>{topping.name}</div>
-									))}
-								</Grouping>
-							</>
-						))}
-					</Grouping>
-				</>
-			) : null}
-			<Button
-				width="250px"
-				onClick={() => markComplete(order._id, 'PREPARED')}
-				color="primary">
-				Mark Order Prepared
-			</Button>
-		</OrderWrapper>
-	)
-}
-
-const OrdersWrapper = styled.div`
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-`
-
-function OrderLayout({ orders }) {
-	return (
-		<OrdersWrapper>
-			{orders.map((order) => (
-				<Order order={order} key={order._id} />
-			))}
-		</OrdersWrapper>
-	)
-}
-
-const ScreenCenter = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	width: 100%;
-`
-
-class FilterableProductTable extends React.Component {
-	render() {
-		return (
-			<ScreenCenter>
-				<OrderLayout orders={this.props.products} />
-			</ScreenCenter>
-		)
-	}
-}
-
-function markComplete(orderID: string, status: sting) {
-	return axios
-		.post(`http://localhost:8100/order/${orderID}`, { status })
-		.then((res) => {
-			window.location.reload(false)
-		})
-		.catch(() => null)
-}
-
-function NoOrders() {
-	return (
-		<Form>
-			<div style={{ textAlign: 'center', margin: '25px', textShadow: '3px 3px 5px blue' }}>
-				No Orders To Display<br></br>Enjoy Your Break!
-			</div>
-		</Form>
-	)
 }

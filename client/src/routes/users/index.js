@@ -1,35 +1,16 @@
 import React, { useState } from 'react'
 import { useQuery, useQueryCache } from 'react-query'
-import axios from 'axios'
-import Button from '../../general/Button'
-import Form from '../../general/Form'
-import Header from '../../general/Header'
-import Footer from '../../general/Footer'
-import Screen from '../../general/Screen'
-import Background from '../../general/Background'
+import { Button, Form, Header, Footer, Screen, Background } from '../../general'
+import { getUsers, updateFunds, updateRoles } from '../../queries'
+import { ROLES, type User } from '../../types'
 import produce from 'immer'
-
-const ONE_SECOND = 1000 // ms
-
-function getUsers() {
-	return axios
-		.get('http://localhost:8100/user/all')
-		.then((res) => {
-			console.log('successfully retrieved accounts')
-			return res.data.data
-		})
-		.catch(() => null)
-}
 
 export default function Users() {
 	const users = useQuery('users', getUsers, {
-		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
-	})
+	}).data
 
-	const USERS = users.data
-
-	if (!USERS) {
+	if (!users) {
 		return null
 	} else
 		return (
@@ -37,7 +18,22 @@ export default function Users() {
 				<Background>
 					<Header text="Users"></Header>
 					<Form>
-						<UserTable users={USERS} />
+						<table>
+							<thead>
+								<tr style={{ fontSize: '30px' }}>
+									<th>Name </th>
+									<th>Email </th>
+									<th>Balance </th>
+									<th>Roles </th>
+									<th>Actions </th>
+								</tr>
+							</thead>
+							<tbody>
+								{users.map((user) => (
+									<UserRow user={user} key={user._id} />
+								))}
+							</tbody>
+						</table>
 					</Form>
 					<Footer>
 						<ul>
@@ -60,13 +56,14 @@ export default function Users() {
 		)
 }
 
-function UserRow({ user }) {
+function UserRow({ user }: { user: User }) {
 	const queryCache = useQueryCache()
-	const name = <span style={{ color: 'black' }}>{user.name}</span>
 	const [funds, setFunds] = useState(user.balance)
 	return (
 		<tr style={{ fontSize: '20px', textAlign: 'center' }}>
-			<td>{name}</td>
+			<td>
+				<span style={{ color: 'black' }}>{user.name}</span>
+			</td>
 			<td>{user.email}</td>
 			<td>
 				$
@@ -86,13 +83,13 @@ function UserRow({ user }) {
 				<Button
 					color="primary"
 					onClick={() => {
-						if (!user.roles.find((element) => element === 'CHEF')) {
-							updateRoles(queryCache, user._id, [...user.roles, 'CHEF'])
+						if (!user.roles.find((role) => role === ROLES.CHEF)) {
+							updateRoles(queryCache, user._id, [...user.roles, ROLES.CHEF])
 						} else {
 							updateRoles(
 								queryCache,
 								user._id,
-								user.roles.filter((element) => element !== 'CHEF')
+								user.roles.filter((role) => role !== ROLES.CHEF)
 							)
 						}
 					}}>
@@ -101,13 +98,13 @@ function UserRow({ user }) {
 				<Button
 					color="primary"
 					onClick={() => {
-						if (!user.roles.find((element) => element === 'CASHIER')) {
-							updateRoles(queryCache, user._id, [...user.roles, 'CASHIER'])
+						if (!user.roles.find((role) => role === ROLES.CASHIER)) {
+							updateRoles(queryCache, user._id, [...user.roles, ROLES.CASHIER])
 						} else {
 							updateRoles(
 								queryCache,
 								user._id,
-								user.roles.filter((element) => element !== 'CASHIER')
+								user.roles.filter((role) => role !== ROLES.CASHIER)
 							)
 						}
 					}}>
@@ -116,13 +113,13 @@ function UserRow({ user }) {
 				<Button
 					color="primary"
 					onClick={() => {
-						if (!user.roles.find((element) => element === 'MANAGER')) {
-							updateRoles(queryCache, user._id, [...user.roles, 'MANAGER'])
+						if (!user.roles.find((role) => role === ROLES.MANAGER)) {
+							updateRoles(queryCache, user._id, [...user.roles, ROLES.MANAGER])
 						} else {
 							updateRoles(
 								queryCache,
 								user._id,
-								user.roles.filter((element) => element !== 'MANAGER')
+								user.roles.filter((role) => role !== ROLES.MANAGER)
 							)
 						}
 					}}>
@@ -131,13 +128,13 @@ function UserRow({ user }) {
 				<Button
 					color="primary"
 					onClick={() => {
-						if (!user.roles.find((element) => element === 'CUSTOMER')) {
-							updateRoles(queryCache, user._id, [...user.roles, 'CUSTOMER'])
+						if (!user.roles.find((role) => role === ROLES.CUSTOMER)) {
+							updateRoles(queryCache, user._id, [...user.roles, ROLES.CUSTOMER])
 						} else {
 							updateRoles(
 								queryCache,
 								user._id,
-								user.roles.filter((element) => element !== 'CUSTOMER')
+								user.roles.filter((role) => role !== ROLES.CUSTOMER)
 							)
 						}
 					}}>
@@ -149,59 +146,4 @@ function UserRow({ user }) {
 			</td>
 		</tr>
 	)
-}
-
-function none() {}
-
-function updateRoles(queryCache: any, id: string, roles: Array<string>) {
-	axios
-		.post(`http://localhost:8100/user/${id}`, {
-			roles,
-		})
-		.then(() => {
-			console.log('successfully changed roles')
-			queryCache.invalidateQueries('users')
-		})
-		.catch((err) => {
-			console.log('failed to update roles')
-			console.error(err)
-		})
-}
-
-function updateFunds(balance: Number, id: string, queryCache: any) {
-	axios
-		.post(`http://localhost:8100/user/${id}`, {
-			balance,
-		})
-		.then(() => {
-			console.log('successfully added funds')
-			queryCache.invalidateQueries('users')
-		})
-		.catch((err) => {
-			console.log('failed to add funds')
-			console.error(err)
-		})
-}
-
-class UserTable extends React.Component {
-	render() {
-		const rows = []
-		this.props.users.forEach((user) => {
-			rows.push(<UserRow user={user} key={user._id} />)
-		})
-		return (
-			<table>
-				<thead>
-					<tr style={{ fontSize: '30px' }}>
-						<th>Name </th>
-						<th>Email </th>
-						<th>Balance </th>
-						<th>Roles </th>
-						<th>Actions </th>
-					</tr>
-				</thead>
-				<tbody>{rows}</tbody>
-			</table>
-		)
-	}
 }

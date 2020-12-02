@@ -1,43 +1,27 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useQuery, useQueryCache } from 'react-query'
-import axios from 'axios'
-import Button from '../../general/Button'
-import Form from '../../general/Form'
-import Header from '../../general/Header'
-import Footer from '../../general/Footer'
-import Screen from '../../general/Screen'
-import Background from '../../general/Background'
+import { Button, Form, Header, Footer, Screen, Background } from '../../general'
 import produce from 'immer'
 import { isEqual, startCase } from 'lodash'
-
-const ONE_SECOND = 1000 // ms
-
-function getInventory() {
-	return axios
-		.get('http://localhost:8100/inventory')
-		.then((res) => {
-			return res.data.data
-		})
-		.catch(() => null)
-}
+import { getInventory, addInventoryItem, updateInventoryItem } from '../../queries'
+import { DEFAULT_INVENTORY } from './constants'
+import { INVENTORY_ITEM_CATEGORIES_ENUM, type InventoryItem } from '../../types'
 
 export default function Inventory() {
 	const inventory = useQuery('inventory', getInventory, {
-		cacheTime: ONE_SECOND,
 		refetchOnWindowFocus: false,
-	})
+	}).data
 
 	const [name, setName] = useState('')
 	const [qty, setQty] = useState('')
 	const [price, setPrice] = useState('')
 	const [targetCount, setTargetCount] = useState('')
-	const [category, setCategory] = useState(INVENTORY_ITEM_CATEGORIES[0])
+	const [category, setCategory] = useState(INVENTORY_ITEM_CATEGORIES_ENUM[0])
 	const [isOnMenu, setIsOnMenu] = useState(false)
 	const queryCache = useQueryCache()
-	const PRODUCTS = inventory.data
 
-	if (!PRODUCTS) {
+	if (!inventory) {
 		return null
 	} else
 		return (
@@ -61,7 +45,7 @@ export default function Inventory() {
 									<select
 										value={category}
 										onChange={(event) => setCategory(event.target.value)}>
-										{INVENTORY_ITEM_CATEGORIES.map((category) => {
+										{INVENTORY_ITEM_CATEGORIES_ENUM.map((category) => {
 											return (
 												<option key={category} value={category}>
 													{startCase(category)}
@@ -114,20 +98,20 @@ export default function Inventory() {
 								<Button
 									color="primary"
 									onClick={() => {
-										addItem(
-											name,
+										addInventoryItem({
 											category,
-											qty,
-											price,
-											targetCount,
-											isOnMenu,
-											queryCache
-										).then(() => {
+											name,
+											quantity: Number(qty),
+											price: Number(price),
+											onMenu: isOnMenu,
+											targetCount: Number(targetCount),
+										}).then(() => {
+											queryCache.invalidateQueries('inventory')
 											setName('')
 											setQty('')
 											setPrice('')
 											setTargetCount('')
-											setCategory(INVENTORY_ITEM_CATEGORIES[0])
+											setCategory(INVENTORY_ITEM_CATEGORIES_ENUM[0])
 											setIsOnMenu(false)
 										})
 									}}>
@@ -140,7 +124,7 @@ export default function Inventory() {
 								</Button>
 							</div>{' '}
 							<br></br>
-							<FilterableProductTable products={PRODUCTS} />
+							<InventoryTable inventory={inventory} />
 						</div>
 					</Form>
 					<Footer>
@@ -164,268 +148,63 @@ export default function Inventory() {
 		)
 }
 
-const INVENTORY_ITEM_CATEGORIES = ['BEVERAGE', 'SAMMICHE_TOPPINGS', 'SMEAR', 'BAGEL']
+function InventoryTable({ inventory }: { inventory: InventoryItem[] }) {
+	const rows = []
+	let lastCategory = null
 
-function addItem(
-	name: string,
-	category: string,
-	qty: string,
-	price: string,
-	targetCount: string,
-	isOnMenu: boolean,
-	queryCache: any
-) {
-	console.log({
-		category,
-		name,
-		quantity: Number(qty),
-		price: Number(price),
-		onMenu: isOnMenu,
-		targetCount: Number(targetCount),
+	const items = [...inventory]
+
+	items.sort((product1, product2) =>
+		String(product1.category).localeCompare(String(product2.category))
+	)
+	items.forEach((item: InventoryItem) => {
+		if (item.category !== lastCategory) {
+			rows.push(
+				<tr>
+					<th colSpan="2" style={{ fontSize: '20px', textAlign: 'left' }}>
+						{item.category}
+					</th>
+				</tr>
+			)
+		}
+		rows.push(<InventoryItemRow item={item} key={item._id} />)
+		lastCategory = item.category
 	})
-	return axios
-		.post('http://localhost:8100/inventory', {
-			category,
-			name,
-			quantity: Number(qty),
-			price: Number(price) * 100,
-			onMenu: isOnMenu,
-			targetCount: Number(targetCount),
-		})
-		.then(() => {
-			console.log('successfully added item')
-			queryCache.invalidateQueries('inventory')
-		})
-		.catch((err) => {
-			console.log('failed to add item')
-			console.error(err)
-		})
+
+	return (
+		<TableWrapper>
+			<table style={{ fontSize: '25px', textAlign: 'center' }}>
+				<thead>
+					<tr>
+						<th> Name </th>
+						<th> Price </th>
+						<th> On Menu </th>
+						<th> Quantity </th>
+						<th> Target Count </th>
+						<th> Needed </th>
+						<th> </th>
+					</tr>
+				</thead>
+				<tbody>{rows}</tbody>
+			</table>
+		</TableWrapper>
+	)
 }
 
-function populateDatabase(queryCache: any) {
-	var i
-	for (i = 0; i < default_inventory.length; i++) {
-		var name = default_inventory[i].name
-		var category = default_inventory[i].category
-		var quantity = default_inventory[i].quantity
-		var price = default_inventory[i].price
-		var onMenu = default_inventory[i].onMenu
-		var targetCount = default_inventory[i].targetCount
-
-		axios
-			.post(`http://localhost:8100/inventory`, {
-				category,
-				name,
-				quantity,
-				price,
-				onMenu,
-				targetCount,
-			})
-			.then(() => {
-				console.log('successfully added item')
-				queryCache.invalidateQueries('inventory')
-			})
-			.catch((err) => {
-				console.log('failed to add item')
-				console.error(err)
-			})
-	}
-}
-
-function updateItem(item: any, queryCache: any) {
-	axios
-		.post(`http://localhost:8100/inventory/${item._id}`, item)
-		.then(() => {
-			console.log('successfully updated item')
-			queryCache.invalidateQueries('inventory')
-		})
-		.catch((err) => {
-			console.log('failed to update item')
-			console.error(err)
-		})
-}
-
-var default_inventory = [
-	{ name: 'Plain', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{ name: 'Onion', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{
-		name: 'Cinnamon raisin',
-		category: 'BAGEL',
-		quantity: 100,
-		price: 200,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{ name: 'Sesame', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{ name: 'Cheesy', category: 'BAGEL', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{
-		name: 'Pumpernickel',
-		category: 'BAGEL',
-		quantity: 100,
-		price: 200,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{ name: 'Plain', category: 'SMEAR', quantity: 100, price: 100, onMenu: true, targetCount: 50 },
-	{
-		name: 'Honey Nut',
-		category: 'SMEAR',
-		quantity: 100,
-		price: 100,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Strawberry',
-		category: 'SMEAR',
-		quantity: 100,
-		price: 100,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'French Onion',
-		category: 'SMEAR',
-		quantity: 100,
-		price: 100,
-		onMenu: true,
-		targetCount: 50,
-	},
-
-	{
-		name: 'Bacon',
-		category: 'SAMMICHE_TOPPINGS',
-		quantity: 100,
-		price: 100,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Egg',
-		category: 'SAMMICHE_TOPPINGS',
-		quantity: 100,
-		price: 200,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Cheese',
-		category: 'SAMMICHE_TOPPINGS',
-		quantity: 100,
-		price: 100,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Sausage',
-		category: 'SAMMICHE_TOPPINGS',
-		quantity: 100,
-		price: 200,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Avocado',
-		category: 'SAMMICHE_TOPPINGS',
-		quantity: 100,
-		price: 1000,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Turkey',
-		category: 'SAMMICHE_TOPPINGS',
-		quantity: 100,
-		price: 200,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Ham',
-		category: 'SAMMICHE TOPPINGS',
-		quantity: 100,
-		price: 200,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Spinach',
-		category: 'SAMMICHE_TOPPINGS',
-		quantity: 100,
-		price: 100,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Tomato',
-		category: 'SAMMICHE_TOPPINGS',
-		quantity: 100,
-		price: 100,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Lox',
-		category: 'SAMMICHE_TOPPINGS',
-		quantity: 100,
-		price: 1000,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Coffee',
-		category: 'BEVERAGE',
-		quantity: 100,
-		price: 200,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{
-		name: 'Milk',
-		category: 'BEVERAGE',
-		quantity: 100,
-		price: 200,
-		onMenu: true,
-		targetCount: 50,
-	},
-	{ name: 'OJ', category: 'BEVERAGE', quantity: 100, price: 200, onMenu: true, targetCount: 50 },
-	{
-		name: 'Water',
-		category: 'BEVERAGE',
-		quantity: 100,
-		price: 500,
-		onMenu: true,
-		targetCount: 50,
-	},
-]
-
-class ProductCategoryRow extends React.Component {
-	render() {
-		const category = this.props.category
-		return (
-			<tr>
-				<th colSpan="2" style={{ fontSize: '20px', textAlign: 'left' }}>
-					{category}
-				</th>
-			</tr>
-		)
-	}
-}
-
-function ProductRow({ product }: { product: any }) {
+function InventoryItemRow({ item }: { item: InventoryItem }) {
 	const queryCache = useQueryCache()
-	const [editableProduct, setEditableProduct] = useState(product)
-	const amountNeeded = editableProduct.targetCount - editableProduct.quantity
+	const [editableItem, setEditableItem] = useState(item)
+	const amountNeeded = editableItem.targetCount - editableItem.quantity
 
 	return (
 		<tr>
 			<td>
 				<input
-					value={editableProduct.name}
+					value={editableItem.name}
 					onChange={(event) =>
-						setEditableProduct(
-							produce(editableProduct, (newProduct) => {
-								newProduct.name = event.target.value
+						setEditableItem(
+							produce(editableItem, (newItem) => {
+								newItem.name = event.target.value
 							})
 						)
 					}
@@ -435,12 +214,12 @@ function ProductRow({ product }: { product: any }) {
 				$
 				<input
 					type="number"
-					value={editableProduct.price / 100}
+					value={editableItem.price / 100}
 					onChange={(event) =>
-						setEditableProduct(
-							produce(editableProduct, (newProduct) => {
+						setEditableItem(
+							produce(editableItem, (newItem) => {
 								try {
-									newProduct.price = Math.floor(Number(event.target.value) * 100)
+									newItem.price = Math.floor(Number(event.target.value) * 100)
 								} catch {}
 							})
 						)
@@ -449,12 +228,12 @@ function ProductRow({ product }: { product: any }) {
 			<td>
 				<input
 					type="checkbox"
-					checked={editableProduct.onMenu}
+					checked={editableItem.onMenu}
 					onChange={(event) =>
-						setEditableProduct(
-							produce(editableProduct, (newProduct) => {
+						setEditableItem(
+							produce(editableItem, (newItem) => {
 								try {
-									newProduct.onMenu = Boolean(event.target.checked)
+									newItem.onMenu = Boolean(event.target.checked)
 								} catch {}
 							})
 						)
@@ -464,12 +243,12 @@ function ProductRow({ product }: { product: any }) {
 				<input
 					id="quan"
 					type="number"
-					value={editableProduct.quantity}
+					value={editableItem.quantity}
 					onChange={(event) =>
-						setEditableProduct(
-							produce(editableProduct, (newProduct) => {
+						setEditableItem(
+							produce(editableItem, (newItem) => {
 								try {
-									newProduct.quantity = Math.floor(Number(event.target.value))
+									newItem.quantity = Math.floor(Number(event.target.value))
 								} catch {}
 							})
 						)
@@ -478,12 +257,12 @@ function ProductRow({ product }: { product: any }) {
 			<td>
 				<input
 					type="number"
-					value={editableProduct.targetCount}
+					value={editableItem.targetCount}
 					onChange={(event) =>
-						setEditableProduct(
-							produce(editableProduct, (newProduct) => {
+						setEditableItem(
+							produce(editableItem, (newItem) => {
 								try {
-									newProduct.targetCount = Math.floor(Number(event.target.value))
+									newItem.targetCount = Math.floor(Number(event.target.value))
 								} catch {}
 							})
 						)
@@ -492,9 +271,11 @@ function ProductRow({ product }: { product: any }) {
 			<td>
 				<Needed>{amountNeeded > 0 ? amountNeeded : null}</Needed>
 			</td>
-			{!isEqual(product, editableProduct) ? (
+			{!isEqual(item, editableItem) ? (
 				<td>
-					<Button color="primary" onClick={() => updateItem(editableProduct, queryCache)}>
+					<Button
+						color="primary"
+						onClick={() => updateInventoryItem(editableItem, queryCache)}>
 						Save
 					</Button>
 				</td>
@@ -503,51 +284,24 @@ function ProductRow({ product }: { product: any }) {
 	)
 }
 
+function populateDatabase(queryCache: any) {
+	return Promise.all(DEFAULT_INVENTORY.map(addInventoryItem))
+		.then(() => {
+			console.log('successfully added item')
+			alert('successfully populated database')
+			queryCache.invalidateQueries('inventory')
+		})
+		.catch((err) => {
+			console.log('failed to add item')
+			alert('faled to  populated database')
+			console.error(err)
+		})
+}
+
 const Needed = styled.span`
 	color: red;
 `
 
-function ProductTable({ products }: { products: any }) {
-	const rows = []
-	let lastCategory = null
-	products.sort((product1, product2) =>
-		String(product1.category).localeCompare(String(product2.category))
-	)
-	products.forEach((product) => {
-		if (product.category !== lastCategory) {
-			rows.push(
-				<ProductCategoryRow
-					category={product.category}
-					key={product.category + ' ' + product.name}
-				/>
-			)
-		}
-		rows.push(<ProductRow product={product} key={product._id} />)
-		lastCategory = product.category
-	})
-
-	return (
-		<table style={{ fontSize: '25px', textAlign: 'center' }}>
-			<thead>
-				<tr>
-					<th> Name </th>
-					<th> Price </th>
-					<th> On Menu </th>
-					<th> Quantity </th>
-					<th> Target Count </th>
-					<th> Needed </th>
-					<th> </th>
-				</tr>
-			</thead>
-			<tbody>{rows}</tbody>
-		</table>
-	)
-}
-
-function FilterableProductTable({ products }) {
-	return (
-		<div style={{ textShadow: '3px 3px 5px blue' }}>
-			<ProductTable products={products} />
-		</div>
-	)
-}
+const TableWrapper = styled.div`
+	text-shadow: 3px 3px 5px blue;
+`
