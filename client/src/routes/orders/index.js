@@ -95,7 +95,7 @@ function OrderInteractive({ order }: { order: PopulatedOrder }) {
 						})
 					}}
 					color="warn">
-					cancelOrder
+					Cancel Order
 				</Button>
 			) : null}
 		</Order>
