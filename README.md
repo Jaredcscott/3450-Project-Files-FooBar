@@ -5,10 +5,11 @@
 
 Sprint documents are located at `docs/sprint`
 ## Group Members
+  * Jared Scott
   * Peter Allen (Gone)
   * Braysen Goodwin
   * Nathan Johnson
-  * Jared Scott
+
 
 ---
   
